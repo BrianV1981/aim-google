@@ -2,11 +2,14 @@ package cmd
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
 	"os"
+	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/alecthomas/kong"
 	"golang.org/x/term"
@@ -36,6 +39,7 @@ type RootFlags struct {
 	DisableCommands string `help:"Comma-separated list of disabled commands; dot paths allowed" default:"${disabled_commands}"`
 	GmailNoSend     bool   `help:"Block Gmail send operations (agent safety)" default:"${gmail_no_send}"`
 	JSON            bool   `help:"Output JSON to stdout (best for scripting)" default:"${json}" aliases:"machine" short:"j"`
+	AgentMode       bool   `help:"Output highly compressed JSON (strips metadata, saves LLM context tokens)" default:"${agent}" name:"agent"`
 	Plain           bool   `help:"Output stable, parseable text to stdout (TSV; no colors)" default:"${plain}" aliases:"tsv" short:"p"`
 	ResultsOnly     bool   `name:"results-only" help:"In JSON mode, emit only the primary result (drops envelope fields like nextPageToken)"`
 	Select          string `name:"select" aliases:"pick,project" help:"In JSON mode, select comma-separated fields (best-effort; supports dot paths). Desire path: use --fields for most commands."`
@@ -93,6 +97,39 @@ type CLI struct {
 type exitPanic struct{ code int }
 
 func Execute(args []string) (err error) {
+	// A.I.M. Swarm Telemetry Wrapper
+	startTime := time.Now()
+	defer func() {
+		if cfgPath, errPath := config.ConfigPath(); errPath == nil {
+			logFile := filepath.Join(filepath.Dir(cfgPath), "execution.log")
+			if f, errOpen := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o600); errOpen == nil {
+				duration := time.Since(startTime)
+				exitCode := 0
+				if err != nil {
+					exitCode = ExitCode(err)
+				}
+				logEntry := struct {
+					Timestamp string   `json:"timestamp"`
+					Args      []string `json:"args"`
+					ExitCode  int      `json:"exit_code"`
+					Duration  string   `json:"duration"`
+					Error     string   `json:"error,omitempty"`
+				}{
+					Timestamp: startTime.UTC().Format(time.RFC3339),
+					Args:      args,
+					ExitCode:  exitCode,
+					Duration:  duration.String(),
+				}
+				if err != nil {
+					logEntry.Error = err.Error()
+				}
+				if encErr := json.NewEncoder(f).Encode(logEntry); encErr == nil {
+					_ = f.Close()
+				}
+			}
+		}
+	}()
+
 	if len(args) == 0 {
 		args = []string{"--help"}
 	}
@@ -151,7 +188,7 @@ func Execute(args []string) (err error) {
 		cli.JSON = true
 	}
 
-	mode, err := outfmt.FromFlags(cli.JSON, cli.Plain)
+	mode, err := outfmt.FromFlags(cli.JSON, cli.AgentMode, cli.Plain)
 	if err != nil {
 		return newUsageError(err)
 	}
@@ -323,6 +360,7 @@ func newParser(description string) (*kong.Kong, *CLI, error) {
 		"enabled_commands":  envOr("AIM_GOOGLE_ENABLE_COMMANDS", ""),
 		"gmail_no_send":     boolString(envBool("AIM_GOOGLE_GMAIL_NO_SEND")),
 		"json":              boolString(envMode.JSON),
+		"agent":             boolString(envMode.Agent),
 		"plain":             boolString(envMode.Plain),
 		"version":           VersionString(),
 	}
