@@ -6,8 +6,8 @@ import (
 	"io"
 	"testing"
 
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 func TestAuthServices_JSON(t *testing.T) {

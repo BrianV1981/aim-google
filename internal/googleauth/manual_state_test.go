@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/steipete/gogcli/internal/config"
+	"github.com/BrianV1981/aim-google/internal/config"
 )
 
 func TestManualAuthURL_ReusesState(t *testing.T) {

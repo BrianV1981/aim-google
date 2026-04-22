@@ -82,8 +82,8 @@ func TestWriteJSON_ResultsOnlyAndSelect(t *testing.T) {
 }
 
 func TestFromEnvAndParseError(t *testing.T) {
-	t.Setenv("GOG_JSON", "yes")
-	t.Setenv("GOG_PLAIN", "0")
+	t.Setenv("AIM_GOOGLE_JSON", "yes")
+	t.Setenv("AIM_GOOGLE_PLAIN", "0")
 	mode := FromEnv()
 
 	if !mode.JSON || mode.Plain {

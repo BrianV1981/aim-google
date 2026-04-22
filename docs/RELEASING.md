@@ -1,8 +1,8 @@
 ---
-summary: "Release checklist for gogcli (GitHub release + Homebrew tap)"
+summary: "Release checklist for aim-google (GitHub release + Homebrew tap)"
 ---
 
-# Releasing `gogcli`
+# Releasing `aim-google`
 
 This playbook mirrors the Homebrew + GitHub flow used in `../camsnap`.
 
@@ -15,15 +15,15 @@ scripts/verify-release.sh X.Y.Z
 ```
 
 Assumptions:
-- Repo: `steipete/gogcli`
-- Tap repo: `../homebrew-tap` (tap: `steipete/tap`)
-- Homebrew formula name: `gogcli` (installs the `gog` binary)
+- Repo: `BrianV1981/aim-google`
+- Tap repo: `../homebrew-tap` (tap: `BrianV1981/tap`)
+- Homebrew formula name: `aim-google` (installs the `aim-google` binary)
 
 ## 0) Prereqs
 - Clean working tree on `main`.
 - Go toolchain installed (Go version comes from `go.mod`).
 - `make` works locally.
-- Access to the tap repo (e.g. `steipete/homebrew-tap`).
+- Access to the tap repo (e.g. `BrianV1981/homebrew-tap`).
 
 ## 1) Verify build is green
 ```sh
@@ -69,41 +69,41 @@ gh workflow run release.yml -f tag=vX.Y.Z
 ```
 
 ## 5) Update (or add) the Homebrew formula
-In the tap repo (assumed sibling at `../homebrew-tap`), create/update `Formula/gogcli.rb`.
+In the tap repo (assumed sibling at `../homebrew-tap`), create/update `Formula/aim-google.rb`.
 
 Recommended formula shape (build-from-source, no binary assets needed):
 - `version "X.Y.Z"`
-- `url "https://github.com/steipete/gogcli/archive/refs/tags/vX.Y.Z.tar.gz"`
+- `url "https://github.com/BrianV1981/aim-google/archive/refs/tags/vX.Y.Z.tar.gz"`
 - `sha256 "<sha256>"`
 - `depends_on "go" => :build`
 - Build:
-  - `system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/gog"`
+  - `system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/aim-google"`
 
 Compute the SHA256 for the tag tarball:
 ```sh
-curl -L -o /tmp/gogcli.tar.gz https://github.com/steipete/gogcli/archive/refs/tags/vX.Y.Z.tar.gz
-shasum -a 256 /tmp/gogcli.tar.gz
+curl -L -o /tmp/aim-google.tar.gz https://github.com/BrianV1981/aim-google/archive/refs/tags/vX.Y.Z.tar.gz
+shasum -a 256 /tmp/aim-google.tar.gz
 ```
 
 Commit + push in the tap repo:
 ```sh
 cd ../homebrew-tap
-git add Formula/gogcli.rb
-git commit -m "gogcli vX.Y.Z"
+git add Formula/aim-google.rb
+git commit -m "aim-google vX.Y.Z"
 git push origin main
 ```
 
 ## 6) Sanity-check install from tap
 ```sh
 brew update
-brew uninstall gogcli || true
-brew untap steipete/tap || true
-brew tap steipete/tap
-brew install steipete/tap/gogcli
-brew test steipete/tap/gogcli
+brew uninstall aim-google || true
+brew untap BrianV1981/tap || true
+brew tap BrianV1981/tap
+brew install BrianV1981/tap/aim-google
+brew test BrianV1981/tap/aim-google
 
-gog --help
+aim-google --help
 ```
 
 ## Notes
-- `gog --version` / `gog version` should report the release version post-install.
+- `aim-google --version` / `aim-google version` should report the release version post-install.

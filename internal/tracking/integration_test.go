@@ -9,9 +9,9 @@ import (
 )
 
 func TestIntegrationEncryptDecryptWithWorker(t *testing.T) {
-	account := strings.TrimSpace(os.Getenv("GOG_IT_ACCOUNT"))
+	account := strings.TrimSpace(os.Getenv("AIM_GOOGLE_IT_ACCOUNT"))
 	if account == "" {
-		t.Skip("set GOG_IT_ACCOUNT to run integration test")
+		t.Skip("set AIM_GOOGLE_IT_ACCOUNT to run integration test")
 	}
 
 	cfg, err := LoadConfig(account)

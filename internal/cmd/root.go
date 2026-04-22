@@ -11,13 +11,13 @@ import (
 	"github.com/alecthomas/kong"
 	"golang.org/x/term"
 
-	"github.com/steipete/gogcli/internal/authclient"
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/errfmt"
-	"github.com/steipete/gogcli/internal/googleauth"
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/secrets"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/authclient"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/errfmt"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 const (
@@ -31,7 +31,7 @@ type RootFlags struct {
 	Color           string `help:"Color output: auto|always|never" default:"${color}"`
 	Account         string `help:"Account email for API commands (gmail/calendar/chat/classroom/drive/docs/slides/contacts/tasks/people/sheets/forms/appscript/ads)" aliases:"acct" short:"a"`
 	Client          string `help:"OAuth client name (selects stored credentials + token bucket)" default:"${client}"`
-	AccessToken     string `help:"Use provided access token directly (bypasses stored refresh tokens; token expires in ~1h)" env:"GOG_ACCESS_TOKEN"`
+	AccessToken     string `help:"Use provided access token directly (bypasses stored refresh tokens; token expires in ~1h)" env:"AIM_GOOGLE_ACCESS_TOKEN"`
 	EnableCommands  string `help:"Comma-separated list of enabled commands; dot paths allowed (restricts CLI)" default:"${enabled_commands}"`
 	DisableCommands string `help:"Comma-separated list of disabled commands; dot paths allowed" default:"${disabled_commands}"`
 	GmailNoSend     bool   `help:"Block Gmail send operations (agent safety)" default:"${gmail_no_send}"`
@@ -147,7 +147,7 @@ func Execute(args []string) (err error) {
 
 	// Opt-in "agent mode": default to JSON when stdout is piped/non-TTY.
 	// We intentionally do this after parsing so `--plain` can override it.
-	if envBool("GOG_AUTO_JSON") && !cli.JSON && !cli.Plain && !term.IsTerminal(int(os.Stdout.Fd())) { //nolint:gosec // os file descriptor fits int on supported targets
+	if envBool("AIM_GOOGLE_AUTO_JSON") && !cli.JSON && !cli.Plain && !term.IsTerminal(int(os.Stdout.Fd())) { //nolint:gosec // os file descriptor fits int on supported targets
 		cli.JSON = true
 	}
 
@@ -316,12 +316,12 @@ func newParser(description string) (*kong.Kong, *CLI, error) {
 	envMode := outfmt.FromEnv()
 	vars := kong.Vars{
 		"auth_services":     googleauth.UserServiceCSV(),
-		"color":             envOr("GOG_COLOR", "auto"),
-		"calendar_weekday":  envOr("GOG_CALENDAR_WEEKDAY", "false"),
-		"client":            envOr("GOG_CLIENT", ""),
-		"disabled_commands": envOr("GOG_DISABLE_COMMANDS", ""),
-		"enabled_commands":  envOr("GOG_ENABLE_COMMANDS", ""),
-		"gmail_no_send":     boolString(envBool("GOG_GMAIL_NO_SEND")),
+		"color":             envOr("AIM_GOOGLE_COLOR", "auto"),
+		"calendar_weekday":  envOr("AIM_GOOGLE_CALENDAR_WEEKDAY", "false"),
+		"client":            envOr("AIM_GOOGLE_CLIENT", ""),
+		"disabled_commands": envOr("AIM_GOOGLE_DISABLE_COMMANDS", ""),
+		"enabled_commands":  envOr("AIM_GOOGLE_ENABLE_COMMANDS", ""),
+		"gmail_no_send":     boolString(envBool("AIM_GOOGLE_GMAIL_NO_SEND")),
 		"json":              boolString(envMode.JSON),
 		"plain":             boolString(envMode.Plain),
 		"version":           VersionString(),
@@ -330,7 +330,7 @@ func newParser(description string) (*kong.Kong, *CLI, error) {
 	cli := &CLI{}
 	parser, err := kong.New(
 		cli,
-		kong.Name("gog"),
+		kong.Name("aim-google"),
 		kong.Description(description),
 		kong.ConfigureHelp(helpOptions()),
 		kong.Help(helpPrinter),

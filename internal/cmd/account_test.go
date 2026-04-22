@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/secrets"
 )
 
 type fakeSecretsStore struct {
@@ -35,7 +35,7 @@ func (s *fakeSecretsStore) GetDefaultAccount(string) (string, error) {
 func (s *fakeSecretsStore) ListTokens() ([]secrets.Token, error) { return s.tokens, s.errListTokens }
 
 func TestRequireAccount_PrefersFlag(t *testing.T) {
-	t.Setenv("GOG_ACCOUNT", "env@example.com")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "env@example.com")
 	flags := &RootFlags{Account: "flag@example.com"}
 	got, err := requireAccount(flags)
 	if err != nil {
@@ -47,7 +47,7 @@ func TestRequireAccount_PrefersFlag(t *testing.T) {
 }
 
 func TestRequireAccount_UsesEnv(t *testing.T) {
-	t.Setenv("GOG_ACCOUNT", "env@example.com")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "env@example.com")
 	flags := &RootFlags{}
 	got, err := requireAccount(flags)
 	if err != nil {
@@ -88,7 +88,7 @@ func TestRequireAccount_ResolvesAliasEnv(t *testing.T) {
 		t.Fatalf("write config: %v", err)
 	}
 
-	t.Setenv("GOG_ACCOUNT", "work")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "work")
 	flags := &RootFlags{}
 	got, err := requireAccount(flags)
 	if err != nil {
@@ -100,7 +100,7 @@ func TestRequireAccount_ResolvesAliasEnv(t *testing.T) {
 }
 
 func TestRequireAccount_AutoUsesDefault(t *testing.T) {
-	t.Setenv("GOG_ACCOUNT", "")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "")
 	flags := &RootFlags{Account: "auto"}
 
 	prev := openSecretsStoreForAccount
@@ -119,7 +119,7 @@ func TestRequireAccount_AutoUsesDefault(t *testing.T) {
 }
 
 func TestRequireAccount_Missing(t *testing.T) {
-	t.Setenv("GOG_ACCOUNT", "")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "")
 	flags := &RootFlags{}
 	_, err := requireAccount(flags)
 	if err == nil {
@@ -128,7 +128,7 @@ func TestRequireAccount_Missing(t *testing.T) {
 }
 
 func TestRequireAccount_UsesKeyringDefaultAccount(t *testing.T) {
-	t.Setenv("GOG_ACCOUNT", "")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "")
 	flags := &RootFlags{}
 
 	prev := openSecretsStoreForAccount
@@ -147,7 +147,7 @@ func TestRequireAccount_UsesKeyringDefaultAccount(t *testing.T) {
 }
 
 func TestRequireAccount_UsesSingleStoredToken(t *testing.T) {
-	t.Setenv("GOG_ACCOUNT", "")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "")
 	flags := &RootFlags{}
 
 	prev := openSecretsStoreForAccount
@@ -168,7 +168,7 @@ func TestRequireAccount_UsesSingleStoredToken(t *testing.T) {
 }
 
 func TestRequireAccount_MissingWhenMultipleTokensAndNoDefault(t *testing.T) {
-	t.Setenv("GOG_ACCOUNT", "")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "")
 	flags := &RootFlags{}
 
 	prev := openSecretsStoreForAccount
@@ -186,7 +186,7 @@ func TestRequireAccount_MissingWhenMultipleTokensAndNoDefault(t *testing.T) {
 }
 
 func TestRequireAccount_AccessTokenNoAccount(t *testing.T) {
-	t.Setenv("GOG_ACCOUNT", "")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "")
 	flags := &RootFlags{AccessToken: "ya29.some-token"}
 
 	var warned bool

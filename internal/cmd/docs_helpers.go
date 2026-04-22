@@ -13,7 +13,7 @@ import (
 	"google.golang.org/api/docs/v1"
 	gapi "google.golang.org/api/googleapi"
 
-	"github.com/steipete/gogcli/internal/config"
+	"github.com/BrianV1981/aim-google/internal/config"
 )
 
 func resolveContentInput(content, filePath string) (string, error) {

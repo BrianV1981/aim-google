@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/steipete/gogcli/internal/timeparse"
+	"github.com/BrianV1981/aim-google/internal/timeparse"
 )
 
 type repeatUnit int

@@ -36,7 +36,7 @@ go.work.sum
 
 # Local build output
 bin/
-/gog
+/aim-google
 
 # Node (optional dev scripts)
 node_modules/

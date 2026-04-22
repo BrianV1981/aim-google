@@ -9,10 +9,10 @@ import (
 
 	"google.golang.org/api/cloudidentity/v1"
 
-	"github.com/steipete/gogcli/internal/errfmt"
-	"github.com/steipete/gogcli/internal/googleapi"
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/errfmt"
+	"github.com/BrianV1981/aim-google/internal/googleapi"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 var newCloudIdentityService = googleapi.NewCloudIdentityGroups
@@ -143,7 +143,7 @@ func wrapCloudIdentityError(err error, account string) error {
 	}
 	if strings.Contains(errStr, "insufficientPermissions") ||
 		strings.Contains(errStr, "insufficient authentication scopes") {
-		return errfmt.NewUserFacingError("Insufficient permissions for Cloud Identity API; re-authenticate with the cloud-identity.groups.readonly scope: gog auth add <account> --services groups", err)
+		return errfmt.NewUserFacingError("Insufficient permissions for Cloud Identity API; re-authenticate with the cloud-identity.groups.readonly scope: aim-google auth add <account> --services groups", err)
 	}
 	if isConsumerAccount(account) && (strings.Contains(errStr, "invalid argument") || strings.Contains(errStr, "badRequest")) {
 		return errfmt.NewUserFacingError("Cloud Identity groups require a Google Workspace/Cloud Identity account; consumer accounts (gmail.com/googlemail.com) are not supported.", err)

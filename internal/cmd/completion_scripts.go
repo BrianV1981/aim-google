@@ -20,35 +20,35 @@ func completionScript(shell string) (string, error) {
 func bashCompletionScript() string {
 	return `#!/usr/bin/env bash
 
-_gog_complete() {
+_aim_google_complete() {
   local IFS=$'\n'
   local completions
-  completions=$(gog __complete --cword "$COMP_CWORD" -- "${COMP_WORDS[@]}")
+  completions=$(aim-google __complete --cword "$COMP_CWORD" -- "${COMP_WORDS[@]}")
   COMPREPLY=()
   if [[ -n "$completions" ]]; then
     COMPREPLY=( $completions )
   fi
 }
 
-complete -F _gog_complete gog
+complete -F _aim_google_complete aim-google
 `
 }
 
 func zshCompletionScript() string {
-	return `#compdef gog
+	return `#compdef aim-google
 
-_gog() {
+_aim_google() {
   local -a completions
-  completions=("${(@f)$(gog __complete --cword "$((CURRENT - 1))" -- "${words[@]}")}")
+  completions=("${(@f)$(aim-google __complete --cword "$((CURRENT - 1))" -- "${words[@]}")}")
   _describe 'values' completions
 }
 
-compdef _gog gog
+compdef _aim_google aim-google
 `
 }
 
 func fishCompletionScript() string {
-	return `function __gog_complete
+	return `function __aim_google_complete
   set -l words (commandline -opc)
   set -l cur (commandline -ct)
 
@@ -57,19 +57,19 @@ func fishCompletionScript() string {
 
   # cword points to the last word (the one being completed).
   set -l cword (math (count $words) - 1)
-  gog __complete --cword $cword -- $words
+  aim-google __complete --cword $cword -- $words
 end
 
-complete -c gog -f -a "(__gog_complete)"
+complete -c aim-google -f -a "(__aim_google_complete)"
 `
 }
 
 func powerShellCompletionScript() string {
-	return `Register-ArgumentCompleter -CommandName gog -ScriptBlock {
+	return `Register-ArgumentCompleter -CommandName aim-google -ScriptBlock {
   param($commandName, $wordToComplete, $cursorPosition, $commandAst, $fakeBoundParameter)
   $elements = $commandAst.CommandElements | ForEach-Object { $_.ToString() }
   $cword = $elements.Count - 1
-  $completions = gog __complete --cword $cword -- $elements
+  $completions = aim-google __complete --cword $cword -- $elements
   foreach ($completion in $completions) {
     [System.Management.Automation.CompletionResult]::new($completion, $completion, 'ParameterValue', $completion)
   }

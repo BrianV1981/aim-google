@@ -9,8 +9,8 @@ import (
 	"google.golang.org/api/calendar/v3"
 	gapi "google.golang.org/api/googleapi"
 
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 func calendarEventsListCall(ctx context.Context, svc *calendar.Service, calendarID, from, to string, maxResults int64, query, privatePropFilter, sharedPropFilter, fields, pageToken string) *calendar.EventsListCall {

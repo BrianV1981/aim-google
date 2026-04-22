@@ -21,17 +21,17 @@ Think `sed` but for Google Docs formatting instead of text transformation.
 
 ```bash
 # Bold all occurrences of "important"
-gog docs sed <DOC_ID> 's/important/{b}important/g'
+aim-google docs sed <DOC_ID> 's/important/{b}important/g'
 
 # Apply heading style and color from a sed file
-gog docs sed <DOC_ID> -f format.sed
+aim-google docs sed <DOC_ID> -f format.sed
 
 # Preview changes without applying
-gog docs sed <DOC_ID> 's/draft/{- c=gray}draft/' --dry-run
+aim-google docs sed <DOC_ID> 's/draft/{- c=gray}draft/' --dry-run
 
 # Seed a document with content, then format it
-gog docs sed <DOC_ID> -f content.txt -p
-gog docs sed <DOC_ID> -f styling.sed
+aim-google docs sed <DOC_ID> -f content.txt -p
+aim-google docs sed <DOC_ID> -f styling.sed
 ```
 
 ### Test Coverage

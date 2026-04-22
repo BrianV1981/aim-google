@@ -5,12 +5,12 @@
 Full spec: [sedmat.org](https://sedmat.org)
 
 ```bash
-gog docs sed <DOC_ID> '<expression>'             # single expression
-gog docs sed <DOC_ID> -f expressions.sed          # batch from file
-gog docs sed <DOC_ID> -f seed.txt -p              # paste seed content
-gog docs sed <DOC_ID> '<expr>' --dry-run          # preview without applying
-echo 's/foo/{b}bar/' | gog docs sed <DOC_ID>      # pipe from stdin
-gog docs sed <DOC_ID> <<'EOF'                      # heredoc
+aim-google docs sed <DOC_ID> '<expression>'             # single expression
+aim-google docs sed <DOC_ID> -f expressions.sed          # batch from file
+aim-google docs sed <DOC_ID> -f seed.txt -p              # paste seed content
+aim-google docs sed <DOC_ID> '<expr>' --dry-run          # preview without applying
+echo 's/foo/{b}bar/' | aim-google docs sed <DOC_ID>      # pipe from stdin
+aim-google docs sed <DOC_ID> <<'EOF'                      # heredoc
 s/title/{h=t}My Report/
 s/draft/{b c=green}final/
 EOF
@@ -311,26 +311,26 @@ s/![logo]/!(https:\/\/new-logo.png)/ # match by alt text
 
 ## Paragraph Addressing
 
-Target specific paragraphs by number using address prefixes. Use `gog docs structure` to see paragraph numbers.
+Target specific paragraphs by number using address prefixes. Use `aim-google docs structure` to see paragraph numbers.
 
 ```bash
 # Introspection — see paragraph numbers, types, and content
-gog docs structure <DOC_ID>              # show numbered structure
-gog docs cat <DOC_ID> -N                 # cat with [N] prefixes
+aim-google docs structure <DOC_ID>              # show numbered structure
+aim-google docs cat <DOC_ID> -N                 # cat with [N] prefixes
 
 # Delete by paragraph number
-gog docs sed <DOC_ID> '5d'              # delete paragraph 5
-gog docs sed <DOC_ID> '3,7d'            # delete paragraphs 3-7
-gog docs sed <DOC_ID> '$d'              # delete last paragraph
+aim-google docs sed <DOC_ID> '5d'              # delete paragraph 5
+aim-google docs sed <DOC_ID> '3,7d'            # delete paragraphs 3-7
+aim-google docs sed <DOC_ID> '$d'              # delete last paragraph
 
 # Substitute within addressed paragraphs
-gog docs sed <DOC_ID> '5s/.*/New text/' # replace all text in paragraph 5
-gog docs sed <DOC_ID> '3,7s/old/new/g' # replace within paragraphs 3-7
+aim-google docs sed <DOC_ID> '5s/.*/New text/' # replace all text in paragraph 5
+aim-google docs sed <DOC_ID> '3,7s/old/new/g' # replace within paragraphs 3-7
 
 # Insert/Append around addressed paragraphs
-gog docs sed <DOC_ID> '5a/New line/'    # append after paragraph 5
-gog docs sed <DOC_ID> '3i/Before text/' # insert before paragraph 3
-gog docs sed <DOC_ID> '$a/Last line/'   # append after last paragraph
+aim-google docs sed <DOC_ID> '5a/New line/'    # append after paragraph 5
+aim-google docs sed <DOC_ID> '3i/Before text/' # insert before paragraph 3
+aim-google docs sed <DOC_ID> '$a/Last line/'   # append after last paragraph
 ```
 
 ### Address Syntax
@@ -345,8 +345,8 @@ gog docs sed <DOC_ID> '$a/Last line/'   # append after last paragraph
 ### Multi-Tab Support
 
 ```bash
-gog docs structure <DOC_ID> --tab "Sheet1"
-gog docs sed <DOC_ID> --tab "Sheet1" '3d'
+aim-google docs structure <DOC_ID> --tab "Sheet1"
+aim-google docs sed <DOC_ID> --tab "Sheet1" '3d'
 ```
 
 ---
@@ -362,14 +362,14 @@ s/QQQ_AUTHOR/{i c=gray}John Doe/
 s/QQQ_DATE/2026-02-22/
 
 # Apply
-gog docs sed <DOC_ID> -a <account> -f format-doc.sed
+aim-google docs sed <DOC_ID> -a <account> -f format-doc.sed
 ```
 
 ### Seed + Format Workflow
 
-1. Clear the doc: `gog docs clear <DOC_ID> -a <account>`
-2. Insert seed via positional insert: `gog docs sed <DOC_ID> -f seed.sed -a <account>`
-3. Format it: `gog docs sed <DOC_ID> -f format.sed -a <account>`
+1. Clear the doc: `aim-google docs clear <DOC_ID> -a <account>`
+2. Insert seed via positional insert: `aim-google docs sed <DOC_ID> -f seed.sed -a <account>`
+3. Format it: `aim-google docs sed <DOC_ID> -f format.sed -a <account>`
 
 ---
 
@@ -386,8 +386,8 @@ gog docs sed <DOC_ID> -a <account> -f format-doc.sed
 
 ## See Also
 
-- `gog docs clear` — Clear all content from a document
-- `gog docs edit` — Simple find/replace without regex
-- `gog docs get` — Export document content
-- `gog docs images list` — List images in document
+- `aim-google docs clear` — Clear all content from a document
+- `aim-google docs edit` — Simple find/replace without regex
+- `aim-google docs get` — Export document content
+- `aim-google docs images list` — List images in document
 - [sedmat.org](https://sedmat.org) — Full Sedmat specification

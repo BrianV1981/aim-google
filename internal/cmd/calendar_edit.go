@@ -8,7 +8,7 @@ import (
 	"github.com/alecthomas/kong"
 	"google.golang.org/api/calendar/v3"
 
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 type CalendarCreateCmd struct {
@@ -22,7 +22,7 @@ type CalendarCreateCmd struct {
 	AllDay                bool     `name:"all-day" help:"All-day event (use date-only in --from/--to)"`
 	Recurrence            []string `name:"rrule" help:"Recurrence rules (e.g., 'RRULE:FREQ=MONTHLY;BYMONTHDAY=11'). Can be repeated." sep:"none"`
 	Reminders             []string `name:"reminder" help:"Custom reminders as method:duration (e.g., popup:30m, email:1d). Can be repeated (max 5)."`
-	ColorId               string   `name:"event-color" help:"Event color ID (1-11). Use 'gog calendar colors' to see available colors."`
+	ColorId               string   `name:"event-color" help:"Event color ID (1-11). Use 'aim-google calendar colors' to see available colors."`
 	Visibility            string   `name:"visibility" help:"Event visibility: default, public, private, confidential"`
 	Transparency          string   `name:"transparency" help:"Show as busy (opaque) or free (transparent). Aliases: busy, free"`
 	SendUpdates           string   `name:"send-updates" help:"Notification mode: all, externalOnly, none (default: none)"`

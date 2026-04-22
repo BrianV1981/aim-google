@@ -6,7 +6,7 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/steipete/gogcli/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
 )
 
 type AgentExitCodesCmd struct{}

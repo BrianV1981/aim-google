@@ -14,8 +14,8 @@ import (
 	"google.golang.org/api/calendar/v3"
 	"google.golang.org/api/option"
 
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 func TestProposeTimeURLGeneration(t *testing.T) {

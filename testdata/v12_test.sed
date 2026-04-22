@@ -4,7 +4,7 @@
 # Both brace syntax and legacy markdown where applicable.
 #
 # Usage:
-#   gog docs sed <DOC_ID> -a <acct> -f testdata/v12_test.sed
+#   aim-google docs sed <DOC_ID> -a <acct> -f testdata/v12_test.sed
 #
 # Starts by clearing the doc, then seeds and formats.
 
@@ -175,7 +175,7 @@ i/Insert Target Line/{b}Inserted before/
 s/QQQ_XLAT_QQQ/XLAT: AEIOU aeiou/
 # NOTE: y/AEIOU/aeiou/ transliteration is tested separately (it operates on
 # the entire doc and would mangle QQQ tokens if run in the same batch).
-# Test with: gog docs sed <DOC_ID> 'y/AEIOU/aeiou/' after running this file.
+# Test with: aim-google docs sed <DOC_ID> 'y/AEIOU/aeiou/' after running this file.
 
 # ══════════════════════════════════════════════════════════════
 # Section 16: Font / Size / Color / Background
@@ -291,7 +291,7 @@ s/QQQ_FLAG_M_QQQ/multiline flag test/
 #   Table 5: 3x3 explicit empty table
 #   Table 6: 4x3:header brace table
 #
-# Usage: gog docs sed <docId> -a <acct> -f testdata/v12_test.sed (table ops section)
+# Usage: aim-google docs sed <docId> -a <acct> -f testdata/v12_test.sed (table ops section)
 
 # ============================================================
 # TABLE 3: Fill cells + append row + append column

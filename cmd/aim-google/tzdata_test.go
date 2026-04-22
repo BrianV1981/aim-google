@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	_ "github.com/steipete/gogcli/internal/tzembed" // Ensure tz database is embedded
+	_ "github.com/BrianV1981/aim-google/internal/tzembed" // Ensure tz database is embedded
 )
 
 // TestEmbeddedTZData verifies that the time/tzdata import in main.go

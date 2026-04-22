@@ -8,12 +8,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/steipete/gogcli/internal/authclient"
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/googleauth"
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/secrets"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/authclient"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 type AuthAddCmd struct {
@@ -28,7 +28,7 @@ type AuthAddCmd struct {
 	AuthCode     string        `name:"auth-code" hidden:"" help:"UNSAFE: Authorization code from browser (manual flow; skips state check; not valid with --remote)"`
 	Timeout      time.Duration `name:"timeout" help:"Authorization timeout (manual flows default to 5m)"`
 	ForceConsent bool          `name:"force-consent" help:"Force consent screen to obtain a refresh token"`
-	ServicesCSV  string        `name:"services" help:"Services to authorize: user|all or comma-separated ${auth_services} (Keep uses service account: gog auth service-account set)" default:"user"`
+	ServicesCSV  string        `name:"services" help:"Services to authorize: user|all or comma-separated ${auth_services} (Keep uses service account: aim-google auth service-account set)" default:"user"`
 	Readonly     bool          `name:"readonly" help:"Use read-only scopes where available (still includes OIDC identity scopes)"`
 	DriveScope   string        `name:"drive-scope" help:"Drive scope mode: full|readonly|file" enum:"full,readonly,file" default:"full"`
 	GmailScope   string        `name:"gmail-scope" help:"Gmail scope mode: full|readonly" enum:"full,readonly" default:"full"`

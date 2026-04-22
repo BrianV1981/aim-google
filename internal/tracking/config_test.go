@@ -18,8 +18,8 @@ func TestConfigRoundTrip(t *testing.T) {
 	cfg := &Config{
 		Enabled:          true,
 		WorkerURL:        "https://test.workers.dev",
-		WorkerName:       "gog-email-tracker-test",
-		DatabaseName:     "gog-email-tracker-test",
+		WorkerName:       "aim-google-email-tracker-test",
+		DatabaseName:     "aim-google-email-tracker-test",
 		DatabaseID:       "db-id-123",
 		SecretsInKeyring: true,
 	}

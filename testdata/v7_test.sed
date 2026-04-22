@@ -4,9 +4,9 @@
 # All seed tokens use QQQ_..._QQQ prefix/suffix to prevent substring conflicts.
 #
 # Usage:
-#   1. Seed: gog docs sed <docId> -a <acct> 's/$/...seed.../'
-#   2. Format: gog docs sed <docId> -a <acct> < testdata/v7_test.sed
-#   3. Table ops: gog docs sed <docId> -a <acct> < testdata/v7_table_ops.sed
+#   1. Seed: aim-google docs sed <docId> -a <acct> 's/$/...seed.../'
+#   2. Format: aim-google docs sed <docId> -a <acct> < testdata/v7_test.sed
+#   3. Table ops: aim-google docs sed <docId> -a <acct> < testdata/v7_table_ops.sed
 
 # ============================================================
 # SECTION 1: Headings (H1–H6)

@@ -5,8 +5,8 @@ import (
 	"io"
 	"testing"
 
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 func newCmdOutputContext(t *testing.T, stdout, stderr io.Writer) context.Context {

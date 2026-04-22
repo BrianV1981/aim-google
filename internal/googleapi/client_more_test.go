@@ -15,10 +15,10 @@ import (
 	"github.com/99designs/keyring"
 	"golang.org/x/oauth2"
 
-	"github.com/steipete/gogcli/internal/authclient"
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/googleauth"
-	"github.com/steipete/gogcli/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/authclient"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/secrets"
 )
 
 var (
@@ -400,27 +400,27 @@ func TestOptionsForAccountScopes_ServiceAccountPreferred(t *testing.T) {
 }
 
 func TestIsADCMode(t *testing.T) {
-	t.Setenv("GOG_AUTH_MODE", "")
+	t.Setenv("AIM_GOOGLE_AUTH_MODE", "")
 
 	if IsADCMode() {
-		t.Fatalf("expected false when GOG_AUTH_MODE is empty")
+		t.Fatalf("expected false when AIM_GOOGLE_AUTH_MODE is empty")
 	}
 
-	t.Setenv("GOG_AUTH_MODE", "adc")
+	t.Setenv("AIM_GOOGLE_AUTH_MODE", "adc")
 
 	if !IsADCMode() {
-		t.Fatalf("expected true when GOG_AUTH_MODE=adc")
+		t.Fatalf("expected true when AIM_GOOGLE_AUTH_MODE=adc")
 	}
 
-	t.Setenv("GOG_AUTH_MODE", "oauth")
+	t.Setenv("AIM_GOOGLE_AUTH_MODE", "oauth")
 
 	if IsADCMode() {
-		t.Fatalf("expected false when GOG_AUTH_MODE=oauth")
+		t.Fatalf("expected false when AIM_GOOGLE_AUTH_MODE=oauth")
 	}
 }
 
 func TestOptionsForAccountScopes_ADCMode(t *testing.T) {
-	t.Setenv("GOG_AUTH_MODE", "adc")
+	t.Setenv("AIM_GOOGLE_AUTH_MODE", "adc")
 
 	origADC := newADCTokenSource
 	origRead := readClientCredentials

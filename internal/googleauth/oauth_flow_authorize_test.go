@@ -15,7 +15,7 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/steipete/gogcli/internal/config"
+	"github.com/BrianV1981/aim-google/internal/config"
 )
 
 var errMissingRedirectState = errors.New("missing redirect/state")

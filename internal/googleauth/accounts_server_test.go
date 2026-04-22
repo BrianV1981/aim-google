@@ -19,8 +19,8 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/secrets"
 )
 
 var (
@@ -506,7 +506,7 @@ func TestManageServer_HandleAuthStart_RedirectURIOverride(t *testing.T) {
 
 	ms := &ManageServer{
 		listener: ln,
-		opts:     ManageServerOptions{RedirectURI: "https://gog.example.com/oauth2/callback"},
+		opts:     ManageServerOptions{RedirectURI: "https://aim-google.example.com/oauth2/callback"},
 	}
 	rr := httptest.NewRecorder()
 	req := httptest.NewRequestWithContext(context.Background(), http.MethodGet, "/auth/start", nil)
@@ -519,7 +519,7 @@ func TestManageServer_HandleAuthStart_RedirectURIOverride(t *testing.T) {
 		t.Fatalf("parse location: %v", parseErr)
 	}
 
-	if got := parsed.Query().Get("redirect_uri"); got != "https://gog.example.com/oauth2/callback" {
+	if got := parsed.Query().Get("redirect_uri"); got != "https://aim-google.example.com/oauth2/callback" {
 		t.Fatalf("unexpected redirect uri: %q", got)
 	}
 }

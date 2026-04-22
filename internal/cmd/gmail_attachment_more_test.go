@@ -15,7 +15,7 @@ import (
 	"google.golang.org/api/gmail/v1"
 	"google.golang.org/api/option"
 
-	"github.com/steipete/gogcli/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
 )
 
 func TestDownloadAttachmentToPath_MissingOutPath(t *testing.T) {

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/steipete/gogcli/internal/googleapi"
+	"github.com/BrianV1981/aim-google/internal/googleapi"
 )
 
 var newTasksService = googleapi.NewTasks

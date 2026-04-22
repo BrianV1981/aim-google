@@ -7,7 +7,7 @@ import (
 
 	"github.com/99designs/keyring"
 
-	"github.com/steipete/gogcli/internal/config"
+	"github.com/BrianV1981/aim-google/internal/config"
 )
 
 func setupKeyringEnv(t *testing.T) {
@@ -15,8 +15,8 @@ func setupKeyringEnv(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg"))
-	t.Setenv("GOG_KEYRING_BACKEND", "file")
-	t.Setenv("GOG_KEYRING_PASSWORD", "testpass")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file")
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "testpass")
 }
 
 func TestSetAndGetSecret_FileBackend(t *testing.T) {

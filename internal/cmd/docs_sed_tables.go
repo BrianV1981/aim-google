@@ -9,7 +9,7 @@ import (
 
 	"google.golang.org/api/docs/v1"
 
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 type tableCellRef struct {

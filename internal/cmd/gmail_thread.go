@@ -20,9 +20,9 @@ import (
 	"golang.org/x/text/encoding/ianaindex"
 	"google.golang.org/api/gmail/v1"
 
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 // HTML stripping patterns for cleaner text output.
@@ -86,7 +86,7 @@ func (c *GmailThreadGetCmd) Run(ctx context.Context, flags *RootFlags) error {
 	var attachDir string
 	if c.Download {
 		if strings.TrimSpace(c.OutputDir.Dir) == "" {
-			// Default: current directory, not gogcli config dir.
+			// Default: current directory, not aim-google config dir.
 			attachDir = "."
 		} else {
 			expanded, err := config.ExpandPath(c.OutputDir.Dir)

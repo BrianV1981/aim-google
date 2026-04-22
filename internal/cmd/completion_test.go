@@ -8,9 +8,9 @@ import (
 
 func TestCompletionCmd(t *testing.T) {
 	cases := map[string]string{
-		"bash":       "complete -F _gog_complete gog",
-		"zsh":        "compdef _gog gog",
-		"fish":       "complete -c gog",
+		"bash":       "complete -F _aim_google_complete aim-google",
+		"zsh":        "compdef _aim_google aim-google",
+		"fish":       "complete -c aim-google",
 		"powershell": "Register-ArgumentCompleter",
 	}
 	for shell, marker := range cases {

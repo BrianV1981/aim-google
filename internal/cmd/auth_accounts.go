@@ -9,12 +9,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/steipete/gogcli/internal/authclient"
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/googleauth"
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/secrets"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/authclient"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 type AuthListCmd struct {
@@ -406,7 +406,7 @@ func (c *AuthRemoveCmd) Run(ctx context.Context, flags *RootFlags) error {
 
 type AuthManageCmd struct {
 	ForceConsent bool          `name:"force-consent" help:"Force consent screen when adding accounts"`
-	ServicesCSV  string        `name:"services" help:"Services to authorize: user|all or comma-separated ${auth_services} (Keep uses service account: gog auth service-account set)" default:"user"`
+	ServicesCSV  string        `name:"services" help:"Services to authorize: user|all or comma-separated ${auth_services} (Keep uses service account: aim-google auth service-account set)" default:"user"`
 	Timeout      time.Duration `name:"timeout" help:"Server timeout duration" default:"10m"`
 	ListenAddr   string        `name:"listen-addr" help:"Address to listen on for OAuth callback (for example 0.0.0.0 or 0.0.0.0:8080)"`
 	RedirectHost string        `name:"redirect-host" help:"Hostname for OAuth callback; builds https://{host}/oauth2/callback"`
@@ -496,6 +496,6 @@ func (c *AuthKeepCmd) Run(ctx context.Context, _ *RootFlags) error {
 	}
 	u.Out().Printf("email\t%s", email)
 	u.Out().Printf("path\t%s", destPath)
-	u.Out().Println("Keep service account configured. Use: gog keep list --account " + email)
+	u.Out().Println("Keep service account configured. Use: aim-google keep list --account " + email)
 	return nil
 }

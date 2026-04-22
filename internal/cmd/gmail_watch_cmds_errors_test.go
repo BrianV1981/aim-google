@@ -14,7 +14,7 @@ import (
 	"google.golang.org/api/idtoken"
 	"google.golang.org/api/option"
 
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 func TestGmailWatchStartCmd_MissingTopic(t *testing.T) {

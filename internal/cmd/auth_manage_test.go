@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/steipete/gogcli/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
 )
 
 func TestAuthManageCmd_ServicesAndOptions(t *testing.T) {
@@ -18,7 +18,7 @@ func TestAuthManageCmd_ServicesAndOptions(t *testing.T) {
 		return nil
 	}
 
-	if err := runKong(t, &AuthManageCmd{}, []string{"--services", "gmail,drive,gmail", "--force-consent", "--timeout", "2m", "--listen-addr", "0.0.0.0:8080", "--redirect-host", "gog.example.com"}, context.Background(), nil); err != nil {
+	if err := runKong(t, &AuthManageCmd{}, []string{"--services", "gmail,drive,gmail", "--force-consent", "--timeout", "2m", "--listen-addr", "0.0.0.0:8080", "--redirect-host", "aim-google.example.com"}, context.Background(), nil); err != nil {
 		t.Fatalf("execute: %v", err)
 	}
 
@@ -31,7 +31,7 @@ func TestAuthManageCmd_ServicesAndOptions(t *testing.T) {
 	if got.ListenAddr != "0.0.0.0:8080" {
 		t.Fatalf("unexpected listen addr: %q", got.ListenAddr)
 	}
-	if got.RedirectURI != "https://gog.example.com/oauth2/callback" {
+	if got.RedirectURI != "https://aim-google.example.com/oauth2/callback" {
 		t.Fatalf("unexpected redirect uri: %q", got.RedirectURI)
 	}
 	if len(got.Services) != 2 {

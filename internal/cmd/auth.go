@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/steipete/gogcli/internal/googleauth"
-	"github.com/steipete/gogcli/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/secrets"
 )
 
 var (
@@ -69,7 +69,7 @@ func parseAuthServices(servicesCSV string) ([]googleauth.Service, error) {
 			return nil, err
 		}
 		if svc == googleauth.ServiceKeep {
-			return nil, usage("Keep auth is Workspace-only and requires a service account. Use: gog auth service-account set <email> --key <service-account.json>")
+			return nil, usage("Keep auth is Workspace-only and requires a service account. Use: aim-google auth service-account set <email> --key <service-account.json>")
 		}
 		if _, ok := seen[svc]; ok {
 			continue

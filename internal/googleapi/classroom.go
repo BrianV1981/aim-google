@@ -6,7 +6,7 @@ import (
 
 	"google.golang.org/api/classroom/v1"
 
-	"github.com/steipete/gogcli/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
 )
 
 func NewClassroom(ctx context.Context, email string) (*classroom.Service, error) {

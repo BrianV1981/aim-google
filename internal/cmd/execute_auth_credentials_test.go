@@ -9,8 +9,8 @@ import (
 
 	"github.com/99designs/keyring"
 
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/secrets"
 )
 
 func TestExecute_AuthCredentials_JSON(t *testing.T) {

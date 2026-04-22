@@ -2,12 +2,12 @@
 
 ## Overview
 
-The `gog slides create-from-template` command allows you to create a new Google Slides presentation from a template and automatically replace placeholder text throughout the presentation.
+The `aim-google slides create-from-template` command allows you to create a new Google Slides presentation from a template and automatically replace placeholder text throughout the presentation.
 
 ## Basic Usage
 
 ```bash
-gog slides create-from-template <templateId> <title> \
+aim-google slides create-from-template <templateId> <title> \
   --replace "key=value" \
   --replace "another=value"
 ```
@@ -27,7 +27,7 @@ By default, the command looks for placeholders in the format `{{key}}` in your t
 #### Command-line flags (for a few replacements):
 
 ```bash
-gog slides create-from-template 1abc123 "Q1 Report" \
+aim-google slides create-from-template 1abc123 "Q1 Report" \
   --replace "quarter=Q1 2026" \
   --replace "revenue=$1.2M" \
   --replace "growth=15%"
@@ -51,14 +51,14 @@ Create a JSON file with your replacements:
 Then use it:
 
 ```bash
-gog slides create-from-template 1abc123 "Monthly Report" \
+aim-google slides create-from-template 1abc123 "Monthly Report" \
   --replacements replacements.json
 ```
 
 #### Combining both (flags override file):
 
 ```bash
-gog slides create-from-template 1abc123 "Report" \
+aim-google slides create-from-template 1abc123 "Report" \
   --replacements base-data.json \
   --replace "date=2026-02-15"  # This overrides "date" from JSON
 ```
@@ -76,7 +76,7 @@ When using JSON files, non-string values are automatically converted:
 Use `--exact` to replace arbitrary text without `{{}}` wrapping:
 
 ```bash
-gog slides create-from-template 1abc123 "Report" \
+aim-google slides create-from-template 1abc123 "Report" \
   --replace "OLD_TEXT=NEW_TEXT" \
   --exact
 ```
@@ -93,7 +93,7 @@ Template contains:
 - `{{sales_total}}`
 
 ```bash
-gog slides create-from-template 1abc123def456 "January Sales Report" \
+aim-google slides create-from-template 1abc123def456 "January Sales Report" \
   --replace "employee_name=Jane Smith" \
   --replace "report_date=2026-01-31" \
   --replace "sales_total=$45,000"
@@ -114,7 +114,7 @@ Create `report-data.json`:
 
 Generate report:
 ```bash
-gog slides create-from-template 1abc123def456 "February Sales Report" \
+aim-google slides create-from-template 1abc123def456 "February Sales Report" \
   --replacements report-data.json \
   --parent 1xyz789abc123  # Optional: place in specific folder
 ```
@@ -128,7 +128,7 @@ TEMPLATE_ID="1abc123def456"
 
 # Read CSV and generate presentations
 while IFS=, read -r name title date sales; do
-  gog slides create-from-template "$TEMPLATE_ID" "Report - $name" \
+  aim-google slides create-from-template "$TEMPLATE_ID" "Report - $name" \
     --replace "name=$name" \
     --replace "title=$title" \
     --replace "date=$date" \
@@ -156,7 +156,7 @@ Replacements:
 ### JSON Output
 
 ```bash
-gog slides create-from-template 1abc123 "Report" \
+aim-google slides create-from-template 1abc123 "Report" \
   --replace "name=John" \
   --json
 ```
@@ -209,7 +209,7 @@ To replace only some placeholders and keep others for later editing:
 
 ```bash
 # Only replace quarter and keep other {{}} placeholders
-gog slides create-from-template 1abc123 "Draft Report" \
+aim-google slides create-from-template 1abc123 "Draft Report" \
   --replace "quarter=Q1 2026"
 ```
 

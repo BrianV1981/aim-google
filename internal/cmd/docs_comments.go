@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 // DocsCommentsCmd is the parent command for comment operations on a Google Doc.
