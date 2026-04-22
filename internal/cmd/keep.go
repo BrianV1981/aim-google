@@ -9,10 +9,10 @@ import (
 
 	keepapi "google.golang.org/api/keep/v1"
 
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/googleapi"
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/googleapi"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 var newKeepServiceWithSA = googleapi.NewKeepWithServiceAccount
@@ -460,5 +460,5 @@ func getKeepService(ctx context.Context, flags *RootFlags, keepCmd *KeepCmd) (*k
 		}
 	}
 
-	return nil, usage("Keep is Workspace-only and requires a service account. Configure it with: gog auth service-account set <email> --key <service-account.json> (or legacy: gog auth keep <email> --key <service-account.json>)")
+	return nil, usage("Keep is Workspace-only and requires a service account. Configure it with: aim-google auth service-account set <email> --key <service-account.json> (or legacy: aim-google auth keep <email> --key <service-account.json>)")
 }

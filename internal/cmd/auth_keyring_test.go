@@ -8,18 +8,18 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/secrets"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 func TestAuthKeyringSet_WritesConfig(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "")
-	t.Setenv("GOG_KEYRING_PASSWORD", "")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "")
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "")
 
 	var stdout, stderr bytes.Buffer
 	u, err := ui.New(ui.Options{Stdout: &stdout, Stderr: &stderr, Color: "never"})
@@ -58,8 +58,8 @@ func TestAuthKeyring_WritesConfig_Shorthand(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "")
-	t.Setenv("GOG_KEYRING_PASSWORD", "")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "")
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "")
 
 	var stdout, stderr bytes.Buffer
 	u, err := ui.New(ui.Options{Stdout: &stdout, Stderr: &stderr, Color: "never"})
@@ -86,7 +86,7 @@ func TestAuthKeyring_FileBackendPasswordHint(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "")
 
 	var stdout, stderr bytes.Buffer
 	u, err := ui.New(ui.Options{Stdout: &stdout, Stderr: &stderr, Color: "never"})
@@ -96,23 +96,23 @@ func TestAuthKeyring_FileBackendPasswordHint(t *testing.T) {
 	ctx := ui.WithUI(context.Background(), u)
 	ctx = outfmt.WithMode(ctx, outfmt.Mode{})
 
-	t.Setenv("GOG_KEYRING_PASSWORD", "pw")
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "pw")
 	if err = runKong(t, &AuthKeyringCmd{}, []string{"file"}, ctx, nil); err != nil {
 		t.Fatalf("run: %v", err)
 	}
-	if !bytes.Contains(stderr.Bytes(), []byte("GOG_KEYRING_PASSWORD found in environment")) {
+	if !bytes.Contains(stderr.Bytes(), []byte("AIM_GOOGLE_KEYRING_PASSWORD found in environment")) {
 		t.Fatalf("expected password env note, got:\n%s", stderr.String())
 	}
 
 	stdout.Reset()
 	stderr.Reset()
 
-	t.Setenv("GOG_KEYRING_PASSWORD", "")
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "")
 	if err = runKong(t, &AuthKeyringCmd{}, []string{"file"}, ctx, nil); err != nil {
 		t.Fatalf("run: %v", err)
 	}
-	if !bytes.Contains(stderr.Bytes(), []byte("requires GOG_KEYRING_PASSWORD")) &&
-		!bytes.Contains(stderr.Bytes(), []byte("Hint: set GOG_KEYRING_PASSWORD")) {
+	if !bytes.Contains(stderr.Bytes(), []byte("requires AIM_GOOGLE_KEYRING_PASSWORD")) &&
+		!bytes.Contains(stderr.Bytes(), []byte("Hint: set AIM_GOOGLE_KEYRING_PASSWORD")) {
 		t.Fatalf("expected password hint, got:\n%s", stderr.String())
 	}
 }

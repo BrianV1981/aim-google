@@ -13,8 +13,8 @@ func setupTrackingConfigEnv(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg"))
-	t.Setenv("GOG_KEYRING_BACKEND", "file")
-	t.Setenv("GOG_KEYRING_PASSWORD", "testpass")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file")
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "testpass")
 }
 
 func TestLoadConfigMissingReturnsDisabled(t *testing.T) {
@@ -193,7 +193,7 @@ func TestLegacyConfigPathUsesXDGConfigHome(t *testing.T) {
 		t.Fatalf("legacyConfigPath: %v", err)
 	}
 
-	if !strings.Contains(path, filepath.Join("xdg", "gog", "tracking.json")) {
+	if !strings.Contains(path, filepath.Join("xdg", "aim-google", "tracking.json")) {
 		t.Fatalf("expected XDG-based legacy path, got %q", path)
 	}
 }

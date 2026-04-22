@@ -21,31 +21,31 @@ import (
 //
 // Prerequisites:
 //   - Run v10 seed + test against the doc first
-//   - Set GOG_LIVE_DOC_ID and GOG_LIVE_ACCOUNT env vars
+//   - Set AIM_GOOGLE_LIVE_DOC_ID and AIM_GOOGLE_LIVE_ACCOUNT env vars
 //
 // Run: go test ./internal/cmd/ -tags live -run TestV10Live -v -count=1
 func TestV10LiveVerification(t *testing.T) {
-	docID := os.Getenv("GOG_TEST_DOC_ID")
+	docID := os.Getenv("AIM_GOOGLE_TEST_DOC_ID")
 	if docID == "" {
-		t.Skip("GOG_TEST_DOC_ID not set; skipping live test")
+		t.Skip("AIM_GOOGLE_TEST_DOC_ID not set; skipping live test")
 	}
-	account := os.Getenv("GOG_TEST_ACCOUNT")
+	account := os.Getenv("AIM_GOOGLE_TEST_ACCOUNT")
 	if account == "" {
-		t.Skip("GOG_TEST_ACCOUNT not set; skipping live test")
+		t.Skip("AIM_GOOGLE_TEST_ACCOUNT not set; skipping live test")
 	}
 
-	// Fetch raw document JSON via gog binary (has OAuth tokens configured)
+	// Fetch raw document JSON via aim-google binary (has OAuth tokens configured)
 	// TestMain overrides HOME to a temp dir; restore real HOME so
-	// both the gog subprocess and the direct API can find credentials.
-	if realHome := os.Getenv("GOG_LIVE_HOME"); realHome != "" {
+	// both the aim-google subprocess and the direct API can find credentials.
+	if realHome := os.Getenv("AIM_GOOGLE_LIVE_HOME"); realHome != "" {
 		prev := os.Getenv("HOME")
 		os.Setenv("HOME", realHome)
 		t.Cleanup(func() { os.Setenv("HOME", prev) })
 	}
 
-	gogBin := os.Getenv("GOG_BIN")
+	gogBin := os.Getenv("AIM_GOOGLE_BIN")
 	if gogBin == "" {
-		gogBin = "gog"
+		gogBin = "aim-google"
 	}
 
 	ctx := context.Background()
@@ -57,22 +57,22 @@ func TestV10LiveVerification(t *testing.T) {
 		// Fall back: try direct API
 		docsSvc, err2 := newDocsService(context.Background(), account)
 		if err2 != nil {
-			t.Fatalf("can't fetch doc: gog failed (%v) and direct API failed (%v)", err, err2)
+			t.Fatalf("can't fetch doc: aim-google failed (%v) and direct API failed (%v)", err, err2)
 		}
 		doc, err2 := docsSvc.Documents.Get(docID).Context(context.Background()).Do()
 		require.NoError(t, err2, "fetch document")
 		require.NotNil(t, doc.Body)
 		_ = doc
-		t.Skip("gog cat -j not available, need raw doc JSON")
+		t.Skip("aim-google cat -j not available, need raw doc JSON")
 		return
 	}
 
-	// gog docs cat -j returns plain text, not the doc structure.
+	// aim-google docs cat -j returns plain text, not the doc structure.
 	// We need the raw API response. Let's use direct API with proper auth setup.
 	// For now, use a helper binary to dump the doc.
 	_ = out
 
-	// Actually, let's just build a small helper that uses the gog OAuth tokens
+	// Actually, let's just build a small helper that uses the aim-google OAuth tokens
 	docsSvc, err := newDocsServiceFromConfig(account)
 	require.NoError(t, err, "create docs service")
 

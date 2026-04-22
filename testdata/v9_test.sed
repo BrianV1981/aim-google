@@ -5,9 +5,9 @@
 # code blocks, superscript/subscript, footnotes, tables, images, and combos.
 #
 # Usage:
-#   1. Seed:      gog docs sed <docId> -a <acct> -f testdata/v9_seed.txt -p
-#   2. Format:    gog docs sed <docId> -a <acct> -f testdata/v9_test.sed
-#   3. Table ops: gog docs sed <docId> -a <acct> -f testdata/v9_table_ops.sed
+#   1. Seed:      aim-google docs sed <docId> -a <acct> -f testdata/v9_seed.txt -p
+#   2. Format:    aim-google docs sed <docId> -a <acct> -f testdata/v9_test.sed
+#   3. Table ops: aim-google docs sed <docId> -a <acct> -f testdata/v9_table_ops.sed
 
 # ============================================================
 # SECTION 1: Headings (H1–H6)

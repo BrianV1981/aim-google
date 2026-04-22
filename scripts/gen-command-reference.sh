@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
-BIN="${GOG_BIN:-$ROOT_DIR/bin/gog}"
+BIN="${AIM_GOOGLE_BIN:-$ROOT_DIR/bin/aim-google}"
 OUT="${1:-}"
 PY="${PYTHON:-python3}"
 
@@ -13,7 +13,7 @@ if [ ! -x "$BIN" ]; then
   make -C "$ROOT_DIR" build >/dev/null
 fi
 
-schema_file="$(mktemp "${TMPDIR:-/tmp}/gog-schema-XXXXXX.json")"
+schema_file="$(mktemp "${TMPDIR:-/tmp}/aim-google-schema-XXXXXX.json")"
 trap 'rm -f "$schema_file"' EXIT
 "$BIN" schema --json >"$schema_file"
 
@@ -30,7 +30,7 @@ root = schema.get("command") or {}
 lines = [
     "# Command Reference",
     "",
-    "Generated from `gog schema --json`.",
+    "Generated from `aim-google schema --json`.",
     "",
 ]
 
@@ -43,7 +43,7 @@ def walk(command):
     path = command.get("path") or command.get("name") or ""
     usage = command.get("usage") or ""
     summary = first_line(command.get("help"))
-    prefix = path.removeprefix("gog ").strip()
+    prefix = path.removeprefix("aim-google ").strip()
     suffix = usage
     if prefix and usage.startswith(prefix):
         suffix = usage[len(prefix):].strip()

@@ -13,8 +13,8 @@ import (
 
 	"github.com/99designs/keyring"
 
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/secrets"
 )
 
 type memSecretsStore struct {
@@ -215,7 +215,7 @@ func TestAuthTokensList_FiltersNonTokenKeys(t *testing.T) {
 func TestAuthStatus_JSON(t *testing.T) {
 	t.Setenv("HOME", t.TempDir())
 	t.Setenv("XDG_CONFIG_HOME", t.TempDir())
-	t.Setenv("GOG_KEYRING_BACKEND", "file")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file")
 
 	out := captureStdout(t, func() {
 		_ = captureStderr(t, func() {
@@ -253,8 +253,8 @@ func TestAuthStatus_Text_ConfigFile(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	os.Unsetenv("GOG_KEYRING_BACKEND")
-	t.Cleanup(func() { os.Setenv("GOG_KEYRING_BACKEND", "file") })
+	os.Unsetenv("AIM_GOOGLE_KEYRING_BACKEND")
+	t.Cleanup(func() { os.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file") })
 
 	cfgPath, err := config.ConfigPath()
 	if err != nil {
@@ -300,7 +300,7 @@ func TestAuthTokensImport_NoInput(t *testing.T) {
 	origKeychain := ensureKeychainAccess
 	t.Cleanup(func() { ensureKeychainAccess = origKeychain })
 
-	t.Setenv("GOG_KEYRING_BACKEND", "keychain")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "keychain")
 	ensureKeychainAccess = func() error {
 		return errors.New("keychain locked")
 	}
@@ -327,7 +327,7 @@ func TestAuthTokensImport_FileBackendSkipsKeychain(t *testing.T) {
 		ensureKeychainAccess = origKeychain
 	})
 
-	t.Setenv("GOG_KEYRING_BACKEND", "file")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file")
 	ensureKeychainAccess = func() error {
 		return errors.New("keychain locked")
 	}
@@ -495,7 +495,7 @@ func TestAuthRemove_CleansUpConfig(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "file")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file")
 
 	origOpen := openSecretsStore
 	t.Cleanup(func() { openSecretsStore = origOpen })

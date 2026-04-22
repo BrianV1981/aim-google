@@ -71,7 +71,7 @@ jobs:
       - name: Test
         # Skip tests that depend on macOS Keychain / Linux keyring or Unix path semantics.
         # These are covered by ubuntu-latest and macos-latest jobs.
-        # See https://github.com/steipete/gogcli/issues/395
+        # See https://github.com/BrianV1981/aim-google/issues/395
         run: make test
         shell: bash
         env:
@@ -81,7 +81,7 @@ jobs:
         run: make lint
         shell: bash
       - name: Build
-        run: go build ./cmd/gog
+        run: go build ./cmd/aim-google
 
   darwin-cgo-build:
     runs-on: macos-latest
@@ -94,4 +94,4 @@ jobs:
       - name: Test
         run: make test
       - name: Build (Keychain / cgo)
-        run: CGO_ENABLED=1 go build ./cmd/gog
+        run: CGO_ENABLED=1 go build ./cmd/aim-google

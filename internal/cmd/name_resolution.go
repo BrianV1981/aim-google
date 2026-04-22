@@ -10,7 +10,7 @@ import (
 	"google.golang.org/api/calendar/v3"
 	"google.golang.org/api/tasks/v1"
 
-	"github.com/steipete/gogcli/internal/selectorutil"
+	"github.com/BrianV1981/aim-google/internal/selectorutil"
 )
 
 const (

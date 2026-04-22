@@ -19,7 +19,7 @@ func TestExecute_GmailWatch_MoreCommands(t *testing.T) {
 	t.Cleanup(func() { newGmailService = origNew })
 
 	setWatchTestConfigHome(t)
-	t.Setenv("GOG_ACCOUNT", "a@b.com")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "a@b.com")
 
 	var stopCalled bool
 	var watchCalls int
@@ -120,7 +120,7 @@ func TestExecute_GmailWatch_MoreCommands(t *testing.T) {
 	}
 
 	// Ensure dir exists but file doesn't.
-	if !strings.Contains(p, filepath.Join("gogcli", "state", "gmail-watch")) {
+	if !strings.Contains(p, filepath.Join("aim-google", "state", "gmail-watch")) {
 		t.Fatalf("unexpected state path: %s", p)
 	}
 }

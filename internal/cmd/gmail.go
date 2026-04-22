@@ -1,6 +1,6 @@
 package cmd
 
-import "github.com/steipete/gogcli/internal/googleapi"
+import "github.com/BrianV1981/aim-google/internal/googleapi"
 
 var newGmailService = googleapi.NewGmail
 

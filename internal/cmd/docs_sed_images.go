@@ -9,7 +9,7 @@ import (
 
 	"google.golang.org/api/docs/v1"
 
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 func (c *DocsSedCmd) runImageReplace(ctx context.Context, u *ui.UI, account, docID string, ref *ImageRefPattern, replacement string, global bool) error {

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/steipete/gogcli/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
 )
 
 func TestCompletionCmdRun(t *testing.T) {
@@ -78,8 +78,8 @@ func TestLoadTrackingConfigForAccount(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg"))
-	t.Setenv("GOG_KEYRING_BACKEND", "file")
-	t.Setenv("GOG_KEYRING_PASSWORD", "testpass")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file")
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "testpass")
 
 	flags := &RootFlags{Account: "a@b.com"}
 	account, cfg, err := loadTrackingConfigForAccount(flags)

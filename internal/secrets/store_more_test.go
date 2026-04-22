@@ -10,7 +10,7 @@ import (
 
 	"github.com/99designs/keyring"
 
-	"github.com/steipete/gogcli/internal/config"
+	"github.com/BrianV1981/aim-google/internal/config"
 )
 
 var (
@@ -279,7 +279,7 @@ func TestSetTokenVerifyCatchesEmptyWrite(t *testing.T) {
 		t.Fatalf("expected errTokenVerifyFailed, got: %v", err)
 	}
 
-	if !strings.Contains(err.Error(), "gog auth keyring file") {
+	if !strings.Contains(err.Error(), "aim-google auth keyring file") {
 		t.Fatalf("expected workaround suggestion in error, got: %v", err)
 	}
 }

@@ -1,5 +1,5 @@
 ---
-summary: "Gmail watch + Pub/Sub push in gog"
+summary: "Gmail watch + Pub/Sub push in aim-google"
 read_when:
   - Adding Gmail watch/push support
   - Wiring Gmail to downstream webhooks
@@ -7,19 +7,19 @@ read_when:
 
 # Gmail watch
 
-Goal: Gmail push → Pub/Sub → `gog` HTTP handler → downstream webhook.
+Goal: Gmail push → Pub/Sub → `aim-google` HTTP handler → downstream webhook.
 
 ## Quick start
 
 1) Create a Pub/Sub topic (GCP project).
-2) Create a push subscription targeting your `gog gmail watch serve` endpoint.
+2) Create a push subscription targeting your `aim-google gmail watch serve` endpoint.
 3) Configure push auth:
    - Preferred: OIDC JWT from a service account.
-   - Fallback/dev: shared token header `x-gog-token` or `?token=`.
+   - Fallback/dev: shared token header `x-aim-google-token` or `?token=`.
 4) Start watch:
 
 ```
-gog gmail watch start \
+aim-google gmail watch start \
   --topic projects/<project>/topics/<topic> \
   --label INBOX
 ```
@@ -27,7 +27,7 @@ gog gmail watch start \
 5) Run handler:
 
 ```
-gog gmail watch serve \
+aim-google gmail watch serve \
   --bind 127.0.0.1 \
   --port 8788 \
   --path /gmail-pubsub \
@@ -38,12 +38,12 @@ gog gmail watch serve \
 ## CLI surface
 
 ```
-gog gmail watch start --topic <gcp-topic> [--label <idOrName>...] [--ttl <sec|duration>]
-gog gmail watch status
-gog gmail watch renew [--ttl <sec|duration>]
-gog gmail watch stop
+aim-google gmail watch start --topic <gcp-topic> [--label <idOrName>...] [--ttl <sec|duration>]
+aim-google gmail watch status
+aim-google gmail watch renew [--ttl <sec|duration>]
+aim-google gmail watch stop
 
-gog gmail watch serve \
+aim-google gmail watch serve \
   --bind 127.0.0.1 --port 8788 --path /gmail-pubsub \
   [--verify-oidc] [--oidc-email <svc@...>] [--oidc-audience <aud>] \
   [--token <shared>] \
@@ -52,7 +52,7 @@ gog gmail watch serve \
   [--include-body] [--max-bytes <n>] [--exclude-labels <id,id,...>] \
   [--history-types <type>...] [--save-hook]
 
-gog gmail history --since <historyId> [--max <n>] [--page <token>]
+aim-google gmail history --since <historyId> [--max <n>] [--page <token>]
 ```
 
 Notes:
@@ -71,7 +71,7 @@ Notes:
 Path (per account):
 
 ```
-~/.config/gogcli/state/gmail-watch/<account>.json
+~/.config/aim-google/state/gmail-watch/<account>.json
 ```
 
 Schema (v1):
@@ -134,7 +134,7 @@ Preferred:
 - Verify JWT audience + email (service account).
 
 Fallback (dev only):
-- Shared token via `x-gog-token` header or `?token=`.
+- Shared token via `x-aim-google-token` header or `?token=`.
 
 ## Error handling
 

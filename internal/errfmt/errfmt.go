@@ -10,8 +10,8 @@ import (
 	"github.com/alecthomas/kong"
 	ggoogleapi "google.golang.org/api/googleapi"
 
-	"github.com/steipete/gogcli/internal/config"
-	gogapi "github.com/steipete/gogcli/internal/googleapi"
+	"github.com/BrianV1981/aim-google/internal/config"
+	gogapi "github.com/BrianV1981/aim-google/internal/googleapi"
 )
 
 func Format(err error) string {
@@ -28,7 +28,7 @@ func Format(err error) string {
 	var authErr *gogapi.AuthRequiredError
 	if errors.As(err, &authErr) {
 		return fmt.Sprintf(
-			"No auth for %s %s.\n\nOAuth (browser flow):\n  gog auth add %s --services %s\n\nWorkspace service account (domain-wide delegation):\n  gog auth service-account set %s --key <service-account.json>",
+			"No auth for %s %s.\n\nOAuth (browser flow):\n  aim-google auth add %s --services %s\n\nWorkspace service account (domain-wide delegation):\n  aim-google auth service-account set %s --key <service-account.json>",
 			authErr.Service,
 			authErr.Email,
 			authErr.Email,
@@ -40,13 +40,13 @@ func Format(err error) string {
 	var credErr *config.CredentialsMissingError
 	if errors.As(err, &credErr) {
 		return fmt.Sprintf(
-			"OAuth client credentials missing (OAuth client ID JSON).\nDownload from: https://console.cloud.google.com/apis/credentials (Create Credentials → OAuth client ID → Desktop app → Download JSON)\nThen run: gog auth credentials <credentials.json> (expected at %s)",
+			"OAuth client credentials missing (OAuth client ID JSON).\nDownload from: https://console.cloud.google.com/apis/credentials (Create Credentials → OAuth client ID → Desktop app → Download JSON)\nThen run: aim-google auth credentials <credentials.json> (expected at %s)",
 			credErr.Path,
 		)
 	}
 
 	if errors.Is(err, keyring.ErrKeyNotFound) {
-		return "Secret not found in keyring (refresh token missing). Run: gog auth add <email>"
+		return "Secret not found in keyring (refresh token missing). Run: aim-google auth add <email>"
 	}
 
 	if errors.Is(err, os.ErrNotExist) {

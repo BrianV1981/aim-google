@@ -13,30 +13,30 @@ import (
 )
 
 func TestLiveScript(t *testing.T) {
-	if os.Getenv("GOG_LIVE") == "" {
-		t.Skip("set GOG_LIVE=1 to run live tests")
+	if os.Getenv("AIM_GOOGLE_LIVE") == "" {
+		t.Skip("set AIM_GOOGLE_LIVE=1 to run live tests")
 	}
 
 	root := findRepoRoot(t)
 	script := filepath.Join(root, "scripts", "live-test.sh")
 
 	args := []string{}
-	if os.Getenv("GOG_LIVE_FAST") != "" {
+	if os.Getenv("AIM_GOOGLE_LIVE_FAST") != "" {
 		args = append(args, "--fast")
 	}
-	if os.Getenv("GOG_LIVE_STRICT") != "" {
+	if os.Getenv("AIM_GOOGLE_LIVE_STRICT") != "" {
 		args = append(args, "--strict")
 	}
-	if v := firstNonEmpty(os.Getenv("GOG_LIVE_ACCOUNT"), os.Getenv("GOG_IT_ACCOUNT")); v != "" {
+	if v := firstNonEmpty(os.Getenv("AIM_GOOGLE_LIVE_ACCOUNT"), os.Getenv("AIM_GOOGLE_IT_ACCOUNT")); v != "" {
 		args = append(args, "--account", v)
 	}
-	if v := os.Getenv("GOG_LIVE_SKIP"); v != "" {
+	if v := os.Getenv("AIM_GOOGLE_LIVE_SKIP"); v != "" {
 		args = append(args, "--skip", v)
 	}
-	if v := os.Getenv("GOG_LIVE_AUTH"); v != "" {
+	if v := os.Getenv("AIM_GOOGLE_LIVE_AUTH"); v != "" {
 		args = append(args, "--auth", v)
 	}
-	if os.Getenv("GOG_LIVE_ALLOW_NONTEST") != "" {
+	if os.Getenv("AIM_GOOGLE_LIVE_ALLOW_NONTEST") != "" {
 		args = append(args, "--allow-nontest")
 	}
 

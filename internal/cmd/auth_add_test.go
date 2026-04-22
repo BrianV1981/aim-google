@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/googleauth"
-	"github.com/steipete/gogcli/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/secrets"
 )
 
 func TestAuthAddCmd_JSON(t *testing.T) {
@@ -84,7 +84,7 @@ func TestAuthAddCmd_JSON(t *testing.T) {
 }
 
 func TestAuthAddCmd_KeychainError(t *testing.T) {
-	t.Setenv("GOG_KEYRING_BACKEND", "keychain")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "keychain")
 
 	origAuth := authorizeGoogle
 	origOpen := openSecretsStore
@@ -877,12 +877,12 @@ func TestAuthAddCmd_RemoteStep1_PassesRedirectHostAsRedirectURI(t *testing.T) {
 		"auth", "add", "user@example.com",
 		"--services", "gmail",
 		"--remote", "--step", "1",
-		"--redirect-host", "gog.example.com",
+		"--redirect-host", "aim-google.example.com",
 	}); err != nil {
 		t.Fatalf("Execute: %v", err)
 	}
 
-	if gotOpts.RedirectURI != "https://gog.example.com/oauth2/callback" {
+	if gotOpts.RedirectURI != "https://aim-google.example.com/oauth2/callback" {
 		t.Fatalf("unexpected redirect uri: %q", gotOpts.RedirectURI)
 	}
 }
@@ -915,7 +915,7 @@ func TestAuthAddCmd_BrowserFlow_PassesListenAddrAndRedirectHost(t *testing.T) {
 		"auth", "add", "user@example.com",
 		"--services", "gmail",
 		"--listen-addr", "0.0.0.0:8080",
-		"--redirect-host", "gog.example.com",
+		"--redirect-host", "aim-google.example.com",
 	}); err != nil {
 		t.Fatalf("Execute: %v", err)
 	}
@@ -923,7 +923,7 @@ func TestAuthAddCmd_BrowserFlow_PassesListenAddrAndRedirectHost(t *testing.T) {
 	if gotOpts.ListenAddr != "0.0.0.0:8080" {
 		t.Fatalf("unexpected listen addr: %q", gotOpts.ListenAddr)
 	}
-	if gotOpts.RedirectURI != "https://gog.example.com/oauth2/callback" {
+	if gotOpts.RedirectURI != "https://aim-google.example.com/oauth2/callback" {
 		t.Fatalf("unexpected redirect uri: %q", gotOpts.RedirectURI)
 	}
 	if gotOpts.Manual {

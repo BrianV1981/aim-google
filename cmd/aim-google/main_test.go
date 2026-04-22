@@ -14,13 +14,13 @@ func TestMainHelpDoesNotExit(t *testing.T) {
 	origArgs := os.Args
 	defer func() { os.Args = origArgs }()
 
-	os.Args = []string{"gog", "--help"}
+	os.Args = []string{"aim-google", "--help"}
 	main()
 }
 
 func TestMainExitOnError(t *testing.T) {
 	if os.Getenv("GOGCLI_TEST_CHILD") == "1" {
-		os.Args = []string{"gog", "nope-nope-nope"}
+		os.Args = []string{"aim-google", "nope-nope-nope"}
 		main()
 		return
 	}

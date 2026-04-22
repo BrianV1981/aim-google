@@ -7,7 +7,7 @@
 #   Table 4: 4x3 merge test table
 #   Table 5: 3x3 cell ops table
 #
-# Usage: gog docs sed <docId> -a <acct> -f testdata/v9_table_ops.sed
+# Usage: aim-google docs sed <docId> -a <acct> -f testdata/v9_table_ops.sed
 
 # ============================================================
 # TABLE 3: Fill cells + append row + append column

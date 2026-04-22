@@ -3,8 +3,8 @@ package cmd
 import (
 	"strings"
 
-	"github.com/steipete/gogcli/internal/errfmt"
-	"github.com/steipete/gogcli/internal/googleapi"
+	"github.com/BrianV1981/aim-google/internal/errfmt"
+	"github.com/BrianV1981/aim-google/internal/googleapi"
 )
 
 var newAdminDirectoryService = googleapi.NewAdminDirectory

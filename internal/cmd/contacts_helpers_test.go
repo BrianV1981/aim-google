@@ -109,14 +109,14 @@ func TestParseCustomUserDefined_InvalidInput(t *testing.T) {
 }
 
 func TestParseCustomUserDefined_ValidInput(t *testing.T) {
-	fields, clearAll, err := parseCustomUserDefined([]string{"team=devops", " repo = gog"}, false)
+	fields, clearAll, err := parseCustomUserDefined([]string{"team=devops", " repo = aim-google"}, false)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	if clearAll {
 		t.Fatalf("did not expect clear")
 	}
-	if len(fields) != 2 || fields[0].Key != "team" || fields[0].Value != "devops" || fields[1].Key != "repo" || fields[1].Value != "gog" {
+	if len(fields) != 2 || fields[0].Key != "team" || fields[0].Value != "devops" || fields[1].Key != "repo" || fields[1].Value != "aim-google" {
 		t.Fatalf("unexpected fields: %#v", fields)
 	}
 }

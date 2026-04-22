@@ -14,7 +14,7 @@ import (
 	keepapi "google.golang.org/api/keep/v1"
 	"google.golang.org/api/option"
 
-	"github.com/steipete/gogcli/internal/config"
+	"github.com/BrianV1981/aim-google/internal/config"
 )
 
 func writeKeepSA(t *testing.T, email string) string {

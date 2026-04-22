@@ -20,7 +20,7 @@ if rg -q "^## ${version} - Unreleased" "$changelog"; then
   exit 2
 fi
 
-notes_file="$(mktemp -t gogcli-release-notes)"
+notes_file="$(mktemp -t aim-google-release-notes)"
 awk -v ver="$version" '
   $0 ~ "^## "ver" " {print "## "ver; in_section=1; next}
   in_section && /^## / {exit}
@@ -58,7 +58,7 @@ fi
 
 make ci
 
-formula_path="../homebrew-tap/Formula/gogcli.rb"
+formula_path="../homebrew-tap/Formula/aim-google.rb"
 if [[ ! -f "$formula_path" ]]; then
   echo "missing formula at $formula_path" >&2
   exit 2
@@ -70,7 +70,7 @@ if [[ "$formula_version" != "$version" ]]; then
   exit 2
 fi
 
-tmp_assets_dir="$(mktemp -d -t gogcli-release-assets)"
+tmp_assets_dir="$(mktemp -d -t aim-google-release-assets)"
 gh release download "v$version" -p checksums.txt -D "$tmp_assets_dir" >/dev/null
 checksums_file="$tmp_assets_dir/checksums.txt"
 
@@ -87,15 +87,15 @@ formula_sha_for_url() {
   ' "$formula_path"
 }
 
-darwin_amd64_expected="$(sha_for_asset "gogcli_${version}_darwin_amd64.tar.gz")"
-darwin_arm64_expected="$(sha_for_asset "gogcli_${version}_darwin_arm64.tar.gz")"
-linux_amd64_expected="$(sha_for_asset "gogcli_${version}_linux_amd64.tar.gz")"
-linux_arm64_expected="$(sha_for_asset "gogcli_${version}_linux_arm64.tar.gz")"
+darwin_amd64_expected="$(sha_for_asset "aim-google_${version}_darwin_amd64.tar.gz")"
+darwin_arm64_expected="$(sha_for_asset "aim-google_${version}_darwin_arm64.tar.gz")"
+linux_amd64_expected="$(sha_for_asset "aim-google_${version}_linux_amd64.tar.gz")"
+linux_arm64_expected="$(sha_for_asset "aim-google_${version}_linux_arm64.tar.gz")"
 
-darwin_amd64_formula="$(formula_sha_for_url "gogcli_#{version}_darwin_amd64.tar.gz")"
-darwin_arm64_formula="$(formula_sha_for_url "gogcli_#{version}_darwin_arm64.tar.gz")"
-linux_amd64_formula="$(formula_sha_for_url "gogcli_#{version}_linux_amd64.tar.gz")"
-linux_arm64_formula="$(formula_sha_for_url "gogcli_#{version}_linux_arm64.tar.gz")"
+darwin_amd64_formula="$(formula_sha_for_url "aim-google_#{version}_darwin_amd64.tar.gz")"
+darwin_arm64_formula="$(formula_sha_for_url "aim-google_#{version}_darwin_arm64.tar.gz")"
+linux_amd64_formula="$(formula_sha_for_url "aim-google_#{version}_linux_amd64.tar.gz")"
+linux_arm64_formula="$(formula_sha_for_url "aim-google_#{version}_linux_arm64.tar.gz")"
 
 if [[ "$darwin_amd64_formula" != "$darwin_amd64_expected" ]]; then
   echo "formula sha mismatch (darwin_amd64): $darwin_amd64_formula (expected $darwin_amd64_expected)" >&2
@@ -115,9 +115,9 @@ if [[ "$linux_arm64_formula" != "$linux_arm64_expected" ]]; then
 fi
 
 brew update >/dev/null
-brew upgrade gogcli || brew install steipete/tap/gogcli
-brew test steipete/tap/gogcli
-gog --version
+brew upgrade aim-google || brew install BrianV1981/tap/aim-google
+brew test BrianV1981/tap/aim-google
+aim-google --version
 
 rm -rf "$tmp_assets_dir"
 rm -f "$notes_file"

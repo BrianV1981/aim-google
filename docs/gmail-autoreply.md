@@ -1,5 +1,5 @@
 ---
-summary: "Reply once to matching Gmail messages with gog"
+summary: "Reply once to matching Gmail messages with aim-google"
 read_when:
   - Adding Gmail email automation
   - Setting up mailbox auto-replies without Gmail templates
@@ -7,7 +7,7 @@ read_when:
 
 # Gmail auto-reply
 
-`gog gmail autoreply` is a one-shot command.
+`aim-google gmail autoreply` is a one-shot command.
 
 Use it on a schedule with `launchd`, cron, or another runner when Gmail's native filter API is not enough.
 
@@ -16,7 +16,7 @@ Use it on a schedule with `launchd`, cron, or another runner when Gmail's native
 Reply once to mail sent to `security@openclaw.ai`, add a dedupe label, then archive:
 
 ```bash
-gog -a clawdbot@gmail.com gmail autoreply \
+aim-google -a clawdbot@gmail.com gmail autoreply \
   'to:security@openclaw.ai in:inbox -label:SecurityAutoReplied' \
   --body-file ./security-autoreply.txt \
   --label SecurityAutoReplied \

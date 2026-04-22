@@ -9,7 +9,7 @@ import (
 
 	"google.golang.org/api/classroom/v1"
 
-	"github.com/steipete/gogcli/internal/timeparse"
+	"github.com/BrianV1981/aim-google/internal/timeparse"
 )
 
 func wrapClassroomError(err error) error {
@@ -23,7 +23,7 @@ func wrapClassroomError(err error) error {
 	}
 	if strings.Contains(errStr, "insufficientPermissions") ||
 		strings.Contains(errStr, "insufficient authentication scopes") {
-		return fmt.Errorf("insufficient permissions for Classroom API; re-authenticate with: gog auth add <account> --services classroom\n\nOriginal error: %w", err)
+		return fmt.Errorf("insufficient permissions for Classroom API; re-authenticate with: aim-google auth add <account> --services classroom\n\nOriginal error: %w", err)
 	}
 	return err
 }

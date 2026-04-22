@@ -11,15 +11,15 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/steipete/gogcli/internal/input"
-	"github.com/steipete/gogcli/internal/tracking"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/input"
+	"github.com/BrianV1981/aim-google/internal/tracking"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 type GmailTrackSetupCmd struct {
-	WorkerName   string `name:"worker-name" help:"Cloudflare Worker name (defaults to gog-email-tracker-<account>)"`
+	WorkerName   string `name:"worker-name" help:"Cloudflare Worker name (defaults to aim-google-email-tracker-<account>)"`
 	DatabaseName string `name:"db-name" help:"D1 database name (defaults to worker name)"`
-	WorkerURL    string `name:"worker-url" aliases:"domain" help:"Tracking worker base URL (e.g. https://gog-email-tracker.<acct>.workers.dev)"`
+	WorkerURL    string `name:"worker-url" aliases:"domain" help:"Tracking worker base URL (e.g. https://aim-google-email-tracker.<acct>.workers.dev)"`
 	TrackingKey  string `name:"tracking-key" help:"Tracking key (base64; generates one if omitted)"`
 	AdminKey     string `name:"admin-key" help:"Admin key for /opens (generates one if omitted)"`
 	Deploy       bool   `name:"deploy" help:"Provision D1 + deploy the worker (requires wrangler)"`
@@ -32,7 +32,7 @@ func (c *GmailTrackSetupCmd) Run(ctx context.Context, flags *RootFlags) error {
 	// Avoid hitting the keyring for implicit account selection in dry-run mode.
 	if flags != nil && flags.DryRun &&
 		strings.TrimSpace(flags.Account) == "" &&
-		strings.TrimSpace(os.Getenv("GOG_ACCOUNT")) == "" {
+		strings.TrimSpace(os.Getenv("AIM_GOOGLE_ACCOUNT")) == "" {
 		return usage("missing --account (dry-run requires an explicit account and does not auto-select)")
 	}
 

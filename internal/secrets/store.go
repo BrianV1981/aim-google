@@ -12,7 +12,7 @@ import (
 	"github.com/99designs/keyring"
 	"golang.org/x/term"
 
-	"github.com/steipete/gogcli/internal/config"
+	"github.com/BrianV1981/aim-google/internal/config"
 )
 
 type Store interface {
@@ -42,14 +42,14 @@ func keyringItem(key string, data []byte) keyring.Item {
 	return keyring.Item{
 		Key:   key,
 		Data:  data,
-		Label: config.AppName, // to show "gogcli" in security dialog instead of "" (empty string)
+		Label: config.AppName, // to show "aim-google" in security dialog instead of "" (empty string)
 	}
 }
 
 const (
-	keyringPasswordEnv    = "GOG_KEYRING_PASSWORD" //nolint:gosec // env var name, not a credential
-	keyringBackendEnv     = "GOG_KEYRING_BACKEND"  //nolint:gosec // env var name, not a credential
-	keyringServiceNameEnv = "GOG_KEYRING_SERVICE_NAME"
+	keyringPasswordEnv    = "AIM_GOOGLE_KEYRING_PASSWORD" //nolint:gosec // env var name, not a credential
+	keyringBackendEnv     = "AIM_GOOGLE_KEYRING_BACKEND"  //nolint:gosec // env var name, not a credential
+	keyringServiceNameEnv = "AIM_GOOGLE_KEYRING_SERVICE_NAME"
 )
 
 var (
@@ -200,7 +200,7 @@ func openKeyring() (keyring.Keyring, error) {
 		// Homebrew upgrades install a new binary with a different hash, causing the
 		// new binary to lose access to existing keychain items. With false, users may
 		// see a one-time keychain prompt after upgrade (click "Always Allow"), but
-		// tokens survive across upgrades. See: https://github.com/steipete/gogcli/issues/86
+		// tokens survive across upgrades. See: https://github.com/BrianV1981/aim-google/issues/86
 		KeychainTrustApplication: false,
 		AllowedBackends:          backends,
 		FileDir:                  keyringDir,
@@ -251,7 +251,7 @@ func openKeyringWithTimeout(cfg keyring.Config, timeout time.Duration) (keyring.
 		return res.ring, nil
 	case <-time.After(timeout):
 		return nil, fmt.Errorf("%w after %v (D-Bus SecretService may be unresponsive); "+
-			"set GOG_KEYRING_BACKEND=file and GOG_KEYRING_PASSWORD=<password> to use encrypted file storage instead",
+			"set AIM_GOOGLE_KEYRING_BACKEND=file and AIM_GOOGLE_KEYRING_PASSWORD=<password> to use encrypted file storage instead",
 			errKeyringTimeout, timeout)
 	}
 }
@@ -357,11 +357,11 @@ func (s *KeyringStore) SetToken(client string, email string, tok Token) error {
 	// even though Set returns no error. Read back to catch this.
 	if item, readErr := s.ring.Get(primaryKey); readErr != nil {
 		return fmt.Errorf("%w: could not read back token after write: %w\n\n"+
-			"Workaround: switch to file-based keyring with: gog auth keyring file", errTokenVerifyFailed, readErr)
+			"Workaround: switch to file-based keyring with: aim-google auth keyring file", errTokenVerifyFailed, readErr)
 	} else if len(item.Data) == 0 {
 		return fmt.Errorf("%w\n\n"+
 			"This usually happens when the macOS Keychain is locked in a headless environment.\n"+
-			"Workaround: switch to file-based keyring with: gog auth keyring file", errTokenVerifyFailed)
+			"Workaround: switch to file-based keyring with: aim-google auth keyring file", errTokenVerifyFailed)
 	}
 
 	if normalizedClient == config.DefaultClientName {

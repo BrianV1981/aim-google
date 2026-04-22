@@ -13,7 +13,7 @@ import (
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"
 
-	"github.com/steipete/gogcli/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
 )
 
 const (
@@ -42,12 +42,12 @@ func optionsForAccount(ctx context.Context, service googleauth.Service, email st
 }
 
 // IsADCMode reports whether Application Default Credentials mode is active.
-// When GOG_AUTH_MODE=adc, the CLI authenticates using the ambient credentials
+// When AIM_GOOGLE_AUTH_MODE=adc, the CLI authenticates using the ambient credentials
 // (e.g. GKE Workload Identity, GOOGLE_APPLICATION_CREDENTIALS, or gcloud ADC)
 // instead of the keyring-based OAuth flow. The service account accesses only
 // resources explicitly shared with it — no domain-wide delegation needed.
 func IsADCMode() bool {
-	return os.Getenv("GOG_AUTH_MODE") == "adc"
+	return os.Getenv("AIM_GOOGLE_AUTH_MODE") == "adc"
 }
 
 func optionsForAccountScopes(ctx context.Context, serviceLabel string, email string, scopes []string) ([]option.ClientOption, error) {
@@ -56,7 +56,7 @@ func optionsForAccountScopes(ctx context.Context, serviceLabel string, email str
 	var ts oauth2.TokenSource
 
 	if IsADCMode() {
-		slog.Debug("using Application Default Credentials (GOG_AUTH_MODE=adc)", "serviceLabel", serviceLabel)
+		slog.Debug("using Application Default Credentials (AIM_GOOGLE_AUTH_MODE=adc)", "serviceLabel", serviceLabel)
 
 		adcTS, err := newADCTokenSource(ctx, scopes...)
 		if err != nil {

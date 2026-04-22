@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-const AppName = "gogcli"
+const AppName = "aim-google"
 
 func Dir() (string, error) {
 	if xdg := strings.TrimSpace(os.Getenv("XDG_CONFIG_HOME")); xdg != "" {

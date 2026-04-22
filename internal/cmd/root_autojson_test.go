@@ -6,7 +6,7 @@ import (
 )
 
 func TestAutoJSON_Version_DefaultsToJSONWhenEnabled(t *testing.T) {
-	t.Setenv("GOG_AUTO_JSON", "1")
+	t.Setenv("AIM_GOOGLE_AUTO_JSON", "1")
 
 	out := captureStdout(t, func() {
 		_ = captureStderr(t, func() {
@@ -25,7 +25,7 @@ func TestAutoJSON_Version_DefaultsToJSONWhenEnabled(t *testing.T) {
 }
 
 func TestAutoJSON_Version_RespectsExplicitPlainFlag(t *testing.T) {
-	t.Setenv("GOG_AUTO_JSON", "1")
+	t.Setenv("AIM_GOOGLE_AUTO_JSON", "1")
 
 	out := captureStdout(t, func() {
 		_ = captureStderr(t, func() {

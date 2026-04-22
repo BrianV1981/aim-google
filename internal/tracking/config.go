@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/steipete/gogcli/internal/config"
+	"github.com/BrianV1981/aim-google/internal/config"
 )
 
 var errMissingAccount = errors.New("missing account")
@@ -46,7 +46,7 @@ func ConfigPath() (string, error) {
 
 func legacyConfigPath() (string, error) {
 	if xdg := strings.TrimSpace(os.Getenv("XDG_CONFIG_HOME")); xdg != "" {
-		return filepath.Join(xdg, "gog", "tracking.json"), nil
+		return filepath.Join(xdg, "aim-google", "tracking.json"), nil
 	}
 
 	configDir, err := os.UserConfigDir()
@@ -54,7 +54,7 @@ func legacyConfigPath() (string, error) {
 		return "", fmt.Errorf("user config dir: %w", err)
 	}
 
-	return filepath.Join(configDir, "gog", "tracking.json"), nil
+	return filepath.Join(configDir, "aim-google", "tracking.json"), nil
 }
 
 func readConfigBytes(path string) ([]byte, bool, error) {

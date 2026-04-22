@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
-# v10_verify.sh — Verify v10 test doc content via gog docs sed --dry-run
+# v10_verify.sh — Verify v10 test doc content via aim-google docs sed --dry-run
 # Each check uses sed to search for expected text in the document.
 # Usage: ./testdata/v10_verify.sh [docId] [account]
 set -uo pipefail
 
-DOC="${1:-${GOG_TEST_DOC_ID:-}}"
-ACCT="${2:-${GOG_TEST_ACCOUNT:-}}"
+DOC="${1:-${AIM_GOOGLE_TEST_DOC_ID:-}}"
+ACCT="${2:-${AIM_GOOGLE_TEST_ACCOUNT:-}}"
 if [ -z "$DOC" ] || [ -z "$ACCT" ]; then
     echo "Usage: $0 [docId] [account]"
-    echo "Or set GOG_TEST_DOC_ID and GOG_TEST_ACCOUNT environment variables."
+    echo "Or set AIM_GOOGLE_TEST_DOC_ID and AIM_GOOGLE_TEST_ACCOUNT environment variables."
     echo "See .env.example for details."
     exit 1
 fi
-GOG="${GOG_BIN:-./gog}"
+AIM_GOOGLE="${AIM_GOOGLE_BIN:-./aim-google}"
 
 PASS=0
 FAIL=0
@@ -25,7 +25,7 @@ fetch_doc_text() {
     if [ -n "$DOC_TEXT" ]; then return; fi
     # Export doc as plain text
     local export_out export_path
-    export_out=$($GOG docs export "$DOC" -a "$ACCT" --format txt 2>/dev/null || true)
+    export_out=$($AIM_GOOGLE docs export "$DOC" -a "$ACCT" --format txt 2>/dev/null || true)
     export_path=$(echo "$export_out" | grep "^path" | cut -f2-)
     if [ -n "$export_path" ] && [ -f "$export_path" ]; then
         DOC_TEXT=$(cat "$export_path")

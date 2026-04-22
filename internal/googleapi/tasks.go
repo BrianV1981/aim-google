@@ -6,7 +6,7 @@ import (
 
 	"google.golang.org/api/tasks/v1"
 
-	"github.com/steipete/gogcli/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
 )
 
 func NewTasks(ctx context.Context, email string) (*tasks.Service, error) {

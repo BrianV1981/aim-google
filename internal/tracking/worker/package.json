@@ -1,5 +1,5 @@
 {
-  "name": "gog-email-tracker",
+  "name": "aim-google-email-tracker",
   "version": "1.0.0",
   "packageManager": "pnpm@10.33.0",
   "private": true,

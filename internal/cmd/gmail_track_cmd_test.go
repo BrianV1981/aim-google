@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/steipete/gogcli/internal/tracking"
+	"github.com/BrianV1981/aim-google/internal/tracking"
 )
 
 func setupTrackingEnv(t *testing.T) {
@@ -16,8 +16,8 @@ func setupTrackingEnv(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg"))
-	t.Setenv("GOG_KEYRING_BACKEND", "file")
-	t.Setenv("GOG_KEYRING_PASSWORD", "testpass")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file")
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "testpass")
 }
 
 func TestGmailTrackSetupAndStatus(t *testing.T) {

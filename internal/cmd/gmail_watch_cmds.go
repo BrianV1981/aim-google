@@ -14,9 +14,9 @@ import (
 	"google.golang.org/api/gmail/v1"
 	"google.golang.org/api/idtoken"
 
-	"github.com/steipete/gogcli/internal/authclient"
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/authclient"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 var (
@@ -225,7 +225,7 @@ type GmailWatchServeCmd struct {
 	VerifyOIDC    bool     `name:"verify-oidc" help:"Verify Pub/Sub OIDC tokens"`
 	OIDCEmail     string   `name:"oidc-email" help:"Expected service account email"`
 	OIDCAudience  string   `name:"oidc-audience" help:"Expected OIDC audience"`
-	SharedToken   string   `name:"token" help:"Shared token for x-gog-token or ?token="`
+	SharedToken   string   `name:"token" help:"Shared token for x-aim-google-token or ?token="`
 	HookURL       string   `name:"hook-url" help:"Webhook URL to forward messages"`
 	HookToken     string   `name:"hook-token" help:"Webhook bearer token"`
 	IncludeBody   bool     `name:"include-body" help:"Include text/plain body in hook payload"`

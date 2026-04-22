@@ -5,9 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/steipete/gogcli/internal/config"
-	"github.com/steipete/gogcli/internal/googleapi"
-	"github.com/steipete/gogcli/internal/secrets"
+	"github.com/BrianV1981/aim-google/internal/config"
+	"github.com/BrianV1981/aim-google/internal/googleapi"
+	"github.com/BrianV1981/aim-google/internal/secrets"
 )
 
 var (
@@ -24,13 +24,13 @@ const (
 
 func requireAccount(flags *RootFlags) (string, error) {
 	// In ADC mode the service account authenticates as itself — no user email
-	// or keyring lookup is needed. We still accept --account/GOG_ACCOUNT as an
+	// or keyring lookup is needed. We still accept --account/AIM_GOOGLE_ACCOUNT as an
 	// optional label (e.g. for logging), but it is not required.
 	if googleapi.IsADCMode() {
 		if v := strings.TrimSpace(flags.Account); v != "" {
 			return v, nil
 		}
-		if v := strings.TrimSpace(os.Getenv("GOG_ACCOUNT")); v != "" {
+		if v := strings.TrimSpace(os.Getenv("AIM_GOOGLE_ACCOUNT")); v != "" {
 			return v, nil
 		}
 		return "adc", nil
@@ -58,11 +58,11 @@ func requireAccount(flags *RootFlags) (string, error) {
 		return account, nil
 	}
 
-	return "", usage("missing --account (or set GOG_ACCOUNT, set default via `gog auth manage`, or store exactly one token)")
+	return "", usage("missing --account (or set AIM_GOOGLE_ACCOUNT, set default via `aim-google auth manage`, or store exactly one token)")
 }
 
 func configuredAccount(flags *RootFlags) (string, bool, error) {
-	for _, candidate := range []string{flagAccount(flags), strings.TrimSpace(os.Getenv("GOG_ACCOUNT"))} {
+	for _, candidate := range []string{flagAccount(flags), strings.TrimSpace(os.Getenv("AIM_GOOGLE_ACCOUNT"))} {
 		account, ok, err := selectConfiguredAccount(candidate)
 		if err != nil {
 			return "", false, err

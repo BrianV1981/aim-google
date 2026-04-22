@@ -15,8 +15,8 @@ import (
 	"google.golang.org/api/gmail/v1"
 	"google.golang.org/api/option"
 
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 func TestGmailWatchStartCmd_JSON(t *testing.T) {
@@ -214,7 +214,7 @@ func TestGmailWatchServerServeHTTP_TruncateBody(t *testing.T) {
 
 	data, _ := json.Marshal(env)
 	req := httptest.NewRequestWithContext(context.Background(), http.MethodPost, "http://example.com/gmail-pubsub", bytes.NewReader(data))
-	req.Header.Set("x-gog-token", "token")
+	req.Header.Set("x-aim-google-token", "token")
 	rec := httptest.NewRecorder()
 
 	hookServer.ServeHTTP(rec, req)

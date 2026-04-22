@@ -9,8 +9,8 @@ import (
 	"github.com/99designs/keyring"
 	ggoogleapi "google.golang.org/api/googleapi"
 
-	"github.com/steipete/gogcli/internal/config"
-	gogapi "github.com/steipete/gogcli/internal/googleapi"
+	"github.com/BrianV1981/aim-google/internal/config"
+	gogapi "github.com/BrianV1981/aim-google/internal/googleapi"
 )
 
 const (

@@ -10,7 +10,7 @@ import (
 
 	"google.golang.org/api/docs/v1"
 
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 // DocsSedCmd implements sed-like find-and-replace operations on Google Docs.

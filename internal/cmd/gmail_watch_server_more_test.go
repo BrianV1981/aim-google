@@ -17,8 +17,8 @@ import (
 	gapi "google.golang.org/api/googleapi"
 	"google.golang.org/api/option"
 
-	"github.com/steipete/gogcli/internal/outfmt"
-	"github.com/steipete/gogcli/internal/ui"
+	"github.com/BrianV1981/aim-google/internal/outfmt"
+	"github.com/BrianV1981/aim-google/internal/ui"
 )
 
 func TestGmailWatchServer_ServeHTTP_AllowNoHook(t *testing.T) {
@@ -341,7 +341,7 @@ func TestGmailWatchHelpers(t *testing.T) {
 		t.Fatalf("bearer: %q", got)
 	}
 	r := httptest.NewRequestWithContext(context.Background(), http.MethodPost, "/x?token=q", nil)
-	r.Header.Set("x-gog-token", "h")
+	r.Header.Set("x-aim-google-token", "h")
 	if !sharedTokenMatches(r, "h") {
 		t.Fatalf("expected shared token match")
 	}

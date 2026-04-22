@@ -5,11 +5,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	_ "github.com/steipete/gogcli/internal/tzembed" // Embed IANA timezone database for Windows test support
+	_ "github.com/BrianV1981/aim-google/internal/tzembed" // Embed IANA timezone database for Windows test support
 )
 
 func TestMain(m *testing.M) {
-	root, err := os.MkdirTemp("", "gogcli-tests-*")
+	root, err := os.MkdirTemp("", "aim-google-tests-*")
 	if err != nil {
 		panic(err)
 	}

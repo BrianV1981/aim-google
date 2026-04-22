@@ -96,7 +96,7 @@ func TestExecute_SheetsMoreCommands(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	t.Setenv("GOG_ACCOUNT", "a@b.com")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "a@b.com")
 
 	svc, err := sheets.NewService(context.Background(),
 		option.WithoutAuthentication(),

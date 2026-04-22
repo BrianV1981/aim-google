@@ -11,7 +11,7 @@ import (
 
 	"github.com/99designs/keyring"
 
-	"github.com/steipete/gogcli/internal/config"
+	"github.com/BrianV1981/aim-google/internal/config"
 )
 
 var errKeyringOpenBlocked = errors.New("keyring open blocked")
@@ -35,9 +35,9 @@ func TestKeyringServiceName(t *testing.T) {
 		t.Fatalf("expected default service name %q, got %q", config.AppName, got)
 	}
 
-	t.Setenv(keyringServiceNameEnv, " custom-gog ")
+	t.Setenv(keyringServiceNameEnv, " custom-aim-google ")
 
-	if got := keyringServiceName(); got != "custom-gog" {
+	if got := keyringServiceName(); got != "custom-aim-google" {
 		t.Fatalf("expected env service name, got %q", got)
 	}
 }
@@ -46,7 +46,7 @@ func TestResolveKeyringBackendInfo_Default(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "")
 
 	info, err := ResolveKeyringBackendInfo()
 	if err != nil {
@@ -66,7 +66,7 @@ func TestResolveKeyringBackendInfo_Config(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "")
 
 	path, err := config.ConfigPath()
 	if err != nil {
@@ -99,7 +99,7 @@ func TestResolveKeyringBackendInfo_EnvOverridesConfig(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "keychain")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "keychain")
 
 	path, err := config.ConfigPath()
 	if err != nil {
@@ -200,8 +200,8 @@ func TestOpenKeyringWithTimeout_Success(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "file")
-	t.Setenv("GOG_KEYRING_PASSWORD", "testpass")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file")
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "testpass")
 
 	keyringDir, err := config.EnsureKeyringDir()
 	if err != nil {
@@ -225,8 +225,8 @@ func TestOpenKeyringWithTimeout_Timeout(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "file")
-	t.Setenv("GOG_KEYRING_PASSWORD", "testpass")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file")
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "testpass")
 
 	keyringDir, err := config.EnsureKeyringDir()
 	if err != nil {
@@ -256,8 +256,8 @@ func TestOpenKeyringWithTimeout_Timeout(t *testing.T) {
 		t.Fatalf("expected keyring timeout error, got: %v", err)
 	}
 
-	if !strings.Contains(err.Error(), "GOG_KEYRING_BACKEND=file") {
-		t.Fatalf("expected timeout error with GOG_KEYRING_BACKEND guidance, got: %v", err)
+	if !strings.Contains(err.Error(), "AIM_GOOGLE_KEYRING_BACKEND=file") {
+		t.Fatalf("expected timeout error with AIM_GOOGLE_KEYRING_BACKEND guidance, got: %v", err)
 	}
 }
 
@@ -269,9 +269,9 @@ func TestOpenKeyring_NoDBus_ForcesFileBackend(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "")        // auto
-	t.Setenv("GOG_KEYRING_PASSWORD", "testpw") // for file backend
-	t.Setenv("DBUS_SESSION_BUS_ADDRESS", "")   // no D-Bus
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "")        // auto
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "testpw") // for file backend
+	t.Setenv("DBUS_SESSION_BUS_ADDRESS", "")          // no D-Bus
 
 	// Should succeed using file backend (not hang on D-Bus)
 	store, err := OpenDefault()
@@ -288,8 +288,8 @@ func TestOpenKeyring_ExplicitBackend_IgnoresDBusDetection(t *testing.T) {
 	home := t.TempDir()
 	t.Setenv("HOME", home)
 	t.Setenv("XDG_CONFIG_HOME", filepath.Join(home, "xdg-config"))
-	t.Setenv("GOG_KEYRING_BACKEND", "file") // explicit file
-	t.Setenv("GOG_KEYRING_PASSWORD", "testpw")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "file") // explicit file
+	t.Setenv("AIM_GOOGLE_KEYRING_PASSWORD", "testpw")
 	t.Setenv("DBUS_SESSION_BUS_ADDRESS", "") // no D-Bus (shouldn't matter)
 
 	// Should succeed with explicit file backend

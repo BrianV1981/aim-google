@@ -6,7 +6,7 @@ import (
 
 	admin "google.golang.org/api/admin/directory/v1"
 
-	"github.com/steipete/gogcli/internal/googleauth"
+	"github.com/BrianV1981/aim-google/internal/googleauth"
 )
 
 // NewAdminDirectory creates an Admin SDK Directory service for user and group management.

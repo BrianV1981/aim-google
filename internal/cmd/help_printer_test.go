@@ -11,15 +11,15 @@ import (
 )
 
 func TestHelpColorMode(t *testing.T) {
-	orig := os.Getenv("GOG_COLOR")
-	t.Cleanup(func() { _ = os.Setenv("GOG_COLOR", orig) })
+	orig := os.Getenv("AIM_GOOGLE_COLOR")
+	t.Cleanup(func() { _ = os.Setenv("AIM_GOOGLE_COLOR", orig) })
 
-	_ = os.Setenv("GOG_COLOR", "always")
+	_ = os.Setenv("AIM_GOOGLE_COLOR", "always")
 	if mode := helpColorMode([]string{"--plain"}); mode != "always" {
 		t.Fatalf("expected env override, got %q", mode)
 	}
 
-	_ = os.Setenv("GOG_COLOR", "")
+	_ = os.Setenv("AIM_GOOGLE_COLOR", "")
 	if mode := helpColorMode([]string{"--json"}); mode != "never" {
 		t.Fatalf("expected json to force never, got %q", mode)
 	}
@@ -40,7 +40,7 @@ func TestInjectBuildLine(t *testing.T) {
 	version = "1.2.3"
 	commit = "abc"
 
-	in := "Usage: gog\nFlags:\n"
+	in := "Usage: aim-google\nFlags:\n"
 	out := injectBuildLine(in)
 	if !bytes.Contains([]byte(out), []byte("Build: 1.2.3 (abc)")) {
 		t.Fatalf("build line missing: %q", out)
@@ -118,17 +118,17 @@ func TestHelpProfileAlways(t *testing.T) {
 }
 
 func TestHelpOptionsEnv(t *testing.T) {
-	orig := os.Getenv("GOG_HELP")
-	t.Cleanup(func() { _ = os.Setenv("GOG_HELP", orig) })
+	orig := os.Getenv("AIM_GOOGLE_HELP")
+	t.Cleanup(func() { _ = os.Setenv("AIM_GOOGLE_HELP", orig) })
 
-	_ = os.Setenv("GOG_HELP", "full")
+	_ = os.Setenv("AIM_GOOGLE_HELP", "full")
 	if opts := helpOptions(); opts.NoExpandSubcommands {
 		t.Fatalf("expected full help to expand subcommands")
 	}
 }
 
 func TestColorizeHelp(t *testing.T) {
-	in := "Usage: gog\nCommands:\n  foo [flags]\n"
+	in := "Usage: aim-google\nCommands:\n  foo [flags]\n"
 	out := colorizeHelp(in, termenv.TrueColor)
 	if out == in {
 		t.Fatalf("expected colorized output")

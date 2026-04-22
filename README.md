@@ -1,6 +1,6 @@
-# 🧭 gogcli — Google in your terminal.
+# 🧭 aim-google — Google in your terminal.
 
-![GitHub Repo Banner](https://ghrb.waren.build/banner?header=gogcli%F0%9F%A7%AD&subheader=Google+in+your+terminal&bg=f3f4f6&color=1f2937&support=true)
+![GitHub Repo Banner](https://ghrb.waren.build/banner?header=aim-google%F0%9F%A7%AD&subheader=Google+in+your+terminal&bg=f3f4f6&color=1f2937&support=true)
 <!-- Created with GitHub Repo Banner by Waren Gonzaga: https://ghrb.waren.build -->
 
 Fast, script-friendly CLI for Gmail, Calendar, Chat, Classroom, Drive, Docs, Slides, Sheets, Forms, Apps Script, Contacts, Tasks, People, Admin, Groups (Workspace), and Keep (Workspace-only). JSON-first output, multiple accounts, and flexible auth built in.
@@ -8,7 +8,7 @@ Fast, script-friendly CLI for Gmail, Calendar, Chat, Classroom, Drive, Docs, Sli
 ## Features
 
 - **Gmail** - search threads/messages, send mail, view attachments, manage labels/drafts/filters/delegation/vacation settings, auto-reply once to matching mail, modify single messages, export filters, inspect history, and run Pub/Sub watch webhooks
-- **Email tracking** - track opens for `gog gmail send --track` with a small Cloudflare Worker backend
+- **Email tracking** - track opens for `aim-google gmail send --track` with a small Cloudflare Worker backend
 - **Calendar** - list/create/update/delete events, manage invitations, aliases, subscriptions, team calendars, free/busy/conflicts, propose new times, focus/OOO/working-location events, recurrence, and reminders
 - **Classroom** - manage courses, roster, coursework/materials, submissions, announcements, topics, invitations, guardians, profiles
 - **Chat** - list/find/create spaces, list messages/threads, send messages and DMs, and manage emoji reactions (Workspace-only)
@@ -38,36 +38,36 @@ Fast, script-friendly CLI for Gmail, Calendar, Chat, Classroom, Drive, Docs, Sli
 ### Homebrew
 
 ```bash
-brew install gogcli
+brew install aim-google
 ```
 ### Arch User Repository
 
 ```bash
-yay -S gogcli
+yay -S aim-google
 ```
 
 ### Build from Source
 
 ```bash
-git clone https://github.com/steipete/gogcli.git
-cd gogcli
+git clone https://github.com/BrianV1981/aim-google.git
+cd aim-google
 make
 ```
 
 Run:
 
 ```bash
-./bin/gog --help
+./bin/aim-google --help
 ```
 
 Help:
 
-- `gog --help` shows top-level command groups.
-- Drill down with `gog <group> --help` (and deeper subcommands).
-- For the full expanded command list: `GOG_HELP=full gog --help`.
-- Make shortcut: `make gog -- --help` (or `make gog -- gmail --help`).
-- `make gog-help` shows CLI help (note: `make gog --help` is Make’s own help; use `--`).
-- Version: `gog --version` or `gog version`.
+- `aim-google --help` shows top-level command groups.
+- Drill down with `aim-google <group> --help` (and deeper subcommands).
+- For the full expanded command list: `AIM_GOOGLE_HELP=full aim-google --help`.
+- Make shortcut: `make aim-google -- --help` (or `make aim-google -- gmail --help`).
+- `make aim-google-help` shows CLI help (note: `make aim-google --help` is Make’s own help; use `--`).
+- Version: `aim-google --version` or `aim-google version`.
 
 ## Quick Start
 
@@ -104,20 +104,20 @@ Before adding an account, create OAuth2 credentials from Google Cloud Console:
 ### 2. Store Credentials
 
 ```bash
-gog auth credentials ~/Downloads/client_secret_....json
+aim-google auth credentials ~/Downloads/client_secret_....json
 ```
 
 For multiple OAuth clients/projects:
 
 ```bash
-gog --client work auth credentials ~/Downloads/work-client.json
-gog auth credentials list
+aim-google --client work auth credentials ~/Downloads/work-client.json
+aim-google auth credentials list
 ```
 
 ### 3. Authorize Your Account
 
 ```bash
-gog auth add you@gmail.com
+aim-google auth add you@gmail.com
 ```
 
 This will open a browser window for OAuth authorization. The refresh token is stored securely in your system keychain.
@@ -127,7 +127,7 @@ Headless / remote server flows (no browser on the server):
 Manual interactive flow (recommended):
 
 ```bash
-gog auth add you@gmail.com --services user --manual
+aim-google auth add you@gmail.com --services user --manual
 ```
 
 - The CLI prints an auth URL. Open it in a local browser.
@@ -138,10 +138,10 @@ Split remote flow (`--remote`, useful for two-step/scripted handoff):
 
 ```bash
 # Step 1: print auth URL (open it locally in a browser)
-gog auth add you@gmail.com --services user --remote --step 1
+aim-google auth add you@gmail.com --services user --remote --step 1
 
 # Step 2: paste the full redirect URL from your browser address bar
-gog auth add you@gmail.com --services user --remote --step 2 --auth-url 'http://127.0.0.1:<port>/oauth2/callback?code=...&state=...'
+aim-google auth add you@gmail.com --services user --remote --step 2 --auth-url 'http://127.0.0.1:<port>/oauth2/callback?code=...&state=...'
 ```
 
 - The `state` is cached on disk for a short time (about 10 minutes). If it expires, rerun step 1.
@@ -150,8 +150,8 @@ gog auth add you@gmail.com --services user --remote --step 2 --auth-url 'http://
 Browser OAuth behind proxies / remote tunnels:
 
 ```bash
-gog auth add you@gmail.com --listen-addr 0.0.0.0:8080 --redirect-host gog.example.com
-gog auth manage --listen-addr 0.0.0.0:8080 --redirect-host gog.example.com
+aim-google auth add you@gmail.com --listen-addr 0.0.0.0:8080 --redirect-host aim-google.example.com
+aim-google auth manage --listen-addr 0.0.0.0:8080 --redirect-host aim-google.example.com
 ```
 
 - `--listen-addr` changes where the local callback server binds.
@@ -161,61 +161,61 @@ gog auth manage --listen-addr 0.0.0.0:8080 --redirect-host gog.example.com
 Direct access token flow (headless/CI, no stored refresh token):
 
 ```bash
-gog --access-token "$(gcloud auth print-access-token)" gmail labels list
+aim-google --access-token "$(gcloud auth print-access-token)" gmail labels list
 ```
 
-- Also available as `GOG_ACCESS_TOKEN`
+- Also available as `AIM_GOOGLE_ACCESS_TOKEN`
 - Bypasses stored refresh tokens and keyring lookup
 - Token expires in about 1 hour; no auto-refresh
 
 ### 4. Test Authentication
 
 ```bash
-export GOG_ACCOUNT=you@gmail.com
-gog gmail labels list
+export AIM_GOOGLE_ACCOUNT=you@gmail.com
+aim-google gmail labels list
 ```
 
 ## Authentication & Secrets
 
 ### Accounts and tokens
 
-`gog` stores your OAuth refresh tokens in a “keyring” backend. Default is `auto` (best available backend for your OS/environment).
+`aim-google` stores your OAuth refresh tokens in a “keyring” backend. Default is `auto` (best available backend for your OS/environment).
 
-Before you can run `gog auth add`, you must store OAuth client credentials once via `gog auth credentials <credentials.json>` (download a Desktop app OAuth client JSON from the Cloud Console). For multiple clients, use `gog --client <name> auth credentials ...`; tokens are isolated per client.
+Before you can run `aim-google auth add`, you must store OAuth client credentials once via `aim-google auth credentials <credentials.json>` (download a Desktop app OAuth client JSON from the Cloud Console). For multiple clients, use `aim-google --client <name> auth credentials ...`; tokens are isolated per client.
 
 List accounts:
 
 ```bash
-gog auth list
+aim-google auth list
 ```
 
 Verify tokens are usable (helps spot revoked/expired tokens):
 
 ```bash
-gog auth list --check
+aim-google auth list --check
 ```
 
-Accounts can be authorized either via OAuth refresh tokens or Workspace service accounts (domain-wide delegation). If a service account key is configured for an account, it takes precedence over OAuth refresh tokens (see `gog auth list`).
+Accounts can be authorized either via OAuth refresh tokens or Workspace service accounts (domain-wide delegation). If a service account key is configured for an account, it takes precedence over OAuth refresh tokens (see `aim-google auth list`).
 
 Show current auth state/services for the active account:
 
 ```bash
-gog auth status
+aim-google auth status
 ```
 
 ### Multiple OAuth clients
 
-Use `--client` (or `GOG_CLIENT`) to select a named OAuth client:
+Use `--client` (or `AIM_GOOGLE_CLIENT`) to select a named OAuth client:
 
 ```bash
-gog --client work auth credentials ~/Downloads/work.json
-gog --client work auth add you@company.com
+aim-google --client work auth credentials ~/Downloads/work.json
+aim-google --client work auth add you@company.com
 ```
 
 Optional domain mapping for auto-selection:
 
 ```bash
-gog --client work auth credentials ~/Downloads/work.json --domain example.com
+aim-google --client work auth credentials ~/Downloads/work.json --domain example.com
 ```
 
 How it works:
@@ -226,7 +226,7 @@ How it works:
 
 Client selection order (when `--client` is not set):
 
-1) `--client` / `GOG_CLIENT`
+1) `--client` / `AIM_GOOGLE_CLIENT`
 2) `account_clients` config (email -> client)
 3) `client_domains` config (domain -> client)
 4) Credentials file named after the email domain (`credentials-example.com.json`)
@@ -244,7 +244,7 @@ Config example (JSON5):
 List stored credentials:
 
 ```bash
-gog auth credentials list
+aim-google auth credentials list
 ```
 
 See `docs/auth-clients.md` for the full client selection and mapping rules.
@@ -260,31 +260,31 @@ Backends:
 Set backend via command (writes `keyring_backend` into `config.json`):
 
 ```bash
-gog auth keyring file
-gog auth keyring keychain
-gog auth keyring auto
+aim-google auth keyring file
+aim-google auth keyring keychain
+aim-google auth keyring auto
 ```
 
 Show current backend + source (env/config/default) and config path:
 
 ```bash
-gog auth keyring
+aim-google auth keyring
 ```
 
-Non-interactive runs (CI/ssh): file backend requires `GOG_KEYRING_PASSWORD`.
+Non-interactive runs (CI/ssh): file backend requires `AIM_GOOGLE_KEYRING_PASSWORD`.
 
 ```bash
-export GOG_KEYRING_PASSWORD='...'
-gog --no-input auth status
+export AIM_GOOGLE_KEYRING_PASSWORD='...'
+aim-google --no-input auth status
 ```
 
 Force backend via env (overrides config):
 
 ```bash
-export GOG_KEYRING_BACKEND=file
+export AIM_GOOGLE_KEYRING_BACKEND=file
 ```
 
-Precedence: `GOG_KEYRING_BACKEND` env var overrides `config.json`.
+Precedence: `AIM_GOOGLE_KEYRING_BACKEND` env var overrides `config.json`.
 
 ## Configuration
 
@@ -294,24 +294,24 @@ Specify the account using either a flag or environment variable:
 
 ```bash
 # Via flag
-gog gmail search 'newer_than:7d' --account you@gmail.com
+aim-google gmail search 'newer_than:7d' --account you@gmail.com
 
 # Via alias
-gog auth alias set work work@company.com
-gog gmail search 'newer_than:7d' --account work
+aim-google auth alias set work work@company.com
+aim-google gmail search 'newer_than:7d' --account work
 
 # Via environment
-export GOG_ACCOUNT=you@gmail.com
-gog gmail search 'newer_than:7d'
+export AIM_GOOGLE_ACCOUNT=you@gmail.com
+aim-google gmail search 'newer_than:7d'
 
 # Auto-select (default account or the single stored token)
-gog gmail labels list --account auto
+aim-google gmail labels list --account auto
 ```
 
 List configured accounts:
 
 ```bash
-gog auth list
+aim-google auth list
 ```
 
 ### Output
@@ -324,37 +324,37 @@ gog auth list
 
 ### Service Scopes
 
-By default, `gog auth add` requests access to the **user** services (see `gog auth services` for the current list and scopes).
+By default, `aim-google auth add` requests access to the **user** services (see `aim-google auth services` for the current list and scopes).
 
 To request fewer scopes:
 
 ```bash
-gog auth add you@gmail.com --services drive,calendar
+aim-google auth add you@gmail.com --services drive,calendar
 ```
 
 To request read-only scopes (write operations will fail with 403 insufficient scopes):
 
 ```bash
-gog auth add you@gmail.com --services drive,calendar --readonly
+aim-google auth add you@gmail.com --services drive,calendar --readonly
 ```
 
 To control Drive’s scope (default: `full`):
 
 ```bash
-gog auth add you@gmail.com --services drive --drive-scope full
-gog auth add you@gmail.com --services drive --drive-scope readonly
-gog auth add you@gmail.com --services drive --drive-scope file
+aim-google auth add you@gmail.com --services drive --drive-scope full
+aim-google auth add you@gmail.com --services drive --drive-scope readonly
+aim-google auth add you@gmail.com --services drive --drive-scope file
 ```
 
 To control Gmail’s scope (default: `full`):
 
 ```bash
-gog auth add you@gmail.com --services gmail --gmail-scope full
-gog auth add you@gmail.com --services gmail --gmail-scope readonly
+aim-google auth add you@gmail.com --services gmail --gmail-scope full
+aim-google auth add you@gmail.com --services gmail --gmail-scope readonly
 # Example: readonly on both Gmail and Drive
-gog auth add you@gmail.com --services gmail,drive --gmail-scope readonly --drive-scope readonly
+aim-google auth add you@gmail.com --services gmail,drive --gmail-scope readonly --drive-scope readonly
 # Example: append one custom scope beyond the built-in Gmail scope set
-gog auth add you@gmail.com --services gmail --extra-scopes https://www.googleapis.com/auth/gmail.labels
+aim-google auth add you@gmail.com --services gmail --extra-scopes https://www.googleapis.com/auth/gmail.labels
 ```
 
 Notes:
@@ -368,9 +368,9 @@ Notes:
 If you need to add services later and Google doesn't return a refresh token, re-run with `--force-consent`:
 
 ```bash
-gog auth add you@gmail.com --services user --force-consent
+aim-google auth add you@gmail.com --services user --force-consent
 # Or add just Sheets
-gog auth add you@gmail.com --services sheets --force-consent
+aim-google auth add you@gmail.com --services sheets --force-consent
 ```
 
 `--services all` is accepted as an alias for `user` for backwards compatibility.
@@ -405,7 +405,7 @@ Service scope matrix (auto-generated; run `go run scripts/gen-auth-services-md.g
 
 A service account is a non-human Google identity that belongs to a Google Cloud project. In Google Workspace, a service account can impersonate a user via **domain-wide delegation** (admin-controlled) and access APIs like Gmail/Calendar/Drive as that user.
 
-In `gog`, service accounts are an **optional auth method** that can be configured per account email. If a service account key is configured for an account, it takes precedence over OAuth refresh tokens (see `gog auth list`).
+In `aim-google`, service accounts are an **optional auth method** that can be configured per account email. If a service account key is configured for an account, it takes precedence over OAuth refresh tokens (see `aim-google auth list`).
 
 #### 1) Create a Service Account (Google Cloud)
 
@@ -422,23 +422,23 @@ Domain-wide delegation is enforced by Workspace admin settings.
 1. Open **Admin console → Security → API controls → Domain-wide delegation**.
 2. Add a new API client:
    - Client ID: use the service account’s “Client ID” from Google Cloud.
-   - OAuth scopes: comma-separated list of scopes you want to allow (copy from `gog auth services` and/or your `gog auth add --services ...` usage).
+   - OAuth scopes: comma-separated list of scopes you want to allow (copy from `aim-google auth services` and/or your `aim-google auth add --services ...` usage).
 
 If a scope is missing from the allowlist, service-account token minting can fail (or API calls will 403 with insufficient permissions).
 
-#### 3) Configure `gog` to use the service account
+#### 3) Configure `aim-google` to use the service account
 
 Store the key for the user you want to impersonate:
 
 ```bash
-gog auth service-account set you@yourdomain.com --key ~/Downloads/service-account.json
+aim-google auth service-account set you@yourdomain.com --key ~/Downloads/service-account.json
 ```
 
-Verify `gog` is preferring the service account for that account:
+Verify `aim-google` is preferring the service account for that account:
 
 ```bash
-gog --account you@yourdomain.com auth status
-gog auth list
+aim-google --account you@yourdomain.com auth status
+aim-google auth list
 ```
 
 ### Google Keep (Workspace only)
@@ -446,36 +446,36 @@ gog auth list
 Keep requires Workspace + domain-wide delegation. You can configure it via the generic service-account command above (recommended), or the legacy Keep helper:
 
 ```bash
-gog auth service-account set you@yourdomain.com --key ~/Downloads/service-account.json
-gog keep list --account you@yourdomain.com
-gog keep get <noteId> --account you@yourdomain.com
-gog keep create --title "Todo" --item "Milk" --item "Eggs" --account you@yourdomain.com
-gog keep delete <noteId> --account you@yourdomain.com --force
+aim-google auth service-account set you@yourdomain.com --key ~/Downloads/service-account.json
+aim-google keep list --account you@yourdomain.com
+aim-google keep get <noteId> --account you@yourdomain.com
+aim-google keep create --title "Todo" --item "Milk" --item "Eggs" --account you@yourdomain.com
+aim-google keep delete <noteId> --account you@yourdomain.com --force
 ```
 
 ### Environment Variables
 
-- `GOG_ACCOUNT` - Default account email or alias to use (avoids repeating `--account`; otherwise uses keyring default or a single stored token)
-- `GOG_ACCESS_TOKEN` - Use a provided access token directly (headless/CI; no auto-refresh)
-- `GOG_CLIENT` - OAuth client name (selects stored credentials + token bucket)
-- `GOG_JSON` - Default JSON output
-- `GOG_PLAIN` - Default plain output
-- `GOG_COLOR` - Color mode: `auto` (default), `always`, or `never`
-- `GOG_TIMEZONE` - Default output timezone for Calendar/Gmail (IANA name, `UTC`, or `local`)
-- `GOG_ENABLE_COMMANDS` - Comma-separated allowlist of commands; dot paths allowed (e.g., `calendar,tasks,gmail.search`)
-- `GOG_DISABLE_COMMANDS` - Comma-separated denylist of commands; dot paths allowed (e.g., `gmail.send,gmail.drafts.send`)
-- `GOG_GMAIL_NO_SEND` - Block Gmail send operations
-- `GOG_KEYRING_SERVICE_NAME` - Override the keyring namespace/service name (default: `gogcli`)
+- `AIM_GOOGLE_ACCOUNT` - Default account email or alias to use (avoids repeating `--account`; otherwise uses keyring default or a single stored token)
+- `AIM_GOOGLE_ACCESS_TOKEN` - Use a provided access token directly (headless/CI; no auto-refresh)
+- `AIM_GOOGLE_CLIENT` - OAuth client name (selects stored credentials + token bucket)
+- `AIM_GOOGLE_JSON` - Default JSON output
+- `AIM_GOOGLE_PLAIN` - Default plain output
+- `AIM_GOOGLE_COLOR` - Color mode: `auto` (default), `always`, or `never`
+- `AIM_GOOGLE_TIMEZONE` - Default output timezone for Calendar/Gmail (IANA name, `UTC`, or `local`)
+- `AIM_GOOGLE_ENABLE_COMMANDS` - Comma-separated allowlist of commands; dot paths allowed (e.g., `calendar,tasks,gmail.search`)
+- `AIM_GOOGLE_DISABLE_COMMANDS` - Comma-separated denylist of commands; dot paths allowed (e.g., `gmail.send,gmail.drafts.send`)
+- `AIM_GOOGLE_GMAIL_NO_SEND` - Block Gmail send operations
+- `AIM_GOOGLE_KEYRING_SERVICE_NAME` - Override the keyring namespace/service name (default: `aim-google`)
 
 ### Config File (JSON5)
 
-Find the actual config path in `gog --help` or `gog auth keyring`.
+Find the actual config path in `aim-google --help` or `aim-google auth keyring`.
 
 Typical paths:
 
-- macOS: `~/Library/Application Support/gogcli/config.json`
-- Linux: `~/.config/gogcli/config.json` (or `$XDG_CONFIG_HOME/gogcli/config.json`)
-- Windows: `%AppData%\\gogcli\\config.json`
+- macOS: `~/Library/Application Support/aim-google/config.json`
+- Linux: `~/.config/aim-google/config.json` (or `$XDG_CONFIG_HOME/aim-google/config.json`)
+- Windows: `%AppData%\\aim-google\\config.json`
 
 Example (JSON5 supports comments and trailing commas):
 
@@ -509,41 +509,41 @@ Example (JSON5 supports comments and trailing commas):
 ### Config Commands
 
 ```bash
-gog config path
-gog config list
-gog config keys
-gog config get timezone
-gog config set timezone UTC
-gog config unset timezone
+aim-google config path
+aim-google config list
+aim-google config keys
+aim-google config get timezone
+aim-google config set timezone UTC
+aim-google config unset timezone
 ```
 
 ### Account Aliases
 
 ```bash
-gog auth alias set work work@company.com
-gog auth alias list
-gog auth alias unset work
+aim-google auth alias set work work@company.com
+aim-google auth alias list
+aim-google auth alias unset work
 ```
 
-Aliases work anywhere you pass `--account` or `GOG_ACCOUNT` (reserved: `auto`, `default`).
+Aliases work anywhere you pass `--account` or `AIM_GOOGLE_ACCOUNT` (reserved: `auto`, `default`).
 
 ### Command Guards (Sandboxing)
 
 ```bash
 # Only allow calendar + tasks commands for an agent
-gog --enable-commands calendar,tasks calendar events --today
+aim-google --enable-commands calendar,tasks calendar events --today
 
 # Allow one Gmail read path, but block Gmail writes
-gog --enable-commands gmail.search --disable-commands gmail.send gmail search from:me
+aim-google --enable-commands gmail.search --disable-commands gmail.send gmail search from:me
 
 # Same via env
-export GOG_ENABLE_COMMANDS=calendar,tasks
-export GOG_DISABLE_COMMANDS=gmail.send,gmail.drafts.send
-gog tasks list <tasklistId>
+export AIM_GOOGLE_ENABLE_COMMANDS=calendar,tasks
+export AIM_GOOGLE_DISABLE_COMMANDS=gmail.send,gmail.drafts.send
+aim-google tasks list <tasklistId>
 
 # Extra Gmail send guard
-gog --gmail-no-send gmail send --to someone@example.com --subject Test --body Test
-gog config no-send set agent@example.com
+aim-google --gmail-no-send gmail send --to someone@example.com --subject Test --body Test
+aim-google config no-send set agent@example.com
 ```
  
 ## Security
@@ -557,19 +557,19 @@ OAuth credentials are stored securely in your system's keychain:
 
 The CLI uses [github.com/99designs/keyring](https://github.com/99designs/keyring) for secure storage.
 
-If no OS keychain backend is available (e.g., Linux/WSL/container), keyring can fall back to an encrypted on-disk store and may prompt for a password; for non-interactive runs set `GOG_KEYRING_PASSWORD`.
+If no OS keychain backend is available (e.g., Linux/WSL/container), keyring can fall back to an encrypted on-disk store and may prompt for a password; for non-interactive runs set `AIM_GOOGLE_KEYRING_PASSWORD`.
 
 ### Keychain Prompts (macOS)
 
-macOS Keychain may prompt more than you’d expect when the “app identity” keeps changing (different binary path, `go run` temp builds, rebuilding to new `./bin/gog`, multiple copies). Keychain treats those as different apps, so it asks again.
+macOS Keychain may prompt more than you’d expect when the “app identity” keeps changing (different binary path, `go run` temp builds, rebuilding to new `./bin/aim-google`, multiple copies). Keychain treats those as different apps, so it asks again.
 
 Options:
 
-- **Default (recommended):** keep using Keychain (secure) and run a stable `gog` binary path to reduce repeat prompts.
-- **Force Keychain:** `GOG_KEYRING_BACKEND=keychain` (disables any file-backend fallback).
-- **Avoid Keychain prompts entirely:** `GOG_KEYRING_BACKEND=file` (stores encrypted entries on disk under your config dir).
-  - To avoid password prompts too (CI/non-interactive): set `GOG_KEYRING_PASSWORD=...` (tradeoff: secret in env).
-- **Use a separate keyring namespace:** `GOG_KEYRING_SERVICE_NAME=custom-gog` (default: `gogcli`).
+- **Default (recommended):** keep using Keychain (secure) and run a stable `aim-google` binary path to reduce repeat prompts.
+- **Force Keychain:** `AIM_GOOGLE_KEYRING_BACKEND=keychain` (disables any file-backend fallback).
+- **Avoid Keychain prompts entirely:** `AIM_GOOGLE_KEYRING_BACKEND=file` (stores encrypted entries on disk under your config dir).
+  - To avoid password prompts too (CI/non-interactive): set `AIM_GOOGLE_KEYRING_PASSWORD=...` (tradeoff: secret in env).
+- **Use a separate keyring namespace:** `AIM_GOOGLE_KEYRING_SERVICE_NAME=custom-aim-google` (default: `aim-google`).
 
 ### Best Practices
 
@@ -577,15 +577,15 @@ Options:
 - Store client credentials outside your project directory
 - Use different OAuth clients for development and production
 - Re-authorize with `--force-consent` if you suspect token compromise
-- Remove unused accounts with `gog auth remove <email>`
+- Remove unused accounts with `aim-google auth remove <email>`
 
 ### OAuth Client IDs in Open Source
 
 Some open source Google CLIs ship a pre-configured OAuth client ID/secret copied from other desktop apps to avoid OAuth consent verification, testing-user limits, or quota issues. This makes the consent screen/security emails show the other app’s name and can stop working at any time.
 
-`gogcli` does not do this. Supported auth:
+`aim-google` does not do this. Supported auth:
 
-- Your own OAuth Desktop client JSON via `gog auth credentials ...` + `gog auth add ...`
+- Your own OAuth Desktop client JSON via `aim-google auth credentials ...` + `aim-google auth add ...`
 - Google Workspace service accounts with domain-wide delegation (Workspace only)
 
 ## Commands
@@ -597,121 +597,121 @@ Flag aliases:
 ### Authentication
 
 ```bash
-gog auth credentials <path>           # Store OAuth client credentials
-gog auth credentials list             # List stored OAuth client credentials
-gog auth credentials remove work      # Remove one OAuth client plus its tokens/domain mappings
-gog auth credentials remove all       # Remove all stored OAuth clients plus their tokens/domain mappings
-gog --client work auth credentials <path>  # Store named OAuth client credentials
-gog auth add <email>                  # Authorize and store refresh token
-gog auth add <email> --services gmail --gmail-scope readonly  # Gmail read-only token
-gog auth add <email> --listen-addr 0.0.0.0:8080 --redirect-host gog.example.com
-gog auth service-account set <email> --key <path>  # Configure service account impersonation (Workspace only)
-gog auth service-account status <email>            # Show service account status
-gog auth service-account unset <email>             # Remove service account
-gog auth keep <email> --key <path>                 # Legacy alias (Keep)
-gog auth keyring [backend]            # Show/set keyring backend (auto|keychain|file)
-gog auth status                       # Show current auth state/services
-gog auth services                     # List available services and OAuth scopes
-gog auth list                         # List stored accounts
-gog auth list --check                 # Validate stored refresh tokens
-gog auth remove <email>               # Remove a stored refresh token
-gog auth manage                       # Open accounts manager in browser
-gog auth manage --listen-addr 0.0.0.0:8080 --redirect-host gog.example.com
-gog auth tokens                       # Manage stored refresh tokens
+aim-google auth credentials <path>           # Store OAuth client credentials
+aim-google auth credentials list             # List stored OAuth client credentials
+aim-google auth credentials remove work      # Remove one OAuth client plus its tokens/domain mappings
+aim-google auth credentials remove all       # Remove all stored OAuth clients plus their tokens/domain mappings
+aim-google --client work auth credentials <path>  # Store named OAuth client credentials
+aim-google auth add <email>                  # Authorize and store refresh token
+aim-google auth add <email> --services gmail --gmail-scope readonly  # Gmail read-only token
+aim-google auth add <email> --listen-addr 0.0.0.0:8080 --redirect-host aim-google.example.com
+aim-google auth service-account set <email> --key <path>  # Configure service account impersonation (Workspace only)
+aim-google auth service-account status <email>            # Show service account status
+aim-google auth service-account unset <email>             # Remove service account
+aim-google auth keep <email> --key <path>                 # Legacy alias (Keep)
+aim-google auth keyring [backend]            # Show/set keyring backend (auto|keychain|file)
+aim-google auth status                       # Show current auth state/services
+aim-google auth services                     # List available services and OAuth scopes
+aim-google auth list                         # List stored accounts
+aim-google auth list --check                 # Validate stored refresh tokens
+aim-google auth remove <email>               # Remove a stored refresh token
+aim-google auth manage                       # Open accounts manager in browser
+aim-google auth manage --listen-addr 0.0.0.0:8080 --redirect-host aim-google.example.com
+aim-google auth tokens                       # Manage stored refresh tokens
 ```
 
 ### Keep (Workspace only)
 
 ```bash
-gog keep list --account you@yourdomain.com
-gog keep get <noteId> --account you@yourdomain.com
-gog keep search <query> --account you@yourdomain.com
-gog keep create --title "Todo" --item "Milk" --item "Eggs" --account you@yourdomain.com
-gog keep create --title "Note" --text "Remember this" --account you@yourdomain.com
-gog keep delete <noteId> --account you@yourdomain.com --force
-gog keep attachment <attachmentName> --account you@yourdomain.com --out ./attachment.bin
+aim-google keep list --account you@yourdomain.com
+aim-google keep get <noteId> --account you@yourdomain.com
+aim-google keep search <query> --account you@yourdomain.com
+aim-google keep create --title "Todo" --item "Milk" --item "Eggs" --account you@yourdomain.com
+aim-google keep create --title "Note" --text "Remember this" --account you@yourdomain.com
+aim-google keep delete <noteId> --account you@yourdomain.com --force
+aim-google keep attachment <attachmentName> --account you@yourdomain.com --out ./attachment.bin
 ```
 
 ### Gmail
 
 ```bash
 # Search and read
-gog gmail search 'newer_than:7d' --max 10
-gog gmail thread get <threadId>
-gog gmail thread get <threadId> --download              # Download attachments to current dir
-gog gmail thread get <threadId> --download --out-dir ./attachments
-gog gmail get <messageId>
-gog gmail get <messageId> --format metadata
-gog gmail attachment <messageId> <attachmentId>
-gog gmail attachment <messageId> <attachmentId> --out ./attachment.bin
-gog gmail url <threadId>              # Print Gmail web URL
-gog gmail thread modify <threadId> --add STARRED --remove INBOX
+aim-google gmail search 'newer_than:7d' --max 10
+aim-google gmail thread get <threadId>
+aim-google gmail thread get <threadId> --download              # Download attachments to current dir
+aim-google gmail thread get <threadId> --download --out-dir ./attachments
+aim-google gmail get <messageId>
+aim-google gmail get <messageId> --format metadata
+aim-google gmail attachment <messageId> <attachmentId>
+aim-google gmail attachment <messageId> <attachmentId> --out ./attachment.bin
+aim-google gmail url <threadId>              # Print Gmail web URL
+aim-google gmail thread modify <threadId> --add STARRED --remove INBOX
 
 # Send and compose
-gog gmail send --to a@b.com --subject "Hi" --body "Plain fallback"
-gog gmail send --to a@b.com --subject "Hi" --body-file ./message.txt
-gog gmail send --to a@b.com --subject "Hi" --body-file -   # Read body from stdin
-gog gmail send --to a@b.com --subject "Hi" --body "Plain fallback" --body-html "<p>Hello</p>"
-gog gmail forward <messageId> --to a@b.com --note "FYI"
-gog gmail forward <messageId> --to a@b.com --skip-attachments
+aim-google gmail send --to a@b.com --subject "Hi" --body "Plain fallback"
+aim-google gmail send --to a@b.com --subject "Hi" --body-file ./message.txt
+aim-google gmail send --to a@b.com --subject "Hi" --body-file -   # Read body from stdin
+aim-google gmail send --to a@b.com --subject "Hi" --body "Plain fallback" --body-html "<p>Hello</p>"
+aim-google gmail forward <messageId> --to a@b.com --note "FYI"
+aim-google gmail forward <messageId> --to a@b.com --skip-attachments
 # Reply + include quoted original message (auto-generates HTML quote unless you pass --body-html)
-gog gmail send --reply-to-message-id <messageId> --quote --to a@b.com --subject "Re: Hi" --body "My reply"
+aim-google gmail send --reply-to-message-id <messageId> --quote --to a@b.com --subject "Re: Hi" --body "My reply"
 # Draft reply + quote (create requires explicit reply target)
-gog gmail drafts create --reply-to-message-id <messageId> --quote --subject "Re: Hi" --body "My reply"
+aim-google gmail drafts create --reply-to-message-id <messageId> --quote --subject "Re: Hi" --body "My reply"
 # Draft reply + quote (update accepts explicit target; else falls back to latest non-draft, non-self message in thread)
-gog gmail drafts update <draftId> --reply-to-message-id <messageId> --quote --subject "Re: Hi" --body "My reply"
-gog gmail drafts update <draftId> --quote --subject "Re: Hi" --body "My reply"
-gog gmail drafts list
-gog gmail drafts create --subject "Draft" --body "Body"
-gog gmail drafts create --to a@b.com --subject "Draft" --body "Body"
-gog gmail drafts update <draftId> --subject "Draft" --body "Body"
-gog gmail drafts update <draftId> --to a@b.com --subject "Draft" --body "Body"
-gog gmail drafts send <draftId>
-gog gmail autoreply 'from:alerts@example.com newer_than:7d' --body-file ./reply.txt --label AutoReplied --dry-run
+aim-google gmail drafts update <draftId> --reply-to-message-id <messageId> --quote --subject "Re: Hi" --body "My reply"
+aim-google gmail drafts update <draftId> --quote --subject "Re: Hi" --body "My reply"
+aim-google gmail drafts list
+aim-google gmail drafts create --subject "Draft" --body "Body"
+aim-google gmail drafts create --to a@b.com --subject "Draft" --body "Body"
+aim-google gmail drafts update <draftId> --subject "Draft" --body "Body"
+aim-google gmail drafts update <draftId> --to a@b.com --subject "Draft" --body "Body"
+aim-google gmail drafts send <draftId>
+aim-google gmail autoreply 'from:alerts@example.com newer_than:7d' --body-file ./reply.txt --label AutoReplied --dry-run
 
 # Labels
-gog gmail labels list
-gog gmail labels get INBOX --json  # Includes message counts
-gog gmail labels create "My Label"
-gog gmail labels rename "Old Label" "New Label"
-gog gmail labels style "My Label" --text-color "#ffffff" --background-color "#4285f4"
-gog gmail labels modify <threadId> --add STARRED --remove INBOX
-gog gmail labels delete <labelIdOrName>  # Deletes user label (guards system labels; confirm)
+aim-google gmail labels list
+aim-google gmail labels get INBOX --json  # Includes message counts
+aim-google gmail labels create "My Label"
+aim-google gmail labels rename "Old Label" "New Label"
+aim-google gmail labels style "My Label" --text-color "#ffffff" --background-color "#4285f4"
+aim-google gmail labels modify <threadId> --add STARRED --remove INBOX
+aim-google gmail labels delete <labelIdOrName>  # Deletes user label (guards system labels; confirm)
 
 # Batch operations
-gog gmail batch delete <messageId> <messageId>
-gog gmail batch modify <messageId> <messageId> --add STARRED --remove INBOX
+aim-google gmail batch delete <messageId> <messageId>
+aim-google gmail batch modify <messageId> <messageId> --add STARRED --remove INBOX
 
 # Filters
-gog gmail filters list
-gog gmail filters create --from 'noreply@example.com' --add-label 'Notifications'
-gog gmail filters delete <filterId>
-gog gmail filters export --out ./filters.json
+aim-google gmail filters list
+aim-google gmail filters create --from 'noreply@example.com' --add-label 'Notifications'
+aim-google gmail filters delete <filterId>
+aim-google gmail filters export --out ./filters.json
 
 # Settings
-gog gmail autoforward get
-gog gmail autoforward enable --email forward@example.com
-gog gmail autoforward disable
-gog gmail forwarding list
-gog gmail forwarding add --email forward@example.com
-gog gmail sendas list
-gog gmail sendas create --email alias@example.com
-gog gmail vacation get
-gog gmail vacation enable --subject "Out of office" --message "..."
-gog gmail vacation disable
+aim-google gmail autoforward get
+aim-google gmail autoforward enable --email forward@example.com
+aim-google gmail autoforward disable
+aim-google gmail forwarding list
+aim-google gmail forwarding add --email forward@example.com
+aim-google gmail sendas list
+aim-google gmail sendas create --email alias@example.com
+aim-google gmail vacation get
+aim-google gmail vacation enable --subject "Out of office" --message "..."
+aim-google gmail vacation disable
 
 # Delegation (G Suite/Workspace)
-gog gmail delegates list
-gog gmail delegates add --email delegate@example.com
-gog gmail delegates remove --email delegate@example.com
+aim-google gmail delegates list
+aim-google gmail delegates add --email delegate@example.com
+aim-google gmail delegates remove --email delegate@example.com
 
 # Watch (Pub/Sub push)
-gog gmail watch start --topic projects/<p>/topics/<t> --label INBOX
-gog gmail watch serve --bind 127.0.0.1 --token <shared> --hook-url http://127.0.0.1:18789/hooks/agent
-gog gmail watch serve --bind 0.0.0.0 --verify-oidc --oidc-email <svc@...> --hook-url <url>
-gog gmail watch serve --bind 127.0.0.1 --token <shared> --fetch-delay 5 --hook-url http://127.0.0.1:18789/hooks/agent
-gog gmail watch serve --bind 127.0.0.1 --token <shared> --exclude-labels SPAM,TRASH --hook-url http://127.0.0.1:18789/hooks/agent
-gog gmail history --since <historyId>
+aim-google gmail watch start --topic projects/<p>/topics/<t> --label INBOX
+aim-google gmail watch serve --bind 127.0.0.1 --token <shared> --hook-url http://127.0.0.1:18789/hooks/agent
+aim-google gmail watch serve --bind 0.0.0.0 --verify-oidc --oidc-email <svc@...> --hook-url <url>
+aim-google gmail watch serve --bind 127.0.0.1 --token <shared> --fetch-delay 5 --hook-url http://127.0.0.1:18789/hooks/agent
+aim-google gmail watch serve --bind 127.0.0.1 --token <shared> --exclude-labels SPAM,TRASH --hook-url http://127.0.0.1:18789/hooks/agent
+aim-google gmail history --since <historyId>
 ```
 
 Gmail watch (Pub/Sub push):
@@ -726,17 +726,17 @@ Track when recipients open your emails:
 
 ```bash
 # Set up local tracking config (per-account; generates keys; follow printed deploy steps)
-gog gmail track setup --worker-url https://gog-email-tracker.<acct>.workers.dev
+aim-google gmail track setup --worker-url https://aim-google-email-tracker.<acct>.workers.dev
 
 # Send with tracking
-gog gmail send --to recipient@example.com --subject "Hello" --body-html "<p>Hi!</p>" --track
+aim-google gmail send --to recipient@example.com --subject "Hello" --body-html "<p>Hi!</p>" --track
 
 # Check opens
-gog gmail track opens <tracking_id>
-gog gmail track opens --to recipient@example.com
+aim-google gmail track opens <tracking_id>
+aim-google gmail track opens --to recipient@example.com
 
 # View status
-gog gmail track status
+aim-google gmail track status
 ```
 
 Docs: `docs/email-tracking.md` (setup/deploy) + `docs/email-tracking-worker.md` (internals).
@@ -747,36 +747,36 @@ Docs: `docs/email-tracking.md` (setup/deploy) + `docs/email-tracking-worker.md` 
 
 ```bash
 # Calendars
-gog calendar calendars
-gog calendar create-calendar "Team Calendar" --timezone Europe/London
-gog calendar acl <calendarId>         # List access control rules
-gog calendar colors                   # List available event/calendar colors
-gog calendar time --timezone America/New_York
-gog calendar users                    # List workspace users (use email as calendar ID)
+aim-google calendar calendars
+aim-google calendar create-calendar "Team Calendar" --timezone Europe/London
+aim-google calendar acl <calendarId>         # List access control rules
+aim-google calendar colors                   # List available event/calendar colors
+aim-google calendar time --timezone America/New_York
+aim-google calendar users                    # List workspace users (use email as calendar ID)
 
 # Events (with timezone-aware time flags)
-gog calendar events <calendarId> --today                    # Today's events
-gog calendar events <calendarId> --tomorrow                 # Tomorrow's events
-gog calendar events <calendarId> --week                     # This week (Mon-Sun by default; use --week-start)
-gog calendar events <calendarId> --days 3                   # Next 3 days
-gog calendar events <calendarId> --from today --to friday   # Relative dates
-gog calendar events <calendarId> --from today --to friday --weekday   # Include weekday columns
-gog calendar events <calendarId> --from 2025-01-01T00:00:00Z --to 2025-01-08T00:00:00Z
-gog calendar events --all             # Fetch events from all calendars
-gog calendar events --calendars 1,3   # Fetch events from calendar indices (see gog calendar calendars)
-gog calendar events --cal Work --cal Personal  # Fetch events from calendars by name/ID
-gog calendar event <calendarId> <eventId>
-gog calendar get <calendarId> <eventId>                     # Alias for event
-gog calendar search "meeting" --today
-gog calendar search "meeting" --tomorrow
-gog calendar search "meeting" --days 365
-gog calendar search "meeting" --from 2025-01-01T00:00:00Z --to 2025-01-31T00:00:00Z --max 50
+aim-google calendar events <calendarId> --today                    # Today's events
+aim-google calendar events <calendarId> --tomorrow                 # Tomorrow's events
+aim-google calendar events <calendarId> --week                     # This week (Mon-Sun by default; use --week-start)
+aim-google calendar events <calendarId> --days 3                   # Next 3 days
+aim-google calendar events <calendarId> --from today --to friday   # Relative dates
+aim-google calendar events <calendarId> --from today --to friday --weekday   # Include weekday columns
+aim-google calendar events <calendarId> --from 2025-01-01T00:00:00Z --to 2025-01-08T00:00:00Z
+aim-google calendar events --all             # Fetch events from all calendars
+aim-google calendar events --calendars 1,3   # Fetch events from calendar indices (see aim-google calendar calendars)
+aim-google calendar events --cal Work --cal Personal  # Fetch events from calendars by name/ID
+aim-google calendar event <calendarId> <eventId>
+aim-google calendar get <calendarId> <eventId>                     # Alias for event
+aim-google calendar search "meeting" --today
+aim-google calendar search "meeting" --tomorrow
+aim-google calendar search "meeting" --days 365
+aim-google calendar search "meeting" --from 2025-01-01T00:00:00Z --to 2025-01-31T00:00:00Z --max 50
 
 # Search defaults to 30 days ago through 90 days ahead unless you set --from/--to/--today/--week/--days.
-# Tip: set GOG_CALENDAR_WEEKDAY=1 to default --weekday for calendar events output.
+# Tip: set AIM_GOOGLE_CALENDAR_WEEKDAY=1 to default --weekday for calendar events output.
 
 # JSON event output includes timezone and localized times (useful for agents).
-gog calendar get <calendarId> <eventId> --json
+aim-google calendar get <calendarId> <eventId> --json
 # {
 #   "event": {
 #     "id": "...",
@@ -793,45 +793,45 @@ gog calendar get <calendarId> <eventId> --json
 # }
 
 # Team calendars (requires Cloud Identity API for Google Workspace)
-gog calendar team <group-email> --today           # Show team's events for today
-gog calendar team <group-email> --week            # Show team's events for the week (use --week-start)
-gog calendar team <group-email> --freebusy        # Show only busy/free blocks (faster)
-gog calendar team <group-email> --query "standup" # Filter by event title
+aim-google calendar team <group-email> --today           # Show team's events for today
+aim-google calendar team <group-email> --week            # Show team's events for the week (use --week-start)
+aim-google calendar team <group-email> --freebusy        # Show only busy/free blocks (faster)
+aim-google calendar team <group-email> --query "standup" # Filter by event title
 
 # Create and update
-gog calendar create <calendarId> \
+aim-google calendar create <calendarId> \
   --summary "Meeting" \
   --from 2025-01-15T10:00:00Z \
   --to 2025-01-15T11:00:00Z
 
-gog calendar create <calendarId> \
+aim-google calendar create <calendarId> \
   --summary "Team Sync" \
   --from 2025-01-15T14:00:00Z \
   --to 2025-01-15T15:00:00Z \
   --attendees "alice@example.com,bob@example.com" \
   --location "Zoom"
 
-gog calendar update <calendarId> <eventId> \
+aim-google calendar update <calendarId> <eventId> \
   --summary "Updated Meeting" \
   --from 2025-01-15T11:00:00Z \
   --to 2025-01-15T12:00:00Z
 
 # Send notifications when creating/updating
-gog calendar create <calendarId> \
+aim-google calendar create <calendarId> \
   --summary "Team Sync" \
   --from 2025-01-15T14:00:00Z \
   --to 2025-01-15T15:00:00Z \
   --send-updates all
 
-gog calendar update <calendarId> <eventId> \
+aim-google calendar update <calendarId> <eventId> \
   --send-updates externalOnly
 
 # Default: no attendee notifications unless you pass --send-updates.
-gog calendar delete <calendarId> <eventId> \
+aim-google calendar delete <calendarId> <eventId> \
   --send-updates all --force
 
 # Recurrence + reminders
-gog calendar create <calendarId> \
+aim-google calendar create <calendarId> \
   --summary "Payment" \
   --from 2025-02-11T09:00:00-03:00 \
   --to 2025-02-11T09:15:00-03:00 \
@@ -840,18 +840,18 @@ gog calendar create <calendarId> \
   --reminder "popup:30m"
 
 # Special event types via --event-type (focus-time/out-of-office/working-location)
-gog calendar create primary \
+aim-google calendar create primary \
   --event-type focus-time \
   --from 2025-01-15T13:00:00Z \
   --to 2025-01-15T14:00:00Z
 
-gog calendar create primary \
+aim-google calendar create primary \
   --event-type out-of-office \
   --from 2025-01-20 \
   --to 2025-01-21 \
   --all-day
 
-gog calendar create primary \
+aim-google calendar create primary \
   --event-type working-location \
   --working-location-type office \
   --working-office-label "HQ" \
@@ -859,42 +859,42 @@ gog calendar create primary \
   --to 2025-01-23
 
 # Dedicated shortcuts (same event types, more opinionated defaults)
-gog calendar focus-time --from 2025-01-15T13:00:00Z --to 2025-01-15T14:00:00Z
-gog calendar out-of-office --from 2025-01-20 --to 2025-01-21 --all-day
-gog calendar working-location --type office --office-label "HQ" --from 2025-01-22 --to 2025-01-23
+aim-google calendar focus-time --from 2025-01-15T13:00:00Z --to 2025-01-15T14:00:00Z
+aim-google calendar out-of-office --from 2025-01-20 --to 2025-01-21 --all-day
+aim-google calendar working-location --type office --office-label "HQ" --from 2025-01-22 --to 2025-01-23
 # Add attendees without replacing existing attendees/RSVP state
-gog calendar update <calendarId> <eventId> \
+aim-google calendar update <calendarId> <eventId> \
   --add-attendee "alice@example.com,bob@example.com"
 
-gog calendar delete <calendarId> <eventId>
+aim-google calendar delete <calendarId> <eventId>
 
 # Invitations
-gog calendar respond <calendarId> <eventId> --status accepted
-gog calendar respond <calendarId> <eventId> --status declined
-gog calendar respond <calendarId> <eventId> --status tentative
-gog calendar respond <calendarId> <eventId> --status declined --send-updates externalOnly
+aim-google calendar respond <calendarId> <eventId> --status accepted
+aim-google calendar respond <calendarId> <eventId> --status declined
+aim-google calendar respond <calendarId> <eventId> --status tentative
+aim-google calendar respond <calendarId> <eventId> --status declined --send-updates externalOnly
 
 # Propose a new time (browser-only flow; API limitation)
-gog calendar propose-time <calendarId> <eventId>
-gog calendar propose-time <calendarId> <eventId> --open
-gog calendar propose-time <calendarId> <eventId> --decline --comment "Can we do 5pm?"
+aim-google calendar propose-time <calendarId> <eventId>
+aim-google calendar propose-time <calendarId> <eventId> --open
+aim-google calendar propose-time <calendarId> <eventId> --decline --comment "Can we do 5pm?"
 
 # Availability
-gog calendar freebusy --calendars "primary,work@example.com" \
+aim-google calendar freebusy --calendars "primary,work@example.com" \
   --from 2025-01-15T00:00:00Z \
   --to 2025-01-16T00:00:00Z
-gog calendar freebusy --cal Work --from 2025-01-15T00:00:00Z --to 2025-01-16T00:00:00Z
+aim-google calendar freebusy --cal Work --from 2025-01-15T00:00:00Z --to 2025-01-16T00:00:00Z
 
-gog calendar conflicts --calendars "primary,work@example.com" \
+aim-google calendar conflicts --calendars "primary,work@example.com" \
   --today                             # Today's conflicts
-gog calendar conflicts --all --today # Check conflicts across all calendars
+aim-google calendar conflicts --all --today # Check conflicts across all calendars
 ```
 
 ### Time
 
 ```bash
-gog time now
-gog time now --timezone UTC
+aim-google time now
+aim-google time now --timezone UTC
 ```
 
 ### Drive
@@ -903,121 +903,121 @@ When you turn a Markdown file into a Google Doc, use **`--convert`** (extension-
 
 ```bash
 # List and search
-gog drive ls --max 20
-gog drive ls --parent <folderId> --max 20
-gog drive ls --all --max 20               # List across all accessible files (cannot combine with --parent)
-gog drive ls --no-all-drives            # Only list from "My Drive"
-gog drive search "invoice" --max 20
-gog drive search "invoice" --no-all-drives
-gog drive search "mimeType = 'application/pdf'" --raw-query
-gog drive get <fileId>                # Get file metadata
-gog drive url <fileId>                # Print Drive web URL
-gog drive copy <fileId> "Copy Name"
+aim-google drive ls --max 20
+aim-google drive ls --parent <folderId> --max 20
+aim-google drive ls --all --max 20               # List across all accessible files (cannot combine with --parent)
+aim-google drive ls --no-all-drives            # Only list from "My Drive"
+aim-google drive search "invoice" --max 20
+aim-google drive search "invoice" --no-all-drives
+aim-google drive search "mimeType = 'application/pdf'" --raw-query
+aim-google drive get <fileId>                # Get file metadata
+aim-google drive url <fileId>                # Print Drive web URL
+aim-google drive copy <fileId> "Copy Name"
 
 # Upload and download
-gog drive upload ./path/to/file --parent <folderId>
-gog drive upload ./path/to/file --replace <fileId>  # Replace file content in-place (preserves shared link)
-gog drive upload ./report.docx --convert
-gog drive upload ./chart.png --convert-to sheet
-gog drive upload ./report.docx --convert --name report.docx
-gog drive upload ./notes.md --convert                              # Markdown → Google Doc (or use --convert-to doc)
-gog drive download <fileId> --out ./downloaded.bin
-gog drive download <fileId> --format pdf --out ./exported.pdf     # Google Workspace files only
-gog drive download <fileId> --format docx --out ./doc.docx
-gog drive download <fileId> --format md --out ./note.md            # Google Doc → Markdown
-gog drive download <fileId> --format pptx --out ./slides.pptx
+aim-google drive upload ./path/to/file --parent <folderId>
+aim-google drive upload ./path/to/file --replace <fileId>  # Replace file content in-place (preserves shared link)
+aim-google drive upload ./report.docx --convert
+aim-google drive upload ./chart.png --convert-to sheet
+aim-google drive upload ./report.docx --convert --name report.docx
+aim-google drive upload ./notes.md --convert                              # Markdown → Google Doc (or use --convert-to doc)
+aim-google drive download <fileId> --out ./downloaded.bin
+aim-google drive download <fileId> --format pdf --out ./exported.pdf     # Google Workspace files only
+aim-google drive download <fileId> --format docx --out ./doc.docx
+aim-google drive download <fileId> --format md --out ./note.md            # Google Doc → Markdown
+aim-google drive download <fileId> --format pptx --out ./slides.pptx
 
 # Organize
-gog drive mkdir "New Folder"
-gog drive mkdir "New Folder" --parent <parentFolderId>
-gog drive rename <fileId> "New Name"
-gog drive move <fileId> --parent <destinationFolderId>
-gog drive delete <fileId>             # Move to trash
-gog drive delete <fileId> --permanent # Permanently delete
+aim-google drive mkdir "New Folder"
+aim-google drive mkdir "New Folder" --parent <parentFolderId>
+aim-google drive rename <fileId> "New Name"
+aim-google drive move <fileId> --parent <destinationFolderId>
+aim-google drive delete <fileId>             # Move to trash
+aim-google drive delete <fileId> --permanent # Permanently delete
 
 # Permissions
-gog drive permissions <fileId>
-gog drive share <fileId> --to user --email user@example.com --role reader
-gog drive share <fileId> --to user --email user@example.com --role writer
-gog drive share <fileId> --to user --email reviewer@example.com --role commenter
-gog drive share <fileId> --to domain --domain example.com --role reader
-gog drive unshare <fileId> --permission-id <permissionId>
+aim-google drive permissions <fileId>
+aim-google drive share <fileId> --to user --email user@example.com --role reader
+aim-google drive share <fileId> --to user --email user@example.com --role writer
+aim-google drive share <fileId> --to user --email reviewer@example.com --role commenter
+aim-google drive share <fileId> --to domain --domain example.com --role reader
+aim-google drive unshare <fileId> --permission-id <permissionId>
 
 # Shared drives (Team Drives)
-gog drive drives --max 100
+aim-google drive drives --max 100
 ```
 
 ### Docs / Slides / Sheets
 
 ```bash
 # Docs
-gog docs info <docId>
-gog docs cat <docId> --max-bytes 10000
-gog docs create "My Doc"
-gog docs create "My Doc" --file ./doc.md            # Import markdown
-gog docs create "My Doc" --pageless
-gog docs copy <docId> "My Doc Copy"
-gog docs export <docId> --format pdf --out ./doc.pdf
-gog docs list-tabs <docId>
-gog docs cat <docId> --tab "Notes"
-gog docs cat <docId> --all-tabs
-gog docs update <docId> --text "Append this later"
-gog docs update <docId> --text "Only in this tab" --tab-id t.notes
-gog docs update <docId> --file ./insert.txt --index 25 --pageless
-gog docs write <docId> --text "Fresh content"
-gog docs write <docId> --text "Rewrite one tab" --tab-id t.notes
-gog docs write <docId> --file ./body.txt --append --pageless
-gog docs write <docId> --file ./body.md --replace --markdown
-gog docs find-replace <docId> "old" "new"
-gog docs find-replace <docId> "old" "new" --tab-id t.notes
+aim-google docs info <docId>
+aim-google docs cat <docId> --max-bytes 10000
+aim-google docs create "My Doc"
+aim-google docs create "My Doc" --file ./doc.md            # Import markdown
+aim-google docs create "My Doc" --pageless
+aim-google docs copy <docId> "My Doc Copy"
+aim-google docs export <docId> --format pdf --out ./doc.pdf
+aim-google docs list-tabs <docId>
+aim-google docs cat <docId> --tab "Notes"
+aim-google docs cat <docId> --all-tabs
+aim-google docs update <docId> --text "Append this later"
+aim-google docs update <docId> --text "Only in this tab" --tab-id t.notes
+aim-google docs update <docId> --file ./insert.txt --index 25 --pageless
+aim-google docs write <docId> --text "Fresh content"
+aim-google docs write <docId> --text "Rewrite one tab" --tab-id t.notes
+aim-google docs write <docId> --file ./body.txt --append --pageless
+aim-google docs write <docId> --file ./body.md --replace --markdown
+aim-google docs find-replace <docId> "old" "new"
+aim-google docs find-replace <docId> "old" "new" --tab-id t.notes
 
 # Slides
-gog slides info <presentationId>
-gog slides create "My Deck"
-gog slides create-from-markdown "My Deck" --content-file ./slides.md
-gog slides create-from-template <templateId> "My Deck" --replace "name=John" --replace "date=2026-02-15"
-gog slides copy <presentationId> "My Deck Copy"
-gog slides export <presentationId> --format pdf --out ./deck.pdf
-gog slides list-slides <presentationId>
-gog slides add-slide <presentationId> ./slide.png --notes "Speaker notes"
-gog slides update-notes <presentationId> <slideId> --notes "Updated notes"
-gog slides replace-slide <presentationId> <slideId> ./new-slide.png --notes "New notes"
+aim-google slides info <presentationId>
+aim-google slides create "My Deck"
+aim-google slides create-from-markdown "My Deck" --content-file ./slides.md
+aim-google slides create-from-template <templateId> "My Deck" --replace "name=John" --replace "date=2026-02-15"
+aim-google slides copy <presentationId> "My Deck Copy"
+aim-google slides export <presentationId> --format pdf --out ./deck.pdf
+aim-google slides list-slides <presentationId>
+aim-google slides add-slide <presentationId> ./slide.png --notes "Speaker notes"
+aim-google slides update-notes <presentationId> <slideId> --notes "Updated notes"
+aim-google slides replace-slide <presentationId> <slideId> ./new-slide.png --notes "New notes"
 
 # Sheets
-gog sheets copy <spreadsheetId> "My Sheet Copy"
-gog sheets export <spreadsheetId> --format pdf --out ./sheet.pdf
-gog sheets format <spreadsheetId> 'Sheet1!A1:B2' --format-json '{"textFormat":{"bold":true}}' --format-fields 'userEnteredFormat.textFormat.bold'
-gog sheets format <spreadsheetId> 'Sheet1!A1:B2' --format-json '{"borders":{"top":{"style":"SOLID"}}}' --format-fields 'userEnteredFormat.borders.top.style'
-gog sheets merge <spreadsheetId> 'Sheet1!A1:B2'
-gog sheets number-format <spreadsheetId> 'Sheet1!C:C' --type CURRENCY --pattern '$#,##0.00'
-gog sheets freeze <spreadsheetId> --rows 1 --cols 1
-gog sheets resize-columns <spreadsheetId> 'Sheet1!A:C' --auto
-gog sheets read-format <spreadsheetId> 'Sheet1!A1:B2'
-gog sheets insert <spreadsheetId> "Sheet1" rows 2 --count 3
-gog sheets notes <spreadsheetId> 'Sheet1!A1:B10'
-gog sheets find-replace <spreadsheetId> "old" "new"
-gog sheets find-replace <spreadsheetId> "old" "new" --sheet Sheet1 --match-entire
-gog sheets links <spreadsheetId> 'Sheet1!A1:B10'
-gog sheets add-tab <spreadsheetId> <tabName> --index 0
-gog sheets rename-tab <spreadsheetId> <oldName> <newName>
-gog sheets delete-tab <spreadsheetId> <tabName> --force
+aim-google sheets copy <spreadsheetId> "My Sheet Copy"
+aim-google sheets export <spreadsheetId> --format pdf --out ./sheet.pdf
+aim-google sheets format <spreadsheetId> 'Sheet1!A1:B2' --format-json '{"textFormat":{"bold":true}}' --format-fields 'userEnteredFormat.textFormat.bold'
+aim-google sheets format <spreadsheetId> 'Sheet1!A1:B2' --format-json '{"borders":{"top":{"style":"SOLID"}}}' --format-fields 'userEnteredFormat.borders.top.style'
+aim-google sheets merge <spreadsheetId> 'Sheet1!A1:B2'
+aim-google sheets number-format <spreadsheetId> 'Sheet1!C:C' --type CURRENCY --pattern '$#,##0.00'
+aim-google sheets freeze <spreadsheetId> --rows 1 --cols 1
+aim-google sheets resize-columns <spreadsheetId> 'Sheet1!A:C' --auto
+aim-google sheets read-format <spreadsheetId> 'Sheet1!A1:B2'
+aim-google sheets insert <spreadsheetId> "Sheet1" rows 2 --count 3
+aim-google sheets notes <spreadsheetId> 'Sheet1!A1:B10'
+aim-google sheets find-replace <spreadsheetId> "old" "new"
+aim-google sheets find-replace <spreadsheetId> "old" "new" --sheet Sheet1 --match-entire
+aim-google sheets links <spreadsheetId> 'Sheet1!A1:B10'
+aim-google sheets add-tab <spreadsheetId> <tabName> --index 0
+aim-google sheets rename-tab <spreadsheetId> <oldName> <newName>
+aim-google sheets delete-tab <spreadsheetId> <tabName> --force
 ```
 
 ### Contacts
 
 ```bash
 # Personal contacts
-gog contacts list --max 50
-gog contacts search "Ada" --max 50
-gog contacts get people/<resourceName>
-gog contacts get user@example.com     # Get by email
+aim-google contacts list --max 50
+aim-google contacts search "Ada" --max 50
+aim-google contacts get people/<resourceName>
+aim-google contacts get user@example.com     # Get by email
 
 # Other contacts (people you've interacted with)
-gog contacts other list --max 50
-gog contacts other search "John" --max 50
+aim-google contacts other list --max 50
+aim-google contacts other search "John" --max 50
 
 # Create and update
-gog contacts create \
+aim-google contacts create \
   --given "John" \
   --family "Doe" \
   --email "john@example.com" \
@@ -1026,7 +1026,7 @@ gog contacts create \
   --gender "male" \
   --relation "spouse=Jane Doe"
 
-gog contacts update people/<resourceName> \
+aim-google contacts update people/<resourceName> \
   --given "Jane" \
   --email "jane@example.com" \
   --address "1 Infinite Loop, Cupertino" \
@@ -1036,36 +1036,36 @@ gog contacts update people/<resourceName> \
   --relation "friend=Bob"
 
 # Update via JSON (see docs/contacts-json-update.md)
-gog contacts get people/<resourceName> --json | \
+aim-google contacts get people/<resourceName> --json | \
   jq '(.contact.urls //= []) | (.contact.urls += [{"value":"obsidian://open?vault=notes&file=People/John%20Doe","type":"profile"}])' | \
-  gog contacts update people/<resourceName> --from-file -
+  aim-google contacts update people/<resourceName> --from-file -
 
-gog contacts delete people/<resourceName>
+aim-google contacts delete people/<resourceName>
 
 # Workspace directory (requires Google Workspace)
-gog contacts directory list --max 50
-gog contacts directory search "Jane" --max 50
+aim-google contacts directory list --max 50
+aim-google contacts directory search "Jane" --max 50
 ```
 
 ### Tasks
 
 ```bash
 # Task lists
-gog tasks lists --max 50
-gog tasks lists create <title>
+aim-google tasks lists --max 50
+aim-google tasks lists create <title>
 
 # Tasks in a list
-gog tasks list <tasklistId> --max 50
-gog tasks get <tasklistId> <taskId>
-gog tasks add <tasklistId> --title "Task title"
-gog tasks add <tasklistId> --title "Weekly sync" --due 2025-02-01 --repeat weekly --repeat-count 4
-gog tasks add <tasklistId> --title "Daily standup" --due 2025-02-01 --repeat daily --repeat-until 2025-02-05
-gog tasks add <tasklistId> --title "Bi-weekly review" --due 2025-02-01 --recur-rrule "FREQ=WEEKLY;INTERVAL=2" --repeat-count 3
-gog tasks update <tasklistId> <taskId> --title "New title"
-gog tasks done <tasklistId> <taskId>
-gog tasks undo <tasklistId> <taskId>
-gog tasks delete <tasklistId> <taskId>
-gog tasks clear <tasklistId>
+aim-google tasks list <tasklistId> --max 50
+aim-google tasks get <tasklistId> <taskId>
+aim-google tasks add <tasklistId> --title "Task title"
+aim-google tasks add <tasklistId> --title "Weekly sync" --due 2025-02-01 --repeat weekly --repeat-count 4
+aim-google tasks add <tasklistId> --title "Daily standup" --due 2025-02-01 --repeat daily --repeat-until 2025-02-05
+aim-google tasks add <tasklistId> --title "Bi-weekly review" --due 2025-02-01 --recur-rrule "FREQ=WEEKLY;INTERVAL=2" --repeat-count 3
+aim-google tasks update <tasklistId> <taskId> --title "New title"
+aim-google tasks done <tasklistId> <taskId>
+aim-google tasks undo <tasklistId> <taskId>
+aim-google tasks delete <tasklistId> <taskId>
+aim-google tasks clear <tasklistId>
 
 # Note: Google Tasks treats due dates as date-only; time components may be ignored.
 # Note: Public Google Tasks API does not expose true recurring-task metadata; `--repeat*`/`--recur*` materialize concrete tasks.
@@ -1076,150 +1076,150 @@ gog tasks clear <tasklistId>
 
 ```bash
 # Read
-gog sheets metadata <spreadsheetId>
-gog sheets get <spreadsheetId> 'Sheet1!A1:B10'
-gog sheets get <spreadsheetId> MyNamedRange
+aim-google sheets metadata <spreadsheetId>
+aim-google sheets get <spreadsheetId> 'Sheet1!A1:B10'
+aim-google sheets get <spreadsheetId> MyNamedRange
 
 # Export (via Drive)
-gog sheets export <spreadsheetId> --format pdf --out ./sheet.pdf
-gog sheets export <spreadsheetId> --format xlsx --out ./sheet.xlsx
+aim-google sheets export <spreadsheetId> --format pdf --out ./sheet.pdf
+aim-google sheets export <spreadsheetId> --format xlsx --out ./sheet.xlsx
 
 # Write
-gog sheets update <spreadsheetId> 'A1' 'val1|val2,val3|val4'
-gog sheets update <spreadsheetId> 'A1' --values-json '[["a","b"],["c","d"]]'
-gog sheets update <spreadsheetId> 'Sheet1!A1:C1' 'new|row|data' --copy-validation-from 'Sheet1!A2:C2'
-gog sheets update <spreadsheetId> MyNamedRange 'new|row|data'
-gog sheets update <spreadsheetId> 'Sheet1!A1:C1' 'new|row|data' --copy-validation-from MyValidationNamedRange
-gog sheets append <spreadsheetId> 'Sheet1!A:C' 'new|row|data'
-gog sheets append <spreadsheetId> 'Sheet1!A:C' 'new|row|data' --copy-validation-from 'Sheet1!A2:C2'
-gog sheets find-replace <spreadsheetId> "old" "new"
-gog sheets find-replace <spreadsheetId> "old" "new" --sheet Sheet1 --regex
-gog sheets update-note <spreadsheetId> 'Sheet1!A1' --note ''
-gog sheets append <spreadsheetId> MyNamedRange 'new|row|data'
-gog sheets clear <spreadsheetId> 'Sheet1!A1:B10'
-gog sheets clear <spreadsheetId> MyNamedRange
+aim-google sheets update <spreadsheetId> 'A1' 'val1|val2,val3|val4'
+aim-google sheets update <spreadsheetId> 'A1' --values-json '[["a","b"],["c","d"]]'
+aim-google sheets update <spreadsheetId> 'Sheet1!A1:C1' 'new|row|data' --copy-validation-from 'Sheet1!A2:C2'
+aim-google sheets update <spreadsheetId> MyNamedRange 'new|row|data'
+aim-google sheets update <spreadsheetId> 'Sheet1!A1:C1' 'new|row|data' --copy-validation-from MyValidationNamedRange
+aim-google sheets append <spreadsheetId> 'Sheet1!A:C' 'new|row|data'
+aim-google sheets append <spreadsheetId> 'Sheet1!A:C' 'new|row|data' --copy-validation-from 'Sheet1!A2:C2'
+aim-google sheets find-replace <spreadsheetId> "old" "new"
+aim-google sheets find-replace <spreadsheetId> "old" "new" --sheet Sheet1 --regex
+aim-google sheets update-note <spreadsheetId> 'Sheet1!A1' --note ''
+aim-google sheets append <spreadsheetId> MyNamedRange 'new|row|data'
+aim-google sheets clear <spreadsheetId> 'Sheet1!A1:B10'
+aim-google sheets clear <spreadsheetId> MyNamedRange
 
 # Format
-gog sheets format <spreadsheetId> 'Sheet1!A1:B2' --format-json '{"textFormat":{"bold":true}}' --format-fields 'userEnteredFormat.textFormat.bold'
-gog sheets format <spreadsheetId> MyNamedRange --format-json '{"textFormat":{"bold":true}}' --format-fields 'userEnteredFormat.textFormat.bold'
-gog sheets format <spreadsheetId> 'Sheet1!A1:B2' --format-json '{"borders":{"top":{"style":"SOLID"}}}' --format-fields 'userEnteredFormat.borders.top.style'
-gog sheets merge <spreadsheetId> 'Sheet1!A1:B2'
-gog sheets unmerge <spreadsheetId> 'Sheet1!A1:B2'
-gog sheets number-format <spreadsheetId> 'Sheet1!C:C' --type CURRENCY --pattern '$#,##0.00'
-gog sheets freeze <spreadsheetId> --rows 1 --cols 1
-gog sheets resize-columns <spreadsheetId> 'Sheet1!A:C' --auto
-gog sheets resize-rows <spreadsheetId> 'Sheet1!1:10' --height 36
-gog sheets read-format <spreadsheetId> 'Sheet1!A1:B2'
-gog sheets read-format <spreadsheetId> 'Sheet1!A1:B2' --effective
+aim-google sheets format <spreadsheetId> 'Sheet1!A1:B2' --format-json '{"textFormat":{"bold":true}}' --format-fields 'userEnteredFormat.textFormat.bold'
+aim-google sheets format <spreadsheetId> MyNamedRange --format-json '{"textFormat":{"bold":true}}' --format-fields 'userEnteredFormat.textFormat.bold'
+aim-google sheets format <spreadsheetId> 'Sheet1!A1:B2' --format-json '{"borders":{"top":{"style":"SOLID"}}}' --format-fields 'userEnteredFormat.borders.top.style'
+aim-google sheets merge <spreadsheetId> 'Sheet1!A1:B2'
+aim-google sheets unmerge <spreadsheetId> 'Sheet1!A1:B2'
+aim-google sheets number-format <spreadsheetId> 'Sheet1!C:C' --type CURRENCY --pattern '$#,##0.00'
+aim-google sheets freeze <spreadsheetId> --rows 1 --cols 1
+aim-google sheets resize-columns <spreadsheetId> 'Sheet1!A:C' --auto
+aim-google sheets resize-rows <spreadsheetId> 'Sheet1!1:10' --height 36
+aim-google sheets read-format <spreadsheetId> 'Sheet1!A1:B2'
+aim-google sheets read-format <spreadsheetId> 'Sheet1!A1:B2' --effective
 
 # Named ranges
-gog sheets named-ranges <spreadsheetId>
-gog sheets named-ranges get <spreadsheetId> MyNamedRange
-gog sheets named-ranges add <spreadsheetId> MyNamedRange 'Sheet1!A1:B2'
-gog sheets named-ranges add <spreadsheetId> MyCols 'Sheet1!A:C'
-gog sheets named-ranges update <spreadsheetId> MyNamedRange --name MyNamedRange2
-gog sheets named-ranges delete <spreadsheetId> MyNamedRange2
+aim-google sheets named-ranges <spreadsheetId>
+aim-google sheets named-ranges get <spreadsheetId> MyNamedRange
+aim-google sheets named-ranges add <spreadsheetId> MyNamedRange 'Sheet1!A1:B2'
+aim-google sheets named-ranges add <spreadsheetId> MyCols 'Sheet1!A:C'
+aim-google sheets named-ranges update <spreadsheetId> MyNamedRange --name MyNamedRange2
+aim-google sheets named-ranges delete <spreadsheetId> MyNamedRange2
 
 # Charts
-gog sheets chart list <spreadsheetId>
-gog sheets chart get <spreadsheetId> <chartId> --json > chart.json
-gog sheets chart create <spreadsheetId> --spec-json @chart.json
-gog sheets chart create <spreadsheetId> --spec-json '{"title":"Revenue","basicChart":{"chartType":"COLUMN"}}' --sheet Sheet1 --anchor E10
-gog sheets chart update <spreadsheetId> <chartId> --spec-json '{"title":"New Title","basicChart":{"chartType":"PIE"}}'
-gog sheets chart delete <spreadsheetId> <chartId>
+aim-google sheets chart list <spreadsheetId>
+aim-google sheets chart get <spreadsheetId> <chartId> --json > chart.json
+aim-google sheets chart create <spreadsheetId> --spec-json @chart.json
+aim-google sheets chart create <spreadsheetId> --spec-json '{"title":"Revenue","basicChart":{"chartType":"COLUMN"}}' --sheet Sheet1 --anchor E10
+aim-google sheets chart update <spreadsheetId> <chartId> --spec-json '{"title":"New Title","basicChart":{"chartType":"PIE"}}'
+aim-google sheets chart delete <spreadsheetId> <chartId>
 
 # Insert rows/cols
-gog sheets insert <spreadsheetId> "Sheet1" rows 2 --count 3
-gog sheets insert <spreadsheetId> "Sheet1" cols 3 --after
+aim-google sheets insert <spreadsheetId> "Sheet1" rows 2 --count 3
+aim-google sheets insert <spreadsheetId> "Sheet1" cols 3 --after
 
 # Notes
-gog sheets notes <spreadsheetId> 'Sheet1!A1:B10'
-gog sheets links <spreadsheetId> 'Sheet1!A1:B10'   # Includes rich-text links
+aim-google sheets notes <spreadsheetId> 'Sheet1!A1:B10'
+aim-google sheets links <spreadsheetId> 'Sheet1!A1:B10'   # Includes rich-text links
 
 # Create
-gog sheets create "My New Spreadsheet" --sheets "Sheet1,Sheet2"
+aim-google sheets create "My New Spreadsheet" --sheets "Sheet1,Sheet2"
 
 # Tab management
-gog sheets add-tab <spreadsheetId> <tabName> --index 0
-gog sheets rename-tab <spreadsheetId> <oldName> <newName>
-gog sheets delete-tab <spreadsheetId> <tabName>          # use --force to skip confirmation
+aim-google sheets add-tab <spreadsheetId> <tabName> --index 0
+aim-google sheets rename-tab <spreadsheetId> <oldName> <newName>
+aim-google sheets delete-tab <spreadsheetId> <tabName>          # use --force to skip confirmation
 ```
 
 ### Forms
 
 ```bash
 # Forms
-gog forms get <formId>
-gog forms create --title "Weekly Check-in" --description "Friday async update"
-gog forms update <formId> --title "Weekly Sync" --quiz true
-gog forms add-question <formId> --title "What shipped?" --type paragraph --required
-gog forms move-question <formId> 3 1
-gog forms delete-question <formId> 2 --force
+aim-google forms get <formId>
+aim-google forms create --title "Weekly Check-in" --description "Friday async update"
+aim-google forms update <formId> --title "Weekly Sync" --quiz true
+aim-google forms add-question <formId> --title "What shipped?" --type paragraph --required
+aim-google forms move-question <formId> 3 1
+aim-google forms delete-question <formId> 2 --force
 
 # Responses
-gog forms responses list <formId> --max 20
-gog forms responses get <formId> <responseId>
+aim-google forms responses list <formId> --max 20
+aim-google forms responses get <formId> <responseId>
 
 # Watches
-gog forms watch create <formId> --topic projects/<project>/topics/<topic>
-gog forms watch list <formId>
-gog forms watch renew <formId> <watchId>
-gog forms watch delete <formId> <watchId>
+aim-google forms watch create <formId> --topic projects/<project>/topics/<topic>
+aim-google forms watch list <formId>
+aim-google forms watch renew <formId> <watchId>
+aim-google forms watch delete <formId> <watchId>
 ```
 
 ### Apps Script
 
 ```bash
 # Projects
-gog appscript get <scriptId>
-gog appscript content <scriptId>
-gog appscript create --title "Automation Helpers"
-gog appscript create --title "Bound Script" --parent-id <driveFileId>
+aim-google appscript get <scriptId>
+aim-google appscript content <scriptId>
+aim-google appscript create --title "Automation Helpers"
+aim-google appscript create --title "Bound Script" --parent-id <driveFileId>
 
 # Execute functions
-gog appscript run <scriptId> myFunction --params '["arg1", 123, true]'
-gog appscript run <scriptId> myFunction --dev-mode
+aim-google appscript run <scriptId> myFunction --params '["arg1", 123, true]'
+aim-google appscript run <scriptId> myFunction --dev-mode
 ```
 
 ### People
 
 ```bash
 # Profile
-gog people me
-gog people get people/<userId>
+aim-google people me
+aim-google people get people/<userId>
 
 # Search the Workspace directory
-gog people search "Ada Lovelace" --max 5
+aim-google people search "Ada Lovelace" --max 5
 
 # Relations (defaults to people/me)
-gog people relations
-gog people relations people/<userId> --type manager
+aim-google people relations
+aim-google people relations people/<userId> --type manager
 ```
 
 ### Chat
 
 ```bash
 # Spaces
-gog chat spaces list
-gog chat spaces find "Engineering"
-gog chat spaces find "Engineering" --exact
-gog chat spaces create "Engineering" --member alice@company.com --member bob@company.com
+aim-google chat spaces list
+aim-google chat spaces find "Engineering"
+aim-google chat spaces find "Engineering" --exact
+aim-google chat spaces create "Engineering" --member alice@company.com --member bob@company.com
 
 # Messages
-gog chat messages list spaces/<spaceId> --max 5
-gog chat messages list spaces/<spaceId> --thread <threadId>
-gog chat messages list spaces/<spaceId> --unread
-gog chat messages send spaces/<spaceId> --text "Build complete!" --thread spaces/<spaceId>/threads/<threadId>
-gog chat messages reactions list spaces/<spaceId>/messages/<messageId>
-gog chat messages react spaces/<spaceId>/messages/<messageId> "👍"  # shorthand for reactions create
-gog chat messages reactions delete spaces/<spaceId>/messages/<messageId>/reactions/<reactionId>
+aim-google chat messages list spaces/<spaceId> --max 5
+aim-google chat messages list spaces/<spaceId> --thread <threadId>
+aim-google chat messages list spaces/<spaceId> --unread
+aim-google chat messages send spaces/<spaceId> --text "Build complete!" --thread spaces/<spaceId>/threads/<threadId>
+aim-google chat messages reactions list spaces/<spaceId>/messages/<messageId>
+aim-google chat messages react spaces/<spaceId>/messages/<messageId> "👍"  # shorthand for reactions create
+aim-google chat messages reactions delete spaces/<spaceId>/messages/<messageId>/reactions/<reactionId>
 
 # Threads
-gog chat threads list spaces/<spaceId>
+aim-google chat threads list spaces/<spaceId>
 
 # Direct messages
-gog chat dm space user@company.com
-gog chat dm send user@company.com --text "ping"
+aim-google chat dm space user@company.com
+aim-google chat dm send user@company.com --text "ping"
 ```
 
 Note: Chat commands require a Google Workspace account (consumer @gmail.com accounts are not supported).
@@ -1228,99 +1228,99 @@ Note: Chat commands require a Google Workspace account (consumer @gmail.com acco
 
 ```bash
 # Requires a Workspace service account with domain-wide delegation.
-gog admin users list --domain example.com
-gog admin users get user@example.com
-gog admin users create user@example.com --given Ada --family Lovelace --password 'TempPass123!'
-gog admin users suspend user@example.com --force
+aim-google admin users list --domain example.com
+aim-google admin users get user@example.com
+aim-google admin users create user@example.com --given Ada --family Lovelace --password 'TempPass123!'
+aim-google admin users suspend user@example.com --force
 
-gog admin groups list --domain example.com
-gog admin groups members list engineering@example.com
-gog admin groups members add engineering@example.com user@example.com --role MEMBER
-gog admin groups members remove engineering@example.com user@example.com --force
+aim-google admin groups list --domain example.com
+aim-google admin groups members list engineering@example.com
+aim-google admin groups members add engineering@example.com user@example.com --role MEMBER
+aim-google admin groups members remove engineering@example.com user@example.com --force
 ```
 
 ### Groups (Google Workspace)
 
 ```bash
 # List groups you belong to
-gog groups list
+aim-google groups list
 
 # List members of a group
-gog groups members engineering@company.com
+aim-google groups members engineering@company.com
 ```
 
 Note: Groups commands require the Cloud Identity API and the `cloud-identity.groups.readonly` scope. If you get a permissions error, re-authenticate:
 
 ```bash
-gog auth add your@email.com --services groups --force-consent
+aim-google auth add your@email.com --services groups --force-consent
 ```
 
 ### Classroom (Google Workspace for Education)
 
 ```bash
 # Courses
-gog classroom courses list
-gog classroom courses list --role teacher
-gog classroom courses get <courseId>
-gog classroom courses create --name "Math 101"
-gog classroom courses update <courseId> --name "Math 102"
-gog classroom courses archive <courseId>
-gog classroom courses unarchive <courseId>
-gog classroom courses url <courseId>
+aim-google classroom courses list
+aim-google classroom courses list --role teacher
+aim-google classroom courses get <courseId>
+aim-google classroom courses create --name "Math 101"
+aim-google classroom courses update <courseId> --name "Math 102"
+aim-google classroom courses archive <courseId>
+aim-google classroom courses unarchive <courseId>
+aim-google classroom courses url <courseId>
 
 # Roster
-gog classroom roster <courseId>
-gog classroom roster <courseId> --students
-gog classroom students add <courseId> <userId>
-gog classroom teachers add <courseId> <userId>
+aim-google classroom roster <courseId>
+aim-google classroom roster <courseId> --students
+aim-google classroom students add <courseId> <userId>
+aim-google classroom teachers add <courseId> <userId>
 
 # Coursework
-gog classroom coursework list <courseId>
-gog classroom coursework get <courseId> <courseworkId>
-gog classroom coursework create <courseId> --title "Homework 1" --type ASSIGNMENT --state PUBLISHED
-gog classroom coursework update <courseId> <courseworkId> --title "Updated"
-gog classroom coursework assignees <courseId> <courseworkId> --mode INDIVIDUAL_STUDENTS --add-student <studentId>
+aim-google classroom coursework list <courseId>
+aim-google classroom coursework get <courseId> <courseworkId>
+aim-google classroom coursework create <courseId> --title "Homework 1" --type ASSIGNMENT --state PUBLISHED
+aim-google classroom coursework update <courseId> <courseworkId> --title "Updated"
+aim-google classroom coursework assignees <courseId> <courseworkId> --mode INDIVIDUAL_STUDENTS --add-student <studentId>
 
 # Materials
-gog classroom materials list <courseId>
-gog classroom materials create <courseId> --title "Syllabus" --state PUBLISHED
+aim-google classroom materials list <courseId>
+aim-google classroom materials create <courseId> --title "Syllabus" --state PUBLISHED
 
 # Submissions
-gog classroom submissions list <courseId> <courseworkId>
-gog classroom submissions get <courseId> <courseworkId> <submissionId>
-gog classroom submissions grade <courseId> <courseworkId> <submissionId> --grade 85
-gog classroom submissions return <courseId> <courseworkId> <submissionId>
-gog classroom submissions turn-in <courseId> <courseworkId> <submissionId>
-gog classroom submissions reclaim <courseId> <courseworkId> <submissionId>
+aim-google classroom submissions list <courseId> <courseworkId>
+aim-google classroom submissions get <courseId> <courseworkId> <submissionId>
+aim-google classroom submissions grade <courseId> <courseworkId> <submissionId> --grade 85
+aim-google classroom submissions return <courseId> <courseworkId> <submissionId>
+aim-google classroom submissions turn-in <courseId> <courseworkId> <submissionId>
+aim-google classroom submissions reclaim <courseId> <courseworkId> <submissionId>
 
 # Announcements
-gog classroom announcements list <courseId>
-gog classroom announcements create <courseId> --text "Welcome!"
-gog classroom announcements update <courseId> <announcementId> --text "Updated"
-gog classroom announcements assignees <courseId> <announcementId> --mode INDIVIDUAL_STUDENTS --add-student <studentId>
+aim-google classroom announcements list <courseId>
+aim-google classroom announcements create <courseId> --text "Welcome!"
+aim-google classroom announcements update <courseId> <announcementId> --text "Updated"
+aim-google classroom announcements assignees <courseId> <announcementId> --mode INDIVIDUAL_STUDENTS --add-student <studentId>
 
 # Topics
-gog classroom topics list <courseId>
-gog classroom topics create <courseId> --name "Unit 1"
-gog classroom topics update <courseId> <topicId> --name "Unit 2"
+aim-google classroom topics list <courseId>
+aim-google classroom topics create <courseId> --name "Unit 1"
+aim-google classroom topics update <courseId> <topicId> --name "Unit 2"
 
 # Invitations
-gog classroom invitations list
-gog classroom invitations create <courseId> <userId> --role student
-gog classroom invitations accept <invitationId>
+aim-google classroom invitations list
+aim-google classroom invitations create <courseId> <userId> --role student
+aim-google classroom invitations accept <invitationId>
 
 # Guardians
-gog classroom guardians list <studentId>
-gog classroom guardians get <studentId> <guardianId>
-gog classroom guardians delete <studentId> <guardianId>
+aim-google classroom guardians list <studentId>
+aim-google classroom guardians get <studentId> <guardianId>
+aim-google classroom guardians delete <studentId> <guardianId>
 
 # Guardian invitations
-gog classroom guardian-invitations list <studentId>
-gog classroom guardian-invitations create <studentId> --email parent@example.com
+aim-google classroom guardian-invitations list <studentId>
+aim-google classroom guardian-invitations create <studentId> --email parent@example.com
 
 # Profiles
-gog classroom profile get
-gog classroom profile get <userId>
+aim-google classroom profile get
+aim-google classroom profile get <userId>
 ```
 
 Note: Classroom commands require a Google Workspace for Education account. Personal Google accounts have limited Classroom functionality.
@@ -1329,33 +1329,33 @@ Note: Classroom commands require a Google Workspace for Education account. Perso
 
 ```bash
 # Export (via Drive)
-gog docs export <docId> --format pdf --out ./doc.pdf
-gog docs export <docId> --format docx --out ./doc.docx
-gog docs export <docId> --format txt --out ./doc.txt
-gog docs export <docId> --format md --out ./doc.md
-gog docs export <docId> --format html --out ./doc.html
+aim-google docs export <docId> --format pdf --out ./doc.pdf
+aim-google docs export <docId> --format docx --out ./doc.docx
+aim-google docs export <docId> --format txt --out ./doc.txt
+aim-google docs export <docId> --format md --out ./doc.md
+aim-google docs export <docId> --format html --out ./doc.html
 
 # Sed-style regex editing with Markdown formatting (sedmat)
-gog docs sed <docId> 's/pattern/replacement/g'
+aim-google docs sed <docId> 's/pattern/replacement/g'
 
 # Formatting in replacements
-gog docs sed <docId> 's/hello/**hello**/'          # bold
-gog docs sed <docId> 's/hello/*hello*/'             # italic
-gog docs sed <docId> 's/hello/~~hello~~/'           # strikethrough
-gog docs sed <docId> 's/hello/`hello`/'             # monospace
-gog docs sed <docId> 's/hello/__hello__/'           # underline
-gog docs sed <docId> 's/Google/[Google](https://google.com)/'  # link
+aim-google docs sed <docId> 's/hello/**hello**/'          # bold
+aim-google docs sed <docId> 's/hello/*hello*/'             # italic
+aim-google docs sed <docId> 's/hello/~~hello~~/'           # strikethrough
+aim-google docs sed <docId> 's/hello/`hello`/'             # monospace
+aim-google docs sed <docId> 's/hello/__hello__/'           # underline
+aim-google docs sed <docId> 's/Google/[Google](https://google.com)/'  # link
 
 # Images
-gog docs sed <docId> 's/{{LOGO}}/![](https://example.com/logo.png)/'
-gog docs sed <docId> 's/{{HERO}}/![](https://example.com/hero.jpg){width=600}/'
+aim-google docs sed <docId> 's/{{LOGO}}/![](https://example.com/logo.png)/'
+aim-google docs sed <docId> 's/{{HERO}}/![](https://example.com/hero.jpg){width=600}/'
 
 # Tables — create, populate, modify
-gog docs sed <docId> 's/{{TABLE}}/|3x4|/'            # create 3-row, 4-col table
-gog docs sed <docId> 's/|1|[A1]/**Name**/'           # set cell A1 (bold)
-gog docs sed <docId> 's/|1|[1,*]/**&**/'             # bold entire row 1
-gog docs sed <docId> 's/|1|[row:+2]//'               # insert row before row 2
-gog docs sed <docId> 's/|1|[col:$+]//'               # append column at end
+aim-google docs sed <docId> 's/{{TABLE}}/|3x4|/'            # create 3-row, 4-col table
+aim-google docs sed <docId> 's/|1|[A1]/**Name**/'           # set cell A1 (bold)
+aim-google docs sed <docId> 's/|1|[1,*]/**&**/'             # bold entire row 1
+aim-google docs sed <docId> 's/|1|[row:+2]//'               # insert row before row 2
+aim-google docs sed <docId> 's/|1|[col:$+]//'               # append column at end
 ```
 
 > See [docs/sedmat.md](docs/sedmat.md) for the full sedmat syntax reference.
@@ -1364,11 +1364,11 @@ gog docs sed <docId> 's/|1|[col:$+]//'               # append column at end
 
 ```bash
 # Export (via Drive)
-gog slides export <presentationId> --format pptx --out ./deck.pptx
-gog slides export <presentationId> --format pdf --out ./deck.pdf
+aim-google slides export <presentationId> --format pptx --out ./deck.pptx
+aim-google slides export <presentationId> --format pdf --out ./deck.pdf
 
 # Create from template with text replacements
-gog slides create-from-template <templateId> "Q1 Report" \
+aim-google slides create-from-template <templateId> "Q1 Report" \
   --replace "quarter=Q1 2026" \
   --replace "revenue=$1.2M" \
   --replace "growth=15%"
@@ -1384,23 +1384,23 @@ cat > replacements.json <<EOF
 }
 EOF
 
-gog slides create-from-template <templateId> "Monthly Report" \
+aim-google slides create-from-template <templateId> "Monthly Report" \
   --replacements replacements.json
 
 # Read slide content (text, notes, images)
-gog slides read-slide <presentationId> <slideId>
+aim-google slides read-slide <presentationId> <slideId>
 
 # Include grouped elements, word art, and tables
-gog slides read-slide <presentationId> <slideId> --recursive --json
+aim-google slides read-slide <presentationId> <slideId> --recursive --json
 
 # Get a rendered slide thumbnail URL
-gog slides thumbnail <presentationId> <slideId>
+aim-google slides thumbnail <presentationId> <slideId>
 
 # Download a rendered slide thumbnail
-gog slides thumbnail <presentationId> <slideId> --output ./slide.png
+aim-google slides thumbnail <presentationId> <slideId> --output ./slide.png
 
 # Control thumbnail size and format
-gog slides thumbnail <presentationId> <slideId> --size medium --format jpeg --output ./slide.jpg
+aim-google slides thumbnail <presentationId> <slideId> --size medium --format jpeg --output ./slide.jpg
 ```
 
 ## Output Formats
@@ -1410,7 +1410,7 @@ gog slides thumbnail <presentationId> <slideId> --size medium --format jpeg --ou
 Human-readable output with colors (default):
 
 ```bash
-$ gog gmail search 'newer_than:7d' --max 3
+$ aim-google gmail search 'newer_than:7d' --max 3
 THREAD_ID           SUBJECT                           FROM                  DATE
 18f1a2b3c4d5e6f7    Meeting notes                     alice@example.com     2025-01-10
 17e1d2c3b4a5f6e7    Invoice #12345                    billing@vendor.com    2025-01-09
@@ -1420,7 +1420,7 @@ THREAD_ID           SUBJECT                           FROM                  DATE
 Message-level search (one row per email; add `--include-body` to fetch/decode bodies, or `--full` for untruncated text bodies):
 
 ```bash
-$ gog gmail messages search 'newer_than:7d' --max 3
+$ aim-google gmail messages search 'newer_than:7d' --max 3
 ID                  THREAD             SUBJECT                           FROM                  DATE
 18f1a2b3c4d5e6f7    9e8d7c6b5a4f3e2d    Meeting notes                     alice@example.com     2025-01-10
 17e1d2c3b4a5f6e7    9e8d7c6b5a4f3e2d    Invoice #12345                    billing@vendor.com    2025-01-09
@@ -1432,7 +1432,7 @@ ID                  THREAD             SUBJECT                           FROM   
 Machine-readable output for scripting and automation:
 
 ```bash
-$ gog gmail search 'newer_than:7d' --max 3 --json
+$ aim-google gmail search 'newer_than:7d' --max 3 --json
 {
   "threads": [
     {
@@ -1446,7 +1446,7 @@ $ gog gmail search 'newer_than:7d' --max 3 --json
 ```
 
 ```bash
-$ gog gmail messages search 'newer_than:7d' --max 3 --json
+$ aim-google gmail messages search 'newer_than:7d' --max 3 --json
 {
   "messages": [
     {
@@ -1462,7 +1462,7 @@ $ gog gmail messages search 'newer_than:7d' --max 3 --json
 ```
 
 ```bash
-$ gog gmail messages search 'newer_than:7d' --max 1 --full --json
+$ aim-google gmail messages search 'newer_than:7d' --max 1 --full --json
 {
   "messages": [
     {
@@ -1480,12 +1480,12 @@ $ gog gmail messages search 'newer_than:7d' --max 1 --full --json
 Data goes to stdout, errors and progress to stderr for clean piping:
 
 ```bash
-gog --json drive ls --max 5 | jq '.files[] | select(.mimeType=="application/pdf")'
+aim-google --json drive ls --max 5 | jq '.files[] | select(.mimeType=="application/pdf")'
 ```
 
 Useful pattern:
 
-- `gog --json ... | jq .`
+- `aim-google --json ... | jq .`
 
 Calendar JSON convenience fields:
 
@@ -1497,29 +1497,29 @@ Calendar JSON convenience fields:
 
 ```bash
 # Search for emails from the last week
-gog gmail search 'newer_than:7d has:attachment' --max 10
+aim-google gmail search 'newer_than:7d has:attachment' --max 10
 
 # Get thread details and download attachments
-gog gmail thread get <threadId> --download
+aim-google gmail thread get <threadId> --download
 ```
 
 ### Modify labels on a thread
 
 ```bash
 # Archive and star a thread
-gog gmail thread modify <threadId> --remove INBOX --add STARRED
+aim-google gmail thread modify <threadId> --remove INBOX --add STARRED
 ```
 
 ### Create a calendar event with attendees
 
 ```bash
 # Find a free time slot
-gog calendar freebusy --calendars "primary" \
+aim-google calendar freebusy --calendars "primary" \
   --from 2025-01-15T00:00:00Z \
   --to 2025-01-16T00:00:00Z
 
 # Create the meeting
-gog calendar create primary \
+aim-google calendar create primary \
   --summary "Team Standup" \
   --from 2025-01-15T10:00:00Z \
   --to 2025-01-15T10:30:00Z \
@@ -1530,10 +1530,10 @@ gog calendar create primary \
 
 ```bash
 # Search for PDFs
-gog drive search "invoice filetype:pdf" --max 20 --json | \
+aim-google drive search "invoice filetype:pdf" --max 20 --json | \
   jq -r '.files[] | .id' | \
   while read fileId; do
-    gog drive download "$fileId"
+    aim-google drive download "$fileId"
   done
 ```
 
@@ -1541,14 +1541,14 @@ gog drive search "invoice filetype:pdf" --max 20 --json | \
 
 ```bash
 # Check personal Gmail
-gog gmail search 'is:unread' --account personal@gmail.com
+aim-google gmail search 'is:unread' --account personal@gmail.com
 
 # Check work Gmail
-gog gmail search 'is:unread' --account work@company.com
+aim-google gmail search 'is:unread' --account work@company.com
 
 # Or set default
-export GOG_ACCOUNT=work@company.com
-gog gmail search 'is:unread'
+export AIM_GOOGLE_ACCOUNT=work@company.com
+aim-google gmail search 'is:unread'
 ```
 
 ### Update a Google Sheet from a CSV
@@ -1556,39 +1556,39 @@ gog gmail search 'is:unread'
 ```bash
 # Convert CSV to pipe-delimited format and update sheet
 cat data.csv | tr ',' '|' | \
-  gog sheets update <spreadsheetId> 'Sheet1!A1'
+  aim-google sheets update <spreadsheetId> 'Sheet1!A1'
 ```
 
 ### Export Sheets / Docs / Slides
 
 ```bash
 # Sheets
-gog sheets export <spreadsheetId> --format pdf
+aim-google sheets export <spreadsheetId> --format pdf
 
 # Docs
-gog docs export <docId> --format docx
+aim-google docs export <docId> --format docx
 
 # Slides
-gog slides export <presentationId> --format pptx
+aim-google slides export <presentationId> --format pptx
 ```
 
 ### Batch process Gmail threads
 
 ```bash
 # Mark all emails from a sender as read
-gog --json gmail search 'from:noreply@example.com' --max 200 | \
+aim-google --json gmail search 'from:noreply@example.com' --max 200 | \
   jq -r '.threads[].id' | \
-  xargs -n 50 gog gmail labels modify --remove UNREAD
+  xargs -n 50 aim-google gmail labels modify --remove UNREAD
 
 # Archive old emails
-gog --json gmail search 'older_than:1y' --max 200 | \
+aim-google --json gmail search 'older_than:1y' --max 200 | \
   jq -r '.threads[].id' | \
-  xargs -n 50 gog gmail labels modify --remove INBOX
+  xargs -n 50 aim-google gmail labels modify --remove INBOX
 
 # Label important emails
-gog --json gmail search 'from:boss@example.com' --max 200 | \
+aim-google --json gmail search 'from:boss@example.com' --max 200 | \
   jq -r '.threads[].id' | \
-  xargs -n 50 gog gmail labels modify --add IMPORTANT
+  xargs -n 50 aim-google gmail labels modify --add IMPORTANT
 ```
 
 ## Advanced Features
@@ -1598,7 +1598,7 @@ gog --json gmail search 'from:boss@example.com' --max 200 | \
 Enable verbose logging for troubleshooting:
 
 ```bash
-gog --verbose gmail search 'newer_than:7d'
+aim-google --verbose gmail search 'newer_than:7d'
 # Shows API requests and responses
 ```
 
@@ -1606,7 +1606,7 @@ gog --verbose gmail search 'newer_than:7d'
 
 All commands support these flags:
 
-- `--account <email|alias|auto>` - Account to use (overrides GOG_ACCOUNT)
+- `--account <email|alias|auto>` - Account to use (overrides AIM_GOOGLE_ACCOUNT)
 - `--enable-commands <csv>` - Allowlist commands; dot paths allowed (e.g., `calendar,tasks,gmail.search`)
 - `--disable-commands <csv>` - Denylist commands; dot paths allowed (e.g., `gmail.send,gmail.drafts.send`)
 - `--gmail-no-send` - Block Gmail send operations
@@ -1626,23 +1626,23 @@ Generate shell completions for your preferred shell:
 
 ```bash
 # macOS (with Homebrew)
-gog completion bash > $(brew --prefix)/etc/bash_completion.d/gog
+aim-google completion bash > $(brew --prefix)/etc/bash_completion.d/aim-google
 
 # Linux
-gog completion bash > /etc/bash_completion.d/gog
+aim-google completion bash > /etc/bash_completion.d/aim-google
 
 # Or load directly in your current session
-source <(gog completion bash)
+source <(aim-google completion bash)
 ```
 
 ### Zsh
 
 ```zsh
 # Generate completion file
-gog completion zsh > "${fpath[1]}/_gog"
+aim-google completion zsh > "${fpath[1]}/_gog"
 
 # Or add to .zshrc for automatic loading
-echo 'eval "$(gog completion zsh)"' >> ~/.zshrc
+echo 'eval "$(aim-google completion zsh)"' >> ~/.zshrc
 
 # Enable completions if not already enabled
 echo "autoload -U compinit; compinit" >> ~/.zshrc
@@ -1651,17 +1651,17 @@ echo "autoload -U compinit; compinit" >> ~/.zshrc
 ### Fish
 
 ```fish
-gog completion fish > ~/.config/fish/completions/gog.fish
+aim-google completion fish > ~/.config/fish/completions/aim-google.fish
 ```
 
 ### PowerShell
 
 ```powershell
 # Load for current session
-gog completion powershell | Out-String | Invoke-Expression
+aim-google completion powershell | Out-String | Invoke-Expression
 
 # Or add to profile for all sessions
-gog completion powershell >> $PROFILE
+aim-google completion powershell >> $PROFILE
 ```
 
 After installing completions, start a new shell session for changes to take effect.
@@ -1690,16 +1690,16 @@ make docs-commands
 
 ### Integration Tests (Live Google APIs)
 
-Opt-in tests that hit real Google APIs using your stored `gog` credentials/tokens.
+Opt-in tests that hit real Google APIs using your stored `aim-google` credentials/tokens.
 
 ```bash
 # Optional: override which account to use
-export GOG_IT_ACCOUNT=you@gmail.com
-export GOG_CLIENT=work
+export AIM_GOOGLE_IT_ACCOUNT=you@gmail.com
+export AIM_GOOGLE_CLIENT=work
 go test -tags=integration ./...
 ```
 
-Tip: if you want to avoid macOS Keychain prompts during these runs, set `GOG_KEYRING_BACKEND=file` and `GOG_KEYRING_PASSWORD=...` (uses encrypted on-disk keyring).
+Tip: if you want to avoid macOS Keychain prompts during these runs, set `AIM_GOOGLE_KEYRING_BACKEND=file` and `AIM_GOOGLE_KEYRING_PASSWORD=...` (uses encrypted on-disk keyring).
 
 ### Live Test Script (CLI)
 
@@ -1721,39 +1721,39 @@ Script toggles:
 Go test wrapper (opt-in):
 
 ```bash
-GOG_LIVE=1 go test -tags=integration ./internal/integration -run Live
+AIM_GOOGLE_LIVE=1 go test -tags=integration ./internal/integration -run Live
 ```
 
 Optional env:
-- `GOG_LIVE_FAST=1`
-- `GOG_LIVE_SKIP=groups,keep`
-- `GOG_LIVE_AUTH=all,groups`
-- `GOG_LIVE_ALLOW_NONTEST=1`
-- `GOG_LIVE_EMAIL_TEST=steipete+gogtest@gmail.com`
-- `GOG_LIVE_GROUP_EMAIL=group@domain`
-- `GOG_LIVE_CLASSROOM_COURSE=<courseId>`
-- `GOG_LIVE_CLASSROOM_CREATE=1`
-- `GOG_LIVE_CLASSROOM_ALLOW_STATE=1`
-- `GOG_LIVE_TRACK=1`
-- `GOG_LIVE_GMAIL_BATCH_DELETE=1`
-- `GOG_LIVE_GMAIL_FILTERS=1`
-- `GOG_LIVE_GMAIL_WATCH_TOPIC=projects/.../topics/...`
-- `GOG_LIVE_CALENDAR_RESPOND=1`
-- `GOG_LIVE_CALENDAR_RECURRENCE=1`
-- `GOG_KEEP_SERVICE_ACCOUNT=/path/to/service-account.json`
-- `GOG_KEEP_IMPERSONATE=user@workspace-domain`
+- `AIM_GOOGLE_LIVE_FAST=1`
+- `AIM_GOOGLE_LIVE_SKIP=groups,keep`
+- `AIM_GOOGLE_LIVE_AUTH=all,groups`
+- `AIM_GOOGLE_LIVE_ALLOW_NONTEST=1`
+- `AIM_GOOGLE_LIVE_EMAIL_TEST=BrianV1981+aimgoogletest@gmail.com`
+- `AIM_GOOGLE_LIVE_GROUP_EMAIL=group@domain`
+- `AIM_GOOGLE_LIVE_CLASSROOM_COURSE=<courseId>`
+- `AIM_GOOGLE_LIVE_CLASSROOM_CREATE=1`
+- `AIM_GOOGLE_LIVE_CLASSROOM_ALLOW_STATE=1`
+- `AIM_GOOGLE_LIVE_TRACK=1`
+- `AIM_GOOGLE_LIVE_GMAIL_BATCH_DELETE=1`
+- `AIM_GOOGLE_LIVE_GMAIL_FILTERS=1`
+- `AIM_GOOGLE_LIVE_GMAIL_WATCH_TOPIC=projects/.../topics/...`
+- `AIM_GOOGLE_LIVE_CALENDAR_RESPOND=1`
+- `AIM_GOOGLE_LIVE_CALENDAR_RECURRENCE=1`
+- `AIM_GOOGLE_KEEP_SERVICE_ACCOUNT=/path/to/service-account.json`
+- `AIM_GOOGLE_KEEP_IMPERSONATE=user@workspace-domain`
 
 ### Make Shortcut
 
 Build and run:
 
 ```bash
-make gog auth add you@gmail.com
+make aim-google auth add you@gmail.com
 ```
 
 For clean stdout when scripting:
 
-- Use `--` when the first arg is a flag: `make gog -- --json gmail search "from:me" | jq .`
+- Use `--` when the first arg is a flag: `make aim-google -- --json gmail search "from:me" | jq .`
 
 ## License
 
@@ -1761,7 +1761,7 @@ MIT
 
 ## Links
 
-- [GitHub Repository](https://github.com/steipete/gogcli)
+- [GitHub Repository](https://github.com/BrianV1981/aim-google)
 - [Gmail API Documentation](https://developers.google.com/gmail/api)
 - [Google Calendar API Documentation](https://developers.google.com/calendar)
 - [Google Drive API Documentation](https://developers.google.com/drive)

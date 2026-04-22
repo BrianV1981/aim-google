@@ -3,17 +3,17 @@ SHELL := /bin/bash
 # `make` should build the binary by default.
 .DEFAULT_GOAL := build
 
-.PHONY: build gog gogcli gog-help gogcli-help help fmt fmt-check lint test ci tools docs-commands
+.PHONY: build aim-google aim-google aim-google-help aim-google-help help fmt fmt-check lint test ci tools docs-commands
 .PHONY: worker-ci
 
 BIN_DIR := $(CURDIR)/bin
-BIN := $(BIN_DIR)/gog
-CMD := ./cmd/gog
+BIN := $(BIN_DIR)/aim-google
+CMD := ./cmd/aim-google
 
 VERSION := $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
 COMMIT := $(shell git rev-parse --short=12 HEAD 2>/dev/null || echo "")
 DATE := $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
-LDFLAGS := -X github.com/steipete/gogcli/internal/cmd.version=$(VERSION) -X github.com/steipete/gogcli/internal/cmd.commit=$(COMMIT) -X github.com/steipete/gogcli/internal/cmd.date=$(DATE)
+LDFLAGS := -X github.com/BrianV1981/aim-google/internal/cmd.version=$(VERSION) -X github.com/BrianV1981/aim-google/internal/cmd.commit=$(COMMIT) -X github.com/BrianV1981/aim-google/internal/cmd.date=$(DATE)
 # `make lint` already covers vet-equivalent checks; skip duplicate work in `make test`.
 GO_TEST_FLAGS ?= -vet=off
 TEST_FLAGS ?=
@@ -27,9 +27,9 @@ TOOLS_STAMP := $(TOOLS_DIR)/.versions
 TOOLS_VERSION := gofumpt=v0.9.2;goimports=v0.44.0;golangci-lint=v2.11.4
 
 # Allow passing CLI args as extra "targets":
-#   make gogcli -- --help
-#   make gogcli -- gmail --help
-ifneq ($(filter gogcli gog,$(MAKECMDGOALS)),)
+#   make aim-google -- --help
+#   make aim-google -- gmail --help
+ifneq ($(filter aim-google,$(MAKECMDGOALS)),)
 RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
 $(eval $(RUN_ARGS):;@:)
 endif
@@ -38,7 +38,7 @@ build:
 	@mkdir -p $(BIN_DIR)
 	@go build -ldflags "$(LDFLAGS)" -o $(BIN) $(CMD)
 
-gog: build
+aim-google: build
 	@if [ -n "$(RUN_ARGS)" ]; then \
 		$(BIN) $(RUN_ARGS); \
 	elif [ -z "$(ARGS)" ]; then \
@@ -47,22 +47,10 @@ gog: build
 		$(BIN) $(ARGS); \
 	fi
 
-gogcli: build
-	@if [ -n "$(RUN_ARGS)" ]; then \
-		$(BIN) $(RUN_ARGS); \
-	elif [ -z "$(ARGS)" ]; then \
-		$(BIN) --help; \
-	else \
-		$(BIN) $(ARGS); \
-	fi
-
-gog-help: build
+aim-google-help: build
 	@$(BIN) --help
 
-gogcli-help: build
-	@$(BIN) --help
-
-help: gog-help
+help: aim-google-help
 
 docs-commands: build
 	@scripts/gen-command-reference.sh docs/commands.generated.md
@@ -79,11 +67,11 @@ tools:
 	fi
 
 fmt: tools
-	@$(GOIMPORTS) -local github.com/steipete/gogcli -w .
+	@$(GOIMPORTS) -local github.com/BrianV1981/aim-google -w .
 	@$(GOFUMPT) -w .
 
 fmt-check: tools
-	@$(GOIMPORTS) -local github.com/steipete/gogcli -w .
+	@$(GOIMPORTS) -local github.com/BrianV1981/aim-google -w .
 	@$(GOFUMPT) -w .
 	@git diff --exit-code -- '*.go' go.mod go.sum
 

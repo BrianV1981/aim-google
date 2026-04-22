@@ -9,7 +9,7 @@ import (
 
 	"github.com/alecthomas/kong"
 
-	"github.com/steipete/gogcli/internal/config"
+	"github.com/BrianV1981/aim-google/internal/config"
 )
 
 func setTestConfigHome(t *testing.T) {
@@ -66,7 +66,7 @@ func TestBoolString(t *testing.T) {
 
 func TestHelpDescription(t *testing.T) {
 	setTestConfigHome(t)
-	t.Setenv("GOG_KEYRING_BACKEND", "auto")
+	t.Setenv("AIM_GOOGLE_KEYRING_BACKEND", "auto")
 
 	out := helpDescription()
 	if !strings.Contains(out, "Config:") {

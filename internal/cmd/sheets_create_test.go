@@ -72,7 +72,7 @@ func TestSheetsCreateCmd_ParentMoveSuccess(t *testing.T) {
 	}))
 	defer driveSrv.Close()
 
-	t.Setenv("GOG_ACCOUNT", "a@b.com")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "a@b.com")
 
 	sheetsSvc, err := sheets.NewService(context.Background(),
 		option.WithoutAuthentication(),
@@ -171,7 +171,7 @@ func TestSheetsCreateCmd_ParentMoveFailureReportedInJSON(t *testing.T) {
 	}))
 	defer driveSrv.Close()
 
-	t.Setenv("GOG_ACCOUNT", "a@b.com")
+	t.Setenv("AIM_GOOGLE_ACCOUNT", "a@b.com")
 
 	sheetsSvc, err := sheets.NewService(context.Background(),
 		option.WithoutAuthentication(),

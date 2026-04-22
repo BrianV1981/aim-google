@@ -7,7 +7,7 @@ import (
 
 	"google.golang.org/api/sheets/v4"
 
-	"github.com/steipete/gogcli/internal/selectorutil"
+	"github.com/BrianV1981/aim-google/internal/selectorutil"
 )
 
 type spreadsheetRangeCatalog struct {
