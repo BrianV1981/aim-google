@@ -12,6 +12,7 @@ import (
 
 type Mode struct {
 	JSON  bool
+	Agent bool
 	Plain bool
 }
 
@@ -19,17 +20,26 @@ type ParseError struct{ msg string }
 
 func (e *ParseError) Error() string { return e.msg }
 
-func FromFlags(jsonOut bool, plainOut bool) (Mode, error) {
-	if jsonOut && plainOut {
-		return Mode{}, &ParseError{msg: "invalid output mode (cannot combine --json and --plain)"}
+func FromFlags(jsonOut bool, agentOut bool, plainOut bool) (Mode, error) {
+	if (jsonOut && plainOut) || (agentOut && plainOut) {
+		return Mode{}, &ParseError{msg: "invalid output mode (cannot combine JSON/Agent with plain text)"}
+	}
+	if agentOut {
+		jsonOut = true // Agent mode inherently uses JSON
 	}
 
-	return Mode{JSON: jsonOut, Plain: plainOut}, nil
+	return Mode{JSON: jsonOut, Agent: agentOut, Plain: plainOut}, nil
 }
 
 func FromEnv() Mode {
+	jsonOut := envBool("AIM_GOOGLE_JSON")
+	agentOut := envBool("AIM_GOOGLE_AGENT")
+	if agentOut {
+		jsonOut = true
+	}
 	return Mode{
-		JSON:  envBool("AIM_GOOGLE_JSON"),
+		JSON:  jsonOut,
+		Agent: agentOut,
 		Plain: envBool("AIM_GOOGLE_PLAIN"),
 	}
 }
@@ -51,6 +61,7 @@ func FromContext(ctx context.Context) Mode {
 }
 
 func IsJSON(ctx context.Context) bool  { return FromContext(ctx).JSON }
+func IsAgent(ctx context.Context) bool { return FromContext(ctx).Agent }
 func IsPlain(ctx context.Context) bool { return FromContext(ctx).Plain }
 
 type JSONTransform struct {
@@ -90,7 +101,9 @@ func WriteJSON(ctx context.Context, w io.Writer, v any) error {
 
 	enc := json.NewEncoder(w)
 	enc.SetEscapeHTML(false)
-	enc.SetIndent("", "  ")
+	if !IsAgent(ctx) {
+		enc.SetIndent("", "  ")
+	}
 
 	if err := enc.Encode(v); err != nil {
 		return fmt.Errorf("encode json: %w", err)

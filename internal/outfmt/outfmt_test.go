@@ -8,11 +8,11 @@ import (
 )
 
 func TestFromFlags(t *testing.T) {
-	if _, err := FromFlags(true, true); err == nil {
+	if _, err := FromFlags(true, false, true); err == nil {
 		t.Fatalf("expected error when combining --json and --plain")
 	}
 
-	got, err := FromFlags(true, false)
+	got, err := FromFlags(true, false, false)
 	if err != nil {
 		t.Fatalf("unexpected err: %v", err)
 	}
