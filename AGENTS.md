@@ -1,49 +1,12 @@
-# Repository Guidelines
+# SWARM ROLE: LEAD GO DEVELOPER (aim-google)
 
-## Project Structure
+## PRIMARY DIRECTIVE
+You are the Lead Architect and Go Developer for the aim-google project (the A.I.M. Swarm Go CLI tool).
 
-- `cmd/aim-google/`: CLI entrypoint.
-- `internal/`: implementation (`cmd/`, Google API/OAuth, config/secrets, output/UI).
-- Tests: `*_test.go` next to code; opt-in integration suite in `internal/integration/` (build-tagged).
-- `bin/`: build outputs; `docs/`: specs/releasing; `scripts/`: release helpers + `scripts/aim-google.mjs`.
-
-## Build, Test, and Development Commands
-
-- `make` / `make build`: build `bin/aim-google`.
-- `make tools`: install pinned dev tools into `.tools/`.
-- `make fmt` / `make lint` / `make test` / `make ci`: format, lint, test, full local gate.
-- Optional: `pnpm aim-google …`: build + run in one step.
-- Hooks: `lefthook install` enables pre-commit/pre-push checks.
-
-## Coding Style & Naming Conventions
-
-- Formatting: `make fmt` (`goimports` local prefix `github.com/BrianV1981/aim-google` + `gofumpt`).
-- Output: keep stdout parseable (`--json` / `--plain`); send human hints/progress to stderr.
-- Gmail labels: treat label IDs as case-sensitive opaque tokens; only case-fold label names for name lookup.
-
-## Testing Guidelines
-
-- Unit tests: stdlib `testing` (and `httptest` where needed).
-- Integration tests (local only):
-  - `AIM_GOOGLE_IT_ACCOUNT=you@gmail.com go test -tags=integration ./internal/integration`
-  - Requires OAuth client credentials + a stored refresh token in your keyring.
-
-## Commit & Pull Request Guidelines
-
-- Create commits with `committer "<msg>" <file...>`; avoid manual staging.
-- Follow Conventional Commits + action-oriented subjects (e.g. `feat(cli): add --verbose to send`).
-- Group related changes; avoid bundling unrelated refactors.
-- PRs should summarize scope, note testing performed, and mention any user-facing changes or new flags.
-- PR review flow: when given a PR link, review via `gh pr view` / `gh pr diff` and do not change branches.
-
-### PR Workflow (Review vs Land)
-
-- **Review mode (PR link only):** read `gh pr view/diff`; do not switch branches; do not change code.
-- **Landing mode:** temp branch from `main`; bring in PR (squash default; rebase/merge when needed); fix; update `CHANGELOG.md` (PR #/issue + thanks); run `make ci`; final commit; merge to `main`; delete temp; end on `main`.
-- If landing contributor work, always add `Co-authored-by:` trailers for PR authors, even when we partially rewrite, group, or manually apply their changes; leave a PR comment with what landed + SHAs.
-- New contributor: thank in `CHANGELOG.md` (and update README contributors list if present).
-
-## Security & Configuration Tips
-
-- Never commit OAuth client credential JSON files or tokens.
-- Prefer OS keychain backends; use `AIM_GOOGLE_KEYRING_BACKEND=file` + `AIM_GOOGLE_KEYRING_PASSWORD` only for headless environments.
+## OPERATING RULES
+1. **Workspace Restrictions:** You operate strictly within the `projects/aim-google/` directory and manage this Go CLI instance.
+2. **Nested GitOps:** This directory (`projects/aim-google/`) is a dedicated Git repository that is nested *inside* the larger A.I.M. Swarm OS repository (`~/aim-google/`).
+   - When executing Git commands (status, add, commit, push) for the CLI tool, you MUST run them from within the `projects/aim-google/` directory.
+   - Do not mistakenly push Go CLI code to the parent Python OS repository.
+3. **TDD:** Always run `make test` before committing changes to ensure behavioral correctness of the Go binary.
+4. **Environment:** When testing the binary, use `AIM_GOOGLE_KEYRING_BACKEND=file` if you are in a headless/WSL environment without a GUI keyring.
