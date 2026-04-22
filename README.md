@@ -114,7 +114,35 @@ aim-google --client work auth credentials ~/Downloads/work-client.json
 aim-google auth credentials list
 ```
 
-### 3. Authorize Your Account
+### 3. Provision Sovereign Credentials
+
+**⚠️ CRITICAL A.I.M. DIRECTIVE:** 
+This fork (`aim-google`) is hardcoded to remain in Google's "Testing" publishing status. We do NOT provide a global, verified OAuth Client ID for the public. You **must** provision your own private credentials. 
+
+Why? Because true data sovereignty means owning your own gateway. Relying on a third-party OAuth client (like the original `gogcli`) means the creator has the power to revoke your access at any time, or access your data if scopes are mishandled. 
+
+To use this Swarm tool, you will need to spend 5 minutes clicking through the Google Cloud Console to generate your own `credentials.json` file.
+
+**How to create your own aim-google credentials:**
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/projectcreate) and create a new project (e.g., `aim-swarm-gateway`).
+2. Go to **APIs & Services -> Enabled APIs and services**. Enable the APIs for the services you want the agent to use (e.g., Gmail API, Google Drive API, Google Calendar API, Google Sheets API).
+3. Go to **APIs & Services -> OAuth consent screen**.
+   - Select **External** (or Internal if you are a Workspace admin).
+   - Fill in the required app information.
+   - For **Test users**, add the specific Gmail addresses you intend to authorize. (Since the app is in testing mode, only these users can log in).
+4. Go to **APIs & Services -> Credentials**.
+   - Click **Create Credentials -> OAuth client ID**.
+   - Choose **Desktop app**. Name it `aim-google-cli`.
+   - Download the JSON file.
+
+Import your sovereign credentials into the CLI:
+```bash
+aim-google auth credentials /path/to/your/client_secret.json
+```
+
+### 4. Authorize Your Account
+
+Once your sovereign credentials are imported, authorize your account:
 
 ```bash
 aim-google auth add you@gmail.com
