@@ -140,15 +140,28 @@ Import your sovereign credentials into the CLI:
 aim-google auth credentials /path/to/your/client_secret.json
 ```
 
-### 4. Authorize Your Account
+### 4. Authorize Your Account for Autonomous Swarm Agents
 
-Once your sovereign credentials are imported, authorize your account:
+To enable headless, background A.I.M. Swarm agents to autonomously use your Google Workspace without hanging on interactive password prompts, you must configure the CLI to use an encrypted file-based keyring and provide the decryption password via an environment variable.
 
-```bash
-aim-google auth add you@gmail.com
-```
+1. **Tell aim-google to use the headless file keyring:**
+   ```bash
+   aim-google auth keyring file
+   ```
+2. **Set your encryption password:** Add this to your `~/.bashrc` (or agent environment profile) so the Swarm can autonomously decrypt the OAuth token. (Replace with your actual chosen password):
+   ```bash
+   export AIM_GOOGLE_KEYRING_PASSWORD="your_secure_password"
+   ```
+3. **Import your sovereign credentials into this new backend:**
+   ```bash
+   aim-google auth credentials /path/to/your/client_secret.json
+   ```
+4. **Authorize the account** (This will open a browser window or provide a remote link):
+   ```bash
+   aim-google auth add you@gmail.com
+   ```
 
-This will open a browser window for OAuth authorization. The refresh token is stored securely in your system keychain.
+Once authorized, your Swarm agents can silently execute commands in the background without human intervention!
 
 Headless / remote server flows (no browser on the server):
 
