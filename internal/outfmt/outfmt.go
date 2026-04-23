@@ -24,6 +24,7 @@ func FromFlags(jsonOut bool, agentOut bool, plainOut bool) (Mode, error) {
 	if (jsonOut && plainOut) || (agentOut && plainOut) {
 		return Mode{}, &ParseError{msg: "invalid output mode (cannot combine JSON/Agent with plain text)"}
 	}
+
 	if agentOut {
 		jsonOut = true // Agent mode inherently uses JSON
 	}
@@ -34,9 +35,11 @@ func FromFlags(jsonOut bool, agentOut bool, plainOut bool) (Mode, error) {
 func FromEnv() Mode {
 	jsonOut := envBool("AIM_GOOGLE_JSON")
 	agentOut := envBool("AIM_GOOGLE_AGENT")
+
 	if agentOut {
 		jsonOut = true
 	}
+
 	return Mode{
 		JSON:  jsonOut,
 		Agent: agentOut,
@@ -101,6 +104,7 @@ func WriteJSON(ctx context.Context, w io.Writer, v any) error {
 
 	enc := json.NewEncoder(w)
 	enc.SetEscapeHTML(false)
+
 	if !IsAgent(ctx) {
 		enc.SetIndent("", "  ")
 	}

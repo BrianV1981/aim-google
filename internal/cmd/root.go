@@ -102,7 +102,8 @@ func Execute(args []string) (err error) {
 	defer func() {
 		if cfgPath, errPath := config.ConfigPath(); errPath == nil {
 			logFile := filepath.Join(filepath.Dir(cfgPath), "execution.log")
-			if f, errOpen := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o600); errOpen == nil {
+			//nolint:gosec // logFile path is constructed safely from config dir
+			if f, errOpen := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600); errOpen == nil {
 				duration := time.Since(startTime)
 				exitCode := 0
 				if err != nil {
