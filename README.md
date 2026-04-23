@@ -163,6 +163,15 @@ To enable headless, background A.I.M. Swarm agents to autonomously use your Goog
 
 Once authorized, your Swarm agents can silently execute commands in the background without human intervention!
 
+### 5. Install the Bundled A.I.M. Swarm Skill
+
+To transform your autonomous Gemini CLI agent into a Google Workspace expert, install the bundled `.skill` package included in this repository. This provides your agent with explicit instructions on how to natively execute the Go binary, respect the exponential backoff, and use the `--agent` flag for extreme token efficiency.
+
+```bash
+gemini skills install agent-skill/aim-google.skill --scope workspace
+```
+*(After installing, remember to run `/skills reload` in any active agent chats).*
+
 Headless / remote server flows (no browser on the server):
 
 Manual interactive flow (recommended):
