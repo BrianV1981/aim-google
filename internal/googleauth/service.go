@@ -236,7 +236,7 @@ var serviceInfoByService = map[Service]serviceInfo{
 		note: "Workspace only; service account with domain-wide delegation required",
 	},
 	ServiceYouTube: {
-		scopes: []string{"https://www.googleapis.com/auth/youtube.readonly"},
+		scopes: []string{"https://www.googleapis.com/auth/youtube"},
 		user:   true,
 		apis:   []string{"YouTube Data API"},
 	},
