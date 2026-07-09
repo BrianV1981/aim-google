@@ -84,6 +84,7 @@ type CLI struct {
 	Keep       KeepCmd               `cmd:"" help:"Google Keep (Workspace only)"`
 	Sheets     SheetsCmd             `cmd:"" aliases:"sheet" help:"Google Sheets"`
 	Forms      FormsCmd              `cmd:"" aliases:"form" help:"Google Forms"`
+	YouTube    YouTubeCmd            `cmd:"" name:"youtube" aliases:"yt" help:"YouTube Data API"`
 	AppScript  AppScriptCmd          `cmd:"" name:"appscript" aliases:"script,apps-script" help:"Google Apps Script"`
 	Config     ConfigCmd             `cmd:"" help:"Manage configuration"`
 	ExitCodes  AgentExitCodesCmd     `cmd:"" name:"exit-codes" aliases:"exitcodes" help:"Print stable exit codes (alias for 'agent exit-codes')"`
@@ -103,7 +104,7 @@ func Execute(args []string) (err error) {
 		if cfgPath, errPath := config.ConfigPath(); errPath == nil {
 			logFile := filepath.Join(filepath.Dir(cfgPath), "execution.log")
 			//nolint:gosec // logFile path is constructed safely from config dir
-			if f, errOpen := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0600); errOpen == nil {
+			if f, errOpen := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o600); errOpen == nil {
 				duration := time.Since(startTime)
 				exitCode := 0
 				if err != nil {
